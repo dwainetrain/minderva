@@ -1,12 +1,11 @@
 'use strict';
 
-// THIS VERSION:
-// - it should keep track of right and wrong answers for eventual Spaced System (just a tally for now?) - k
-// - Question and Answer editing logic should be seperate methods - k
-
+// VERSION 0.004
+// - 
 
 // SOMEDAY MAYBE:
 // - it should provide answer validation for typed in answers
+// - could you use the nature of arrays and delete to maintain a private index?
 
 
 /* Cards Object */
@@ -16,7 +15,7 @@
 let flashCards = {
 
     // Unique Card Id
-    _idCount: 3,
+    _idCount: 8,
 
     // Card Collection (contains sample data)
     // Structure: {uid: int, 'question: string, 'answer': string}
@@ -29,6 +28,11 @@ let flashCards = {
 
     // Display card collection
     displayCards: function() {
+
+        if (this.cards.length === 0) {
+            console.log('Your study deck is empty')
+        }
+        
         for (let card of this.cards) {
             console.log(card);
         }
@@ -109,3 +113,25 @@ let flashCards = {
         }
     },
 }
+
+
+/* Version History */
+// VERSION 0.003:
+// - it should keep track of right and wrong answers for eventual Spaced System (just a tally for now?) - k
+// - Question and Answer editing logic should be seperate methods - k
+
+// VERSION 0.002:
+// - it should have a display function in cards object - k
+// - it should have an idCount in cards object - k (note)
+// - it should have an add card method in Cards object - k
+// - it should have a delete card method in Cards object - k
+// - it should have an edit card method in Cards object - k
+// - it should have a quiz method in Cards object -k
+
+// VERSION 0.001
+// - it should show the question - k
+// - it should accept input from user to show answer - k
+// - it should show the answer - k
+// - it should allow to add more questions/answer pairs - k
+// - it should allow to edit cards - k
+// - it should allow to delete cards - k
