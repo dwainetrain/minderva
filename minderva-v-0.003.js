@@ -1,12 +1,12 @@
 'use strict';
 
 // THIS VERSION:
-// - it should keep track of right and wrong answers for eventual Spaced System (just a tally for now?)
-// - Question and Answer editing logic should be seperate methods
+// - it should keep track of right and wrong answers for eventual Spaced System (just a tally for now?) - k
+// - Question and Answer editing logic should be seperate methods - k
 
 
 // SOMEDAY MAYBE:
-// - it should provide answer validation
+// - it should provide answer validation for typed in answers
 
 
 /* Cards Object */
@@ -64,13 +64,23 @@ let flashCards = {
         this.displayCards();
     },
 
-    // Edit Card
-    editCard: function(id) {
+    // Edit Question
+    editQuestion: function(id) {
         let index = this.findIndex(id);
         if (index !== -1) {
             let q = prompt('Enter an updated question');
-            let a = prompt('Enter an updated answer.');
             this.cards[index]['question'] = q;
+        } else {
+            return 'Can\'t edit card. This card id doesn\'t exit';
+        }
+        this.displayCards();
+    },
+
+    // Edit Answer
+    editAnswer: function(id) {
+        let index = this.findIndex(id);
+        if (index !== -1) {
+            let a = prompt('Enter an updated question');
             this.cards[index]['answer'] = a;
         } else {
             return 'Can\'t edit card. This card id doesn\'t exit';
@@ -78,6 +88,7 @@ let flashCards = {
         this.displayCards();
     },
 
+    // Card Quiz
     quiz: function() {
         for (let card of Object.keys(this.cards)) {
 
