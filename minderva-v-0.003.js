@@ -1,7 +1,7 @@
 'use strict';
 
 // VERSION 0.004
-// - 
+// - start dom implementation
 
 // SOMEDAY MAYBE:
 // - it should provide answer validation for typed in answers
@@ -18,7 +18,7 @@ let flashCards = {
     _idCount: 8,
 
     // Card Collection (contains sample data)
-    // Structure: {uid: int, 'question: string, 'answer': string}
+    // Structure: {uid: int, 'question: string, 'answer': string, 'correct': int, 'incorrect': int}
     cards: [
         {uid: 0, 'question': 'What is New Mexico\'s Capital?', 'answer': 'Santa Fe', 'correct': 0, 'incorrect': 0},
         {uid: 1, 'question': 'What is Colorado\'s Capital?', 'answer': 'Denver', 'correct': 1, 'incorrect': 1},
@@ -32,7 +32,7 @@ let flashCards = {
         if (this.cards.length === 0) {
             console.log('Your study deck is empty')
         }
-        
+
         for (let card of this.cards) {
             console.log(card);
         }
