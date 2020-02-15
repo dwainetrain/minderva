@@ -3,6 +3,10 @@
 // VERSION 0.004
 // - start dom implementation
 
+// DOM Process
+// Get element, html should have an id, 
+// 
+
 // SOMEDAY MAYBE:
 // - it should provide answer validation for typed in answers
 // - could you use the nature of arrays and delete to maintain a private index?
@@ -113,6 +117,12 @@ let flashCards = {
         }
     },
 }
+
+// Testing out dom selection and event listening
+let displayCardsButton = document.querySelector('#display-cards');
+displayCardsButton.addEventListener('click', function() {
+    flashCards.displayCards();
+})
 
 
 /* Version History */
