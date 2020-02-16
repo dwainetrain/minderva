@@ -2,6 +2,7 @@
 
 // VERSION 0.004
 // - start dom implementation
+// - it should show all cards
 
 // DOM Process
 // Get element, html should have an id, 
