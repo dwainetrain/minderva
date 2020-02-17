@@ -133,6 +133,8 @@ addCardButton.addEventListener('click', function() {
     let addQuestion = document.querySelector('#addQuestion').value;
     let addAnswer = document.querySelector('#addAnswer').value;
     flashCards.addCard(addQuestion, addAnswer);
+    document.querySelector('#addQuestion').value = '';
+    document.querySelector('#addAnswer').value = '';
 })
 
 /* Version History */
