@@ -58,7 +58,7 @@ let flashCards = {
     // Apply current id to new card, create card, display cards
     addCard: function (q, a) {
         const id = this.currentId();
-        this.cards.push({uid: id, 'question': q, 'answer': a});
+        this.cards.push({uid: id, 'question': q, 'answer': a, 'correct': 0, 'incorrect': 0});
         this._idCount += 1;
         this.displayCards();
     },
