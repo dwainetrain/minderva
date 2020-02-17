@@ -3,9 +3,9 @@
 // Don't forget the debugger;
 
 // VERSION 0.004
-// - it should allow adding cards via page
-// - it should allow deleting cards via page
-// - it should show all cards
+// - it should allow adding cards via page - ok
+// - it should allow deleting cards via page - ok
+// - it should show all cards - ok
 
 // DOM Process
 // Get element, html should have an id, 
@@ -121,13 +121,25 @@ let flashCards = {
     },
 }
 
-// Testing out dom selection and event listening
+// Display Cards in HTML (rude)
 let displayCardsButton = document.querySelector('#display-cards');
 displayCardsButton.addEventListener('click', function() {
-    flashCards.displayCards();
+    if (flashCards.cards.length === 0) {
+        let div = document.createElement('div')
+        div.innerHTML = 'Your study deck is empty';
+    }
+
+    for (let card of flashCards.cards) {
+        console.log(card);
+        let div = document.createElement('div')
+        div.className = 'card';
+        div.innerHTML = Object.values(card);
+        document.body.append(div);
+    }
+    
 })
 
-// Add a Card
+// Add a Card (rude)
 let addCardButton = document.querySelector('#addCard');
 addCardButton.addEventListener('click', function() {
     let addQuestion = document.querySelector('#addQuestion').value;
@@ -135,6 +147,14 @@ addCardButton.addEventListener('click', function() {
     flashCards.addCard(addQuestion, addAnswer);
     document.querySelector('#addQuestion').value = '';
     document.querySelector('#addAnswer').value = '';
+})
+
+// Delete a Card (rude)
+let deleteCardButton = document.querySelector('#deleteCard');
+deleteCardButton.addEventListener('click', function() {
+    let cardId = document.querySelector('#deleteCardId').value;
+    flashCards.deleteCard(parseInt(cardId));
+    document.querySelector('#deleteCardId').value = '';
 })
 
 /* Version History */
