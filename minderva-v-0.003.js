@@ -1,7 +1,10 @@
 'use strict';
 
+// Don't forget the debugger;
+
 // VERSION 0.004
-// - start dom implementation
+// - it should allow adding cards via page
+// - it should allow deleting cards via page
 // - it should show all cards
 
 // DOM Process
@@ -33,7 +36,6 @@ let flashCards = {
 
     // Display card collection
     displayCards: function() {
-
         if (this.cards.length === 0) {
             console.log('Your study deck is empty')
         }
@@ -125,6 +127,13 @@ displayCardsButton.addEventListener('click', function() {
     flashCards.displayCards();
 })
 
+// Add a Card
+let addCardButton = document.querySelector('#addCard');
+addCardButton.addEventListener('click', function() {
+    let addQuestion = document.querySelector('#addQuestion').value;
+    let addAnswer = document.querySelector('#addAnswer').value;
+    flashCards.addCard(addQuestion, addAnswer);
+})
 
 /* Version History */
 // VERSION 0.003:
