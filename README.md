@@ -1,2 +1,2 @@
-# minderva
-Minderva - A Modern Spaced Repetition System (SRS) for Knowledge Retention.
+# Minderva
+A modern spaced-repetition-system (SRS) for knowledge retention.
