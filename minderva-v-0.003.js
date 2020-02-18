@@ -6,6 +6,16 @@
 // - it should allow adding cards via page - ok
 // - it should allow deleting cards via page - ok
 // - it should show all cards - ok
+// - it should have allow editing of a card on page - ok
+// - it should show an error if a card doesn't exist for edit or delete
+// - display cards should use the display method? (the method is now obsolete?)
+// - it should show card collection state after adding a card
+// - it should show card collection state after deleting a card
+// - it should show card collection state after editing a card
+// - it should ignore editing answer or question if either are left blank
+// - it should open the quiz via page - k
+// - it should display in a table
+
 
 // DOM Process
 // Get element, html should have an id, 
@@ -66,7 +76,6 @@ let flashCards = {
     // Delete Card
     deleteCard: function(id) {
         let idx = this.findIndex(id);
-        console.log(idx);
         if (idx !== -1) {
             this.cards.splice(idx, 1);
         } else {
@@ -76,10 +85,10 @@ let flashCards = {
     },
 
     // Edit Question
-    editQuestion: function(id) {
+    editQuestion: function(id, q) {
         let index = this.findIndex(id);
         if (index !== -1) {
-            let q = prompt('Enter an updated question');
+            // let q = prompt('Enter an updated question');
             this.cards[index]['question'] = q;
         } else {
             return 'Can\'t edit card. This card id doesn\'t exit';
@@ -88,10 +97,10 @@ let flashCards = {
     },
 
     // Edit Answer
-    editAnswer: function(id) {
+    editAnswer: function(id,a ) {
         let index = this.findIndex(id);
         if (index !== -1) {
-            let a = prompt('Enter an updated question');
+            // let a = prompt('Enter an updated question');
             this.cards[index]['answer'] = a;
         } else {
             return 'Can\'t edit card. This card id doesn\'t exit';
@@ -121,23 +130,55 @@ let flashCards = {
     },
 }
 
-// Display Cards in HTML (rude)
-let displayCardsButton = document.querySelector('#display-cards');
-displayCardsButton.addEventListener('click', function() {
+// Display Cards as a table in HTML (rude)
+let displayTableButton = document.querySelector('#display-table');
+let cardTable = document.querySelector('#card-table');
+displayTableButton.addEventListener('click', function() {
+
+    cardTable.innerHTML = '';
+
     if (flashCards.cards.length === 0) {
         let div = document.createElement('div')
-        div.innerHTML = 'Your study deck is empty';
+         cardTable.innerHTML = 'Your study deck is empty';
     }
 
+    // Build a table
+
+    // Build the heading
+    let table = document.createElement('table')
+    cardTable.appendChild(table);
+
+    let thead = document.createElement('thead')
+    table.appendChild(thead);
+
+    // Also create body
+    let tbody = document.createElement('tbody')
+    table.appendChild(tbody);
+
+    let theadtr = document.createElement('tr');
+    thead.appendChild(theadtr);
+
+    for (let heading of Object.keys(flashCards.cards[0])) {
+        let th = document.createElement('th')
+        theadtr.appendChild(th)
+        th.innerHTML = heading;
+    }
+    
+    // Insert data
     for (let card of flashCards.cards) {
         console.log(card);
-        let div = document.createElement('div')
-        div.className = 'card';
-        div.innerHTML = Object.values(card);
-        document.body.append(div);
+        let tr = document.createElement('tr')
+        for (let data of Object.values(card)) {
+            let td = document.createElement('td');
+            tr.appendChild(td);
+            td.innerHTML = data;
+        }
+        tr.className = 'card';
+        tbody.appendChild(tr);
     }
     
 })
+
 
 // Add a Card (rude)
 let addCardButton = document.querySelector('#addCard');
@@ -149,13 +190,34 @@ addCardButton.addEventListener('click', function() {
     document.querySelector('#addAnswer').value = '';
 })
 
+// Edit a Card (rude)
+let editCardButton = document.querySelector('#editCard');
+editCardButton.addEventListener('click', function() {
+    let cardId = document.querySelector('#editCardId').valueAsNumber;
+    let editedQuestion = document.querySelector('#editQuestion').value;
+    let editedAnswer = document.querySelector('#editAnswer').value;
+    flashCards.editQuestion(cardId, editedQuestion);
+    flashCards.editAnswer(cardId, editedAnswer);
+    document.querySelector('#editQuestion').value = '';
+    document.querySelector('#editAnswer').value = '';
+    document.querySelector('#editCardId').value = '';
+})
+
 // Delete a Card (rude)
 let deleteCardButton = document.querySelector('#deleteCard');
 deleteCardButton.addEventListener('click', function() {
-    let cardId = document.querySelector('#deleteCardId').value;
-    flashCards.deleteCard(parseInt(cardId));
+    let cardId = document.querySelector('#deleteCardId').valueAsNumber;
+    flashCards.deleteCard(cardId);
     document.querySelector('#deleteCardId').value = '';
 })
+
+// Quiz
+let quizButton = document.querySelector('#quiz');
+quizButton.addEventListener('click', function () {
+    flashCards.quiz();
+})
+
+// Quiz
 
 /* Version History */
 // VERSION 0.003:
