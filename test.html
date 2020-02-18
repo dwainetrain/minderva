@@ -6,6 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
    
     <title>Document</title>
+    <style>
+    /* Just quick styling until I have more time */
+    table {  
+    color: #333; /* Lighten up font color */
+    font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+    width: 640px; 
+    border-collapse: 
+    collapse; border-spacing: 0; 
+}
+
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {  
+    background: #F3F3F3; /* Light grey background */
+    font-weight: bold; /* Make sure they're bold */
+}
+
+td {  
+    background: #FAFAFA; /* Lighter grey background */
+    text-align: center; /* Center our text */
+}
+
+    </style>
 </head>
 <body>
     <div>
@@ -15,11 +38,23 @@
     </div>
 
     <div>
-        <input id="deleteCardId" type="text" placeholder="Enter card uid">
+        <input id="deleteCardId" type="number" placeholder="Enter card uid">
         <button id="deleteCard">Delete Card</button>
     </div>
 
-    <button id="display-cards">Display Cards</button>
+    <div>
+        <input id="editCardId" type="number" placeholder="Enter card uid">
+        <input id="editQuestion" type="text" placeholder="Edit Question">
+        <input id="editAnswer" type="text" placeholder="Edit Answer">
+        <button id="editCard">Edit Card</button>
+    </div>
+
+    <button id="display-table">Display Table</button>
+
+    <button id="quiz">Quiz</button>
+
+    <div id="card-table"> <!-- should I moven this to js? -->
+    </div>
 
     
     <!-- at bottom for parsing purposes -->
