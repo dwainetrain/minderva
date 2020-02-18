@@ -9,12 +9,12 @@
 // - it should have allow editing of a card on page - ok
 // - it should show an error if a card doesn't exist for edit or delete
 // - display cards should use the display method? (the method is now obsolete?)
-// - it should show card collection state after adding a card
-// - it should show card collection state after deleting a card
-// - it should show card collection state after editing a card
+// - it should show card collection state after adding a card - k
+// - it should show card collection state after deleting a card - k
+// - it should show card collection state after editing a card - k
 // - it should ignore editing answer or question if either are left blank
 // - it should open the quiz via page - k
-// - it should display in a table
+// - it should display cards in a table - k
 
 
 // DOM Process
@@ -130,16 +130,22 @@ let flashCards = {
     },
 }
 
-// Display Cards as a table in HTML (rude)
-let displayTableButton = document.querySelector('#display-table');
-let cardTable = document.querySelector('#card-table');
-displayTableButton.addEventListener('click', function() {
+// HTML Handling
 
+let displayTableButton = document.querySelector('#display-table');
+displayTableButton.addEventListener('click', function() {
+    return displayTable();
+})
+
+
+// Display Cards as a table in HTML (rude)
+function displayTable() { 
+    let cardTable = document.querySelector('#card-table');
     cardTable.innerHTML = '';
 
     if (flashCards.cards.length === 0) {
         let div = document.createElement('div')
-         cardTable.innerHTML = 'Your study deck is empty';
+        cardTable.innerHTML = 'Your study deck is empty';
     }
 
     // Build a table
@@ -163,7 +169,7 @@ displayTableButton.addEventListener('click', function() {
         theadtr.appendChild(th)
         th.innerHTML = heading;
     }
-    
+
     // Insert data
     for (let card of flashCards.cards) {
         console.log(card);
@@ -173,11 +179,12 @@ displayTableButton.addEventListener('click', function() {
             tr.appendChild(td);
             td.innerHTML = data;
         }
-        tr.className = 'card';
         tbody.appendChild(tr);
     }
     
-})
+}
+
+
 
 
 // Add a Card (rude)
@@ -188,6 +195,7 @@ addCardButton.addEventListener('click', function() {
     flashCards.addCard(addQuestion, addAnswer);
     document.querySelector('#addQuestion').value = '';
     document.querySelector('#addAnswer').value = '';
+    displayTable();
 })
 
 // Edit a Card (rude)
@@ -201,6 +209,7 @@ editCardButton.addEventListener('click', function() {
     document.querySelector('#editQuestion').value = '';
     document.querySelector('#editAnswer').value = '';
     document.querySelector('#editCardId').value = '';
+    displayTable();
 })
 
 // Delete a Card (rude)
@@ -209,6 +218,7 @@ deleteCardButton.addEventListener('click', function() {
     let cardId = document.querySelector('#deleteCardId').valueAsNumber;
     flashCards.deleteCard(cardId);
     document.querySelector('#deleteCardId').value = '';
+    displayTable();
 })
 
 // Quiz
