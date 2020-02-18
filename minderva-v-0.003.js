@@ -12,7 +12,7 @@
 // - it should show card collection state after adding a card - k
 // - it should show card collection state after deleting a card - k
 // - it should show card collection state after editing a card - k
-// - it should ignore editing answer or question if either are left blank
+// - it should ignore editing answer or question if either are left blank - k
 // - it should open the quiz via page - k
 // - it should display cards in a table - k
 
@@ -44,7 +44,7 @@ let flashCards = {
         {uid: 7, 'question': 'What is Britain\'s Capital?', 'answer': 'London', 'correct': 3, 'incorrect': 1},
     ],
 
-    // Display card collection
+    // Display card collection - only useful for console debugging now
     displayCards: function() {
         if (this.cards.length === 0) {
             console.log('Your study deck is empty')
@@ -87,11 +87,16 @@ let flashCards = {
     // Edit Question
     editQuestion: function(id, q) {
         let index = this.findIndex(id);
+        
+        if (q === '') {
+            return;
+        }
+
         if (index !== -1) {
             // let q = prompt('Enter an updated question');
             this.cards[index]['question'] = q;
         } else {
-            return 'Can\'t edit card. This card id doesn\'t exit';
+            return 'Can\'t edit card. This card id doesn\'t exist';
         }
         this.displayCards();
     },
@@ -99,11 +104,16 @@ let flashCards = {
     // Edit Answer
     editAnswer: function(id,a ) {
         let index = this.findIndex(id);
+        
+        if (a === '') {
+            return;
+        }
+
         if (index !== -1) {
             // let a = prompt('Enter an updated question');
             this.cards[index]['answer'] = a;
         } else {
-            return 'Can\'t edit card. This card id doesn\'t exit';
+            return 'Can\'t edit card. This card id doesn\'t exist';
         }
         this.displayCards();
     },
@@ -132,13 +142,13 @@ let flashCards = {
 
 // HTML Handling
 
+
+// Display Cards as a table in HTML (rude)
 let displayTableButton = document.querySelector('#display-table');
 displayTableButton.addEventListener('click', function() {
     return displayTable();
 })
 
-
-// Display Cards as a table in HTML (rude)
 function displayTable() { 
     let cardTable = document.querySelector('#card-table');
     cardTable.innerHTML = '';
@@ -183,9 +193,6 @@ function displayTable() {
     }
     
 }
-
-
-
 
 // Add a Card (rude)
 let addCardButton = document.querySelector('#addCard');
