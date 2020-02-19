@@ -15,6 +15,10 @@
 // - it should ignore editing answer or question if either are left blank - k
 // - it should open the quiz via page - k
 // - it should display cards in a table - k
+// - it should show a single question - k
+// - it should 'flip' to show the answer - k
+// - it should have the option to say whether you got the card wrong or right - ?
+// - it should have a button to go to the next card - 
 
 
 // DOM Process
@@ -144,6 +148,8 @@ let flashCards = {
 
 
 // Display Cards as a table in HTML (rude)
+// TODO Should I convert this to a view object?
+// TODO Can you refactor with Array.map?
 let displayTableButton = document.querySelector('#display-table');
 displayTableButton.addEventListener('click', function() {
     return displayTable();
@@ -194,6 +200,8 @@ function displayTable() {
     
 }
 
+// TODO Should I create a handler object with these methods?
+
 // Add a Card (rude)
 let addCardButton = document.querySelector('#addCard');
 addCardButton.addEventListener('click', function() {
@@ -229,12 +237,86 @@ deleteCardButton.addEventListener('click', function() {
 })
 
 // Quiz
+// Well, it works, but could it be clearer?
+// Basically it's a kind of recursive quiz
+// using the counter to keep calling the quiz function
+// with a new value
+// which will work for a deck of any length
+// needs some serious refactoring
 let quizButton = document.querySelector('#quiz');
+let quizCanvas = document.querySelector('#quiz-canvas');
 quizButton.addEventListener('click', function () {
-    flashCards.quiz();
+    quiz(0);
 })
 
-// Quiz
+// Start Quiz and show 1st question
+function quiz(counter) {
+        let availableCards = [...flashCards.cards];
+        if (counter < availableCards.length) {
+            let cardCounter = counter;
+            quizCanvas.innerHTML = '';
+        
+            let div = document.createElement('div');
+            div.innerHTML = showCardFront(flashCards.cards[cardCounter])
+            quizCanvas.appendChild(div);
+
+            let flipButton = document.querySelector('#flip-button');
+            flipButton.addEventListener('click', function() {
+                div.innerHTML = showCardBack(flashCards.cards[cardCounter])
+                quizCanvas.appendChild(div);
+                getNextCard(cardCounter);
+            })
+        } else {
+            let div = document.createElement('div')
+            quizCanvas.innerHTML = 'Quiz Complete';
+        }
+
+        function getNextCard(counter) {
+            counter += 1;
+            let nextCardButton = document.querySelector('#next-card');
+            nextCardButton.addEventListener('click', function() {
+                quiz(counter);
+            })
+        
+        };
+
+        function showCardFront(card) {
+            const cardFront = `
+                <p>${card['question']}</p>
+                <button id="flip-button">Flip</button>
+            `
+            return cardFront;
+        }
+        
+        function showCardBack(card) {
+            const cardBack = `
+                <p>${card['answer']}</p>
+                <button id="next-card">Continue</button>
+            `
+            return cardBack;
+        }
+
+        
+        
+        // Getting correct and incorrect responses
+        
+        // let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
+        // Please type 'y' for yes or 'n' for no.`)
+        // let correct = response.toLowerCase();
+        
+        // if (correct === 'y') {
+        //     this.cards[card]['correct'] += 1;
+        // } else if (correct === 'n') {
+        //     this.cards[card]['incorrect'] += 1;
+        // } else {
+        //     prompt('Invalid input, please try again')
+        //     // Very rudimentary validation at this stage
+        // }
+    // }
+}
+
+
+
 
 /* Version History */
 // VERSION 0.003:
