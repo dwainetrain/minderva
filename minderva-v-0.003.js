@@ -1,39 +1,6 @@
 'use strict';
 
-// Don't forget the debugger;
-
-// VERSION 0.004
-// - it should allow adding cards via page - ok
-// - it should allow deleting cards via page - ok
-// - it should show all cards - ok
-// - it should have allow editing of a card on page - ok
-// - it should show an error if a card doesn't exist for edit or delete
-// - display cards should use the display method? (the method is now obsolete?)
-// - it should show card collection state after adding a card - k
-// - it should show card collection state after deleting a card - k
-// - it should show card collection state after editing a card - k
-// - it should ignore editing answer or question if either are left blank - k
-// - it should open the quiz via page - k
-// - it should display cards in a table - k
-// - it should show a single question - k
-// - it should 'flip' to show the answer - k
-// - it should have the option to say whether you got the card wrong or right - ?
-// - it should have a button to go to the next card - 
-
-
-// DOM Process
-// Get element, html should have an id, 
-// 
-
-// SOMEDAY MAYBE:
-// - it should provide answer validation for typed in answers
-// - could you use the nature of arrays and delete to maintain a private index?
-
-
 /* Cards Object */
-// NOTE: Find some way to protect the idCount number
-// research ways to make the property private
-
 let flashCards = {
 
     // Unique Card Id
@@ -69,7 +36,7 @@ let flashCards = {
         return this.cards.findIndex( ({uid}) => uid === id);
     },
 
-    // Apply current id to new card, create card, display cards
+    // Add Card
     addCard: function (q, a) {
         const id = this.currentId();
         this.cards.push({uid: id, 'question': q, 'answer': a, 'correct': 0, 'incorrect': 0});
@@ -205,34 +172,46 @@ function displayTable() {
 // Add a Card (rude)
 let addCardButton = document.querySelector('#addCard');
 addCardButton.addEventListener('click', function() {
+
     let addQuestion = document.querySelector('#addQuestion').value;
     let addAnswer = document.querySelector('#addAnswer').value;
+    
     flashCards.addCard(addQuestion, addAnswer);
+    
     document.querySelector('#addQuestion').value = '';
     document.querySelector('#addAnswer').value = '';
+    
     displayTable();
 })
 
 // Edit a Card (rude)
 let editCardButton = document.querySelector('#editCard');
 editCardButton.addEventListener('click', function() {
+
     let cardId = document.querySelector('#editCardId').valueAsNumber;
     let editedQuestion = document.querySelector('#editQuestion').value;
     let editedAnswer = document.querySelector('#editAnswer').value;
+
     flashCards.editQuestion(cardId, editedQuestion);
     flashCards.editAnswer(cardId, editedAnswer);
+    
     document.querySelector('#editQuestion').value = '';
     document.querySelector('#editAnswer').value = '';
     document.querySelector('#editCardId').value = '';
+    
     displayTable();
 })
 
 // Delete a Card (rude)
 let deleteCardButton = document.querySelector('#deleteCard');
 deleteCardButton.addEventListener('click', function() {
+
     let cardId = document.querySelector('#deleteCardId').valueAsNumber;
+    
     flashCards.deleteCard(cardId);
+    
     document.querySelector('#deleteCardId').value = '';
+    
     displayTable();
 })
 
@@ -242,99 +221,79 @@ deleteCardButton.addEventListener('click', function() {
 // using the counter to keep calling the quiz function
 // with a new value
 // which will work for a deck of any length
-// needs some serious refactoring
+// needs refactoring
+
 let quizButton = document.querySelector('#quiz');
-let quizCanvas = document.querySelector('#quiz-canvas');
 quizButton.addEventListener('click', function () {
     quiz(0);
 })
 
-// Start Quiz and show 1st question
+let quizCanvas = document.querySelector('#quiz-canvas');
+
+// Start Quiz
 function quiz(counter) {
-        let availableCards = [...flashCards.cards];
-        if (counter < availableCards.length) {
-            let cardCounter = counter;
-            quizCanvas.innerHTML = '';
-        
-            let div = document.createElement('div');
-            div.innerHTML = showCardFront(flashCards.cards[cardCounter])
+    
+    let availableCards = [...flashCards.cards];
+
+    if (counter < availableCards.length) {
+        let cardCounter = counter;
+        quizCanvas.innerHTML = '';
+    
+        let div = document.createElement('div');
+        div.innerHTML = showCardFront(availableCards[cardCounter])
+        quizCanvas.appendChild(div);
+
+        let flipButton = document.querySelector('#flip-button');
+        flipButton.addEventListener('click', function() {
+            div.innerHTML = showCardBack(availableCards[cardCounter])
             quizCanvas.appendChild(div);
+            getNextCard(cardCounter);
+        })
+    } else {
+        let div = document.createElement('div')
+        quizCanvas.innerHTML = 'Quiz Complete';
+    }
 
-            let flipButton = document.querySelector('#flip-button');
-            flipButton.addEventListener('click', function() {
-                div.innerHTML = showCardBack(flashCards.cards[cardCounter])
-                quizCanvas.appendChild(div);
-                getNextCard(cardCounter);
-            })
-        } else {
-            let div = document.createElement('div')
-            quizCanvas.innerHTML = 'Quiz Complete';
-        }
+    function getNextCard(counter) {
+        counter += 1;
+        let nextCardButton = document.querySelector('#next-card');
+        nextCardButton.addEventListener('click', function() {
+            quiz(counter);
+        })
+    
+    };
 
-        function getNextCard(counter) {
-            counter += 1;
-            let nextCardButton = document.querySelector('#next-card');
-            nextCardButton.addEventListener('click', function() {
-                quiz(counter);
-            })
-        
-        };
+    function showCardFront(card) {
+        const cardFront = `
+            <p>${card['question']}</p>
+            <button id="flip-button">Flip</button>
+        `
+        return cardFront;
+    }
+    
+    function showCardBack(card) {
+        const cardBack = `
+            <p>${card['answer']}</p>
+            <button id="next-card">Continue</button>
+        `
+        return cardBack;
+    }
 
-        function showCardFront(card) {
-            const cardFront = `
-                <p>${card['question']}</p>
-                <button id="flip-button">Flip</button>
-            `
-            return cardFront;
-        }
-        
-        function showCardBack(card) {
-            const cardBack = `
-                <p>${card['answer']}</p>
-                <button id="next-card">Continue</button>
-            `
-            return cardBack;
-        }
-
-        
-        
-        // Getting correct and incorrect responses
-        
-        // let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
-        // Please type 'y' for yes or 'n' for no.`)
-        // let correct = response.toLowerCase();
-        
-        // if (correct === 'y') {
-        //     this.cards[card]['correct'] += 1;
-        // } else if (correct === 'n') {
-        //     this.cards[card]['incorrect'] += 1;
-        // } else {
-        //     prompt('Invalid input, please try again')
-        //     // Very rudimentary validation at this stage
-        // }
+    
+    
+    // Getting correct and incorrect responses
+    
+    // let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
+    // Please type 'y' for yes or 'n' for no.`)
+    // let correct = response.toLowerCase();
+    
+    // if (correct === 'y') {
+    //     this.cards[card]['correct'] += 1;
+    // } else if (correct === 'n') {
+    //     this.cards[card]['incorrect'] += 1;
+    // } else {
+    //     prompt('Invalid input, please try again')
+    //     // Very rudimentary validation at this stage
     // }
+// }
 }
-
-
-
-
-/* Version History */
-// VERSION 0.003:
-// - it should keep track of right and wrong answers for eventual Spaced System (just a tally for now?) - k
-// - Question and Answer editing logic should be seperate methods - k
-
-// VERSION 0.002:
-// - it should have a display function in cards object - k
-// - it should have an idCount in cards object - k (note)
-// - it should have an add card method in Cards object - k
-// - it should have a delete card method in Cards object - k
-// - it should have an edit card method in Cards object - k
-// - it should have a quiz method in Cards object -k
-
-// VERSION 0.001
-// - it should show the question - k
-// - it should accept input from user to show answer - k
-// - it should show the answer - k
-// - it should allow to add more questions/answer pairs - k
-// - it should allow to edit cards - k
-// - it should allow to delete cards - k
