@@ -52,7 +52,7 @@ let flashCards = {
         } else {
             return 'This card id doesn\'t exit';
         }
-        this.displayCards();
+        displayTable();
     },
 
     // Edit Question
@@ -153,15 +153,31 @@ function displayTable() {
         th.innerHTML = heading;
     }
 
-    // Insert data
+    // Create Delete Column
+    let thDelete = document.createElement('th');
+    theadtr.appendChild(thDelete);
+    thDelete.innerHTML = 'Delete';
+
+    // Insert data and delete functions
     for (let card of flashCards.cards) {
-        console.log(card);
+
         let tr = document.createElement('tr')
         for (let data of Object.values(card)) {
             let td = document.createElement('td');
             tr.appendChild(td);
             td.innerHTML = data;
         }
+
+        // Delete button
+        let tdDelete = document.createElement('td');
+        let tdDeleteButton = document.createElement('button');
+        tr.appendChild(tdDelete)
+        tdDelete.appendChild(tdDeleteButton)
+        tdDeleteButton.innerHTML = 'Delete'
+        tdDeleteButton.addEventListener('click', function() {
+            flashCards.deleteCard(card['uid'])
+        })
+
         tbody.appendChild(tr);
     }
     
@@ -202,18 +218,6 @@ editCardButton.addEventListener('click', function() {
     displayTable();
 })
 
-// Delete a Card (rude)
-let deleteCardButton = document.querySelector('#deleteCard');
-deleteCardButton.addEventListener('click', function() {
-
-    let cardId = document.querySelector('#deleteCardId').valueAsNumber;
-    
-    flashCards.deleteCard(cardId);
-    
-    document.querySelector('#deleteCardId').value = '';
-    
-    displayTable();
-})
 
 // Quiz
 // Well, it works, but could it be clearer?
