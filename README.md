@@ -5,7 +5,7 @@ A modern spaced-repetition-system (SRS) for knowledge retention.
 
 ##### VERSION 0.005 (WIP)
 
-- Core functionality is there, now the goals are:
+- Core flashcard functionality is there, now the goals are:
 
 - MAKE SORTA PRETTY(leads to SPA)
 
