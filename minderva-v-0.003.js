@@ -89,26 +89,26 @@ let flashCards = {
         this.displayCards();
     },
 
-    // Card Quiz
-    quiz: function() {
-        for (let card of Object.keys(this.cards)) {
+    // Card Quiz - I think this can get removed from the flashcard object
+    // quiz: function() {
+    //     for (let card of Object.keys(this.cards)) {
 
-            prompt(this.cards[card]['question']);
+    //         prompt(this.cards[card]['question']);
             
-            let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
-            Please type 'y' for yes or 'n' for no.`)
-            let correct = response.toLowerCase();
+    //         let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
+    //         Please type 'y' for yes or 'n' for no.`)
+    //         let correct = response.toLowerCase();
             
-            if (correct === 'y') {
-                this.cards[card]['correct'] += 1;
-            } else if (correct === 'n') {
-                this.cards[card]['incorrect'] += 1;
-            } else {
-                prompt('Invalid input, please try again')
-                // Very rudimentary validation at this stage
-            }
-        }
-    },
+    //         if (correct === 'y') {
+    //             this.cards[card]['correct'] += 1;
+    //         } else if (correct === 'n') {
+    //             this.cards[card]['incorrect'] += 1;
+    //         } else {
+    //             prompt('Invalid input, please try again')
+    //             // Very rudimentary validation at this stage
+    //         }
+    //     }
+    // },
 }
 
 // HTML Handling
@@ -162,7 +162,7 @@ function displayTable() {
     theadtr.appendChild(thEdit);
     thEdit.innerHTML = 'Edit';
 
-    // Insert data and delete functions
+    // Insert data into cells, add edit and delete buttons
     for (let card of flashCards.cards) {
 
         let tr = document.createElement('tr')
@@ -190,7 +190,6 @@ function displayTable() {
         tdEditButton.innerHTML = 'Edit'
         tdEditButton.addEventListener('click', function() {
             
-            console.log('Time to Edit')
             const editFields = `
                     <input id="editQuestion" type="text" placeholder="Edit Question">
                     <input id="editAnswer" type="text" placeholder="Edit Answer">
