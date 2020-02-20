@@ -113,7 +113,6 @@ let flashCards = {
 
 // HTML Handling
 
-
 // Display Cards as a table in HTML (rude)
 // TODO Should I convert this to a view object?
 // TODO Can you refactor with Array.map?
@@ -158,6 +157,11 @@ function displayTable() {
     theadtr.appendChild(thDelete);
     thDelete.innerHTML = 'Delete';
 
+    // Create Edit Column
+    let thEdit = document.createElement('th');
+    theadtr.appendChild(thEdit);
+    thEdit.innerHTML = 'Edit';
+
     // Insert data and delete functions
     for (let card of flashCards.cards) {
 
@@ -176,6 +180,39 @@ function displayTable() {
         tdDeleteButton.innerHTML = 'Delete'
         tdDeleteButton.addEventListener('click', function() {
             flashCards.deleteCard(card['uid'])
+        })
+
+        // Edit button
+        let tdEdit = document.createElement('td');
+        let tdEditButton = document.createElement('button');
+        tr.appendChild(tdEdit)
+        tdEdit.appendChild(tdEditButton)
+        tdEditButton.innerHTML = 'Edit'
+        tdEditButton.addEventListener('click', function() {
+            
+            console.log('Time to Edit')
+            const editFields = `
+                    <input id="editQuestion" type="text" placeholder="Edit Question">
+                    <input id="editAnswer" type="text" placeholder="Edit Answer">
+                    <button id="editCard">Edit Card</button>
+            `
+            let editDiv = document.createElement('div');
+            cardTable.appendChild(editDiv);
+            editDiv.innerHTML = editFields;
+
+            let editCardButton = document.querySelector('#editCard');
+            editCardButton.addEventListener('click', function() {
+                let editedQuestion = document.querySelector('#editQuestion').value;
+                let editedAnswer = document.querySelector('#editAnswer').value;
+
+                flashCards.editQuestion(card['uid'], editedQuestion);
+                flashCards.editAnswer(card['uid'], editedAnswer);
+                
+                document.querySelector('#editQuestion').value = '';
+                document.querySelector('#editAnswer').value = '';
+                
+                displayTable();
+            })
         })
 
         tbody.appendChild(tr);
@@ -199,25 +236,6 @@ addCardButton.addEventListener('click', function() {
     
     displayTable();
 })
-
-// Edit a Card (rude)
-let editCardButton = document.querySelector('#editCard');
-editCardButton.addEventListener('click', function() {
-
-    let cardId = document.querySelector('#editCardId').valueAsNumber;
-    let editedQuestion = document.querySelector('#editQuestion').value;
-    let editedAnswer = document.querySelector('#editAnswer').value;
-
-    flashCards.editQuestion(cardId, editedQuestion);
-    flashCards.editAnswer(cardId, editedAnswer);
-    
-    document.querySelector('#editQuestion').value = '';
-    document.querySelector('#editAnswer').value = '';
-    document.querySelector('#editCardId').value = '';
-    
-    displayTable();
-})
-
 
 // Quiz
 // Well, it works, but could it be clearer?
