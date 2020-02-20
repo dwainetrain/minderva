@@ -15,13 +15,15 @@ A modern spaced-repetition-system (SRS) for knowledge retention.
 
 - REFACTOR(leads to better readability/editability)
 
-- [ ] it should have the option to indicate a in/correct answer
+- [ ] it should have the option to indicate a in/correct answer and tally answer
 
-- [ ] it should show an error if a card doesn't exist for edit or delete
+- [x] it should show an error if a card doesn't exist for edit or delete (NA)
 
-- [ ] it should be refactored into a more managable scheme
+- [ ] it should be refactored into MVC pattern
 
-- [ ] display cards should use the display method? (the method is now obsolete, refactor logic)
+- [x] display cards should use the display method? (the method is now obsolete, refactor logic)
+- [ ] remove quiz from flashcard object
+- [ ] utilize event delegation for edit and delete buttons (tentative)
 
   
 
