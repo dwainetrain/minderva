@@ -15,9 +15,11 @@ A modern spaced-repetition-system (SRS) for knowledge retention.
 
 - REFACTOR(leads to better readability/editability)
 
-- [ ] it should have the option to indicate a in/correct
+- [ ] it should have the option to indicate a in/correct answer
 
 - [ ] it should show an error if a card doesn't exist for edit or delete
+
+- [ ] it should be refactored into a more managable scheme
 
 - [ ] display cards should use the display method? (the method is now obsolete, refactor logic)
 
