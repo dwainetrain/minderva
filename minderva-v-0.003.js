@@ -88,27 +88,6 @@ let flashCards = {
         }
         this.displayCards();
     },
-
-    // Card Quiz - I think this can get removed from the flashcard object
-    // quiz: function() {
-    //     for (let card of Object.keys(this.cards)) {
-
-    //         prompt(this.cards[card]['question']);
-            
-    //         let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
-    //         Please type 'y' for yes or 'n' for no.`)
-    //         let correct = response.toLowerCase();
-            
-    //         if (correct === 'y') {
-    //             this.cards[card]['correct'] += 1;
-    //         } else if (correct === 'n') {
-    //             this.cards[card]['incorrect'] += 1;
-    //         } else {
-    //             prompt('Invalid input, please try again')
-    //             // Very rudimentary validation at this stage
-    //         }
-    //     }
-    // },
 }
 
 // HTML Handling
@@ -276,9 +255,19 @@ function quiz(counter) {
     }
 
     function getNextCard(counter) {
-        counter += 1;
-        let nextCardButton = document.querySelector('#next-card');
-        nextCardButton.addEventListener('click', function() {
+        
+        let correctCardButton = document.querySelector('#correct-answer');
+        let wrongCardButton = document.querySelector('#wrong-answer');
+        
+        correctCardButton.addEventListener('click', function() {
+            availableCards[counter]['correct'] ++;
+            counter += 1;
+            quiz(counter);
+        })
+
+        wrongCardButton.addEventListener('click', function() {
+            availableCards[counter]['incorrect'] ++;
+            counter += 1;
             quiz(counter);
         })
     
@@ -295,7 +284,9 @@ function quiz(counter) {
     function showCardBack(card) {
         const cardBack = `
             <p>${card['answer']}</p>
-            <button id="next-card">Continue</button>
+            <p>Did you remember?</p>
+            <button id="correct-answer">Yes</button>
+            <button id="wrong-answer">No</button>
         `
         return cardBack;
     }
