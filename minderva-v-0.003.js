@@ -291,21 +291,4 @@ function quiz(counter) {
         return cardBack;
     }
 
-    
-    
-    // Getting correct and incorrect responses
-    
-    // let response = prompt(`The answer is ${this.cards[card]['answer']}. Were you correct?
-    // Please type 'y' for yes or 'n' for no.`)
-    // let correct = response.toLowerCase();
-    
-    // if (correct === 'y') {
-    //     this.cards[card]['correct'] += 1;
-    // } else if (correct === 'n') {
-    //     this.cards[card]['incorrect'] += 1;
-    // } else {
-    //     prompt('Invalid input, please try again')
-    //     // Very rudimentary validation at this stage
-    // }
-// }
 }
