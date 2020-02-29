@@ -73,7 +73,7 @@ class Model {
     }
 
     // Edit Answer
-    editAnswer(id,a ) {
+    editAnswer(id,a) {
         let index = this.findIndex(id);
         
         if (a === '') {
@@ -87,10 +87,29 @@ class Model {
         }
         this.displayCards(); // Only for Testing Model
     }
+
+    // To keep seperation clear, shouldn't the tally function be in here?
+    // You could just rewrite the whole entry, and include the updated tally
+    // in the rewrite (ie, just use editCard)
 }
 
 class View{
     constructor(){}
+
+    createElement(tag, className) {
+        const element = document.createElement(tag)
+        if (className) {
+            element.classList.add(className)
+        }
+
+        return element
+    }
+
+    getElement(selector) {
+        const element = document.querySelector(selector)
+
+        return element
+    }
 }
 
 class Controller{
