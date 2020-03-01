@@ -1,3 +1,7 @@
+Version 0.005
+Making some progress on the MVC front. Now that I've initiated the basics in all three, things are starting to work as expected. Still, there's a to go! Pick up the controllers section on the website and then keep going. I think once this structure is in place, it will help with the overall app as it grows in complexity.
+
+
 Random Notes for the Project:
 What I want at first is a basic flashcard program with a working SRS algorythm.
 Should I get the html dom structure working first
