@@ -262,7 +262,7 @@ class Controller{
         this.model = model
         this.view = view
 
-        this.cards = this.model.cards
+        this.renderCardTable(this.model.cards)
     }
 
     renderCardTable = cards => {
