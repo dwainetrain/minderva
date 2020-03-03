@@ -271,8 +271,8 @@ class View{
         
         document.addEventListener('click', function(event) {
                 if (event.target.className === 'edit') {
-                    
-                    handler()
+                    const uid = parseInt(event.target.dataset.uid)
+                    handler(uid)
                 }
                 
                 })
@@ -394,8 +394,8 @@ class Controller{
         this.handleRenderCardTable()
     }
 
-    handleOpenEditCard = () => {
-        this.view.displayEdit()
+    handleOpenEditCard = (id) => {
+        this.view.displayEdit(id)
     }
 
     handleEditCard = (id, questionAnswerArray) => {
