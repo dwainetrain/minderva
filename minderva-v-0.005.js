@@ -235,6 +235,77 @@ class View{
             }
     }
 
+    startQuiz(cards) {
+        // let quizButton = document.querySelector('#quiz');
+        // quizButton.addEventListener('click', function () {
+        //     quiz(0);
+        // })
+        let quizCanvas = document.querySelector('#quiz-canvas');
+        quiz(0)
+
+        // Start Quiz
+        function quiz(counter) {
+            console.log('quiz started')
+            let availableCards = [...cards];
+
+            if (counter < availableCards.length) {
+                let cardCounter = counter;
+                quizCanvas.innerHTML = '';
+            
+                let div = document.createElement('div');
+                div.innerHTML = showCardFront(availableCards[cardCounter])
+                quizCanvas.appendChild(div);
+
+                let flipButton = document.querySelector('#flip-button');
+                flipButton.addEventListener('click', function() {
+                    div.innerHTML = showCardBack(availableCards[cardCounter])
+                    quizCanvas.appendChild(div);
+                    getNextCard(cardCounter);
+                })
+            } else {
+                let div = document.createElement('div')
+                quizCanvas.innerHTML = 'Quiz Complete';
+            }
+
+            function getNextCard(counter) {
+                
+                let correctCardButton = document.querySelector('#correct-answer');
+                let wrongCardButton = document.querySelector('#wrong-answer');
+                
+                correctCardButton.addEventListener('click', function() {
+                    availableCards[counter]['correct'] ++;
+                    counter += 1;
+                    quiz(counter);
+                })
+
+                wrongCardButton.addEventListener('click', function() {
+                    availableCards[counter]['incorrect'] ++;
+                    counter += 1;
+                    quiz(counter);
+                })
+            
+            };
+
+            function showCardFront(card) {
+                const cardFront = `
+                    <p>${card['question']}</p>
+                    <button id="flip-button">Flip</button>
+                `
+                return cardFront;
+            }
+            
+            function showCardBack(card) {
+                const cardBack = `
+                    <p>${card['answer']}</p>
+                    <p>Did you remember?</p>
+                    <button id="correct-answer">Yes</button>
+                    <button id="wrong-answer">No</button>
+                `
+                return cardBack;
+            }
+    }
+    }
+
     // Getters and Setters for input
 
     get _inputText() {
@@ -341,6 +412,17 @@ class View{
         })
     }
 
+    bindStartQuiz(handler) {
+        console.log('bindStartQuiz reached')
+        document.addEventListener('click', function(event) {
+            if (event.target.id === 'quiz') {
+                console.log('Quiz Button Clicked')
+                handler()
+            }
+            
+            })
+    }
+
 
 
     // html get and create elements
@@ -369,6 +451,7 @@ class Controller{
         this.view.bindDisplayTable(this.handleRenderCardTable)
         this.view.bindDeleteCard(this.handleDeleteCard)
         this.view.bindOpenEditCard(this.handleOpenEditCard)
+        this.view.bindStartQuiz(this.handleOpenQuiz)
     }
 
     handleRenderCardTable = () => {
@@ -394,6 +477,10 @@ class Controller{
     handleDeleteCard = id => {
         this.model.deleteCard(id)
         this.handleRenderCardTable()
+    }
+
+    handleOpenQuiz = () => {
+        this.view.startQuiz(this.cards)
     }
     
 }
