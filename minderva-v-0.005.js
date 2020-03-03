@@ -90,7 +90,7 @@ class Model {
 
     // To keep seperation clear, shouldn't the tally function be in here?
     // You could just rewrite the whole entry, and include the updated tally
-    // in the rewrite (ie, just use editCard)
+    // in the rewrite (ie, just use editCard) - I'll figure this out once I get to the quiz section.
 }
 
 class View{
@@ -134,8 +134,6 @@ class View{
         this.app.append(this.displayTableButton)
 
     }
-
-    
 
     displayTable(cards) {
       
@@ -244,9 +242,8 @@ class View{
     }
 
     get _editText() {
-        console.log( [this.editQuestionInput.value, this.editAnswerInput.value] );
+        return [parseInt(this.editCardUid), this.editQuestionInput.value, this.editAnswerInput.value]
     }
-
 
     _resetInput() {
         this.addQuestionInput.value = ''
@@ -265,13 +262,12 @@ class View{
         })
     }
 
-    
-
     bindOpenEditCard(handler) {
         
         document.addEventListener('click', function(event) {
                 if (event.target.className === 'edit') {
                     const uid = parseInt(event.target.dataset.uid)
+                    console.log('uid: ', uid)
                     handler(uid)
                 }
                 
@@ -279,15 +275,11 @@ class View{
     }
 
     bindEditCard(handler) {
-        
-        document.addEventListener('click', function(event) {
-                if (event.target.className === 'edit-submit') {
+        this.editForm.addEventListener('submit', event => {
+                    
                     event.preventDefault()
 
-                    const uid = parseInt(event.target.dataset.uid)
-                    console.log(uid, this._editText)
-                    handler(uid, this._editText)
-                }
+                    handler(this._editText)
                 
                 })
     }
@@ -302,7 +294,7 @@ class View{
                 })
     }
 
-    displayEdit(id) {
+    bindDisplayEdit(id) {
 
         // Somehow display the card's original text about edit fields...
 
@@ -320,9 +312,12 @@ class View{
         this.editAnswerInput.type = 'text'
         this.editAnswerInput.placeholder = 'Edit Answer'
 
+       
+
         this.editCardButton = this.createElement('button')
         this.editCardButton.textContent = "Edit Card"
         this.editCardButton.setAttribute('data-uid', id)
+        this.editCardUid = this.editCardButton.dataset.uid
         this.editCardButton.type = 'submit'
         this.editCardButton.className = 'edit-submit'
              
@@ -332,19 +327,6 @@ class View{
 
         // append other title, heading and form to app
         this.app.append(this.editForm)
-    
-        //         let editedQuestion = document.querySelector('#editQuestion').value;
-        //         let editedAnswer = document.querySelector('#editAnswer').value;
-
-        //         flashCards.editQuestion(card['uid'], editedQuestion);
-        //         flashCards.editAnswer(card['uid'], editedAnswer);
-                
-        //         document.querySelector('#editQuestion').value = '';
-        //         document.querySelector('#editAnswer').value = '';
-                
-        //         displayTable();
-        //     })
-        // })
     }
 
     bindDisplayTable(handler) {
@@ -381,8 +363,6 @@ class Controller{
         this.view.bindDisplayTable(this.handleRenderCardTable)
         this.view.bindDeleteCard(this.handleDeleteCard)
         this.view.bindOpenEditCard(this.handleOpenEditCard)
-        this.view.bindEditCard(this.handleEditCard)
-
     }
 
     handleRenderCardTable = () => {
@@ -395,13 +375,15 @@ class Controller{
     }
 
     handleOpenEditCard = (id) => {
-        this.view.displayEdit(id)
+        this.view.bindDisplayEdit(id)
+        this.view.bindEditCard(this.handleEditCard)
     }
 
-    handleEditCard = (id, questionAnswerArray) => {
-        console.log(id, questionAnswerArray)
-        // this.model.editQuestion(id, questionAnswerArray[0])
-        // this.model.editAnswer(id, questionAnswerArray[1])
+    handleEditCard = (questionAnswerArray) => {
+        
+        this.model.editQuestion(questionAnswerArray[0], questionAnswerArray[1])
+        this.model.editAnswer(questionAnswerArray[0], questionAnswerArray[2])
+        this.handleRenderCardTable()
     }
 
     handleDeleteCard = (id) => {
