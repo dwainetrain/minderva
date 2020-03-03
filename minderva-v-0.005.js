@@ -245,7 +245,6 @@ class View{
 
         // Start Quiz
         function quiz(counter) {
-            console.log('quiz started')
             let availableCards = [...cards];
 
             if (counter < availableCards.length) {
@@ -272,6 +271,9 @@ class View{
                 let correctCardButton = document.querySelector('#correct-answer');
                 let wrongCardButton = document.querySelector('#wrong-answer');
                 
+                // These are the functions that are accessing the model directly
+                // How can we switch burden over to controller
+                // It may take a rewrite of the whole quiz function.
                 correctCardButton.addEventListener('click', function() {
                     availableCards[counter]['correct'] ++;
                     counter += 1;
@@ -413,7 +415,6 @@ class View{
     }
 
     bindStartQuiz(handler) {
-        console.log('bindStartQuiz reached')
         document.addEventListener('click', function(event) {
             if (event.target.id === 'quiz') {
                 console.log('Quiz Button Clicked')
