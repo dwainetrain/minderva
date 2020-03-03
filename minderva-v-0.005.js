@@ -104,15 +104,13 @@ class View{
 
         // Card Creation Form
         this.form = this.createElement('form')
+        this.form.id = 'add-card'
 
         // Add a card to the collection (inputs)
         this.addQuestionInput = this.createElement('input')
         this.addQuestionInput.name = 'addQuestion'
         this.addQuestionInput.type = 'text'
         this.addQuestionInput.placeholder = 'Add Question'
-
-        this.addCardButton = this.createElement('button')
-        this.addCardButton.textContent = "Add Card"
 
         this.addAnswerInput = this.createElement('input')
         this.addAnswerInput.name = 'addAnswer'
@@ -121,6 +119,7 @@ class View{
 
         this.addCardButton = this.createElement('button')
         this.addCardButton.textContent = "Add Card"
+        this.addCardButton.type = 'submit'
 
         // append input and button to form
         this.form.append(this.addQuestionInput, this.addAnswerInput, this.addCardButton)
@@ -128,23 +127,18 @@ class View{
         // append other title, heading and form to app
         this.app.append(this.title, this.form)
 
+        // DISPLAY CARDS BUTTON
+        this.displayTableButton = this.createElement('button')
+        this.displayTableButton.id = 'display-table'
+        this.displayTableButton.textContent = 'Display Cards'
+        this.app.append(this.displayTableButton)
+
     }
 
-    // Getters and Setters for input
-
-    get _questionText() {
-        return this.input.value
-    }
-
-    _resetInput() {
-        this.input.value = '';
-    }
+    
 
     displayTable(cards) {
-        // let displayTableButton = this.getElement('#display-table');
-        // displayTableButton.addEventListener('click', function() {
-        //     return displayCardTable();
-        // })
+      
             this.cardTable = this.getElement('#card-table');
             this.cardTable.innerHTML = '';
 
@@ -169,7 +163,7 @@ class View{
             this.theadtr = this.createElement('tr');
             this.thead.appendChild(this.theadtr);
 
-            for (let heading of Object.keys(cards[0])) {
+            for (let heading of Object.keys(cards[0])) { 
                 this.th = this.createElement('th')
                 this.theadtr.appendChild(this.th)
                 this.th.innerHTML = heading;
@@ -192,24 +186,27 @@ class View{
                     this.td = document.createElement('td');
                     this.tr.appendChild(this.td);
                     this.td.innerHTML = data;
+                    
                 }
         
-                // // Delete button
-                // let tdDelete = document.createElement('td');
-                // let tdDeleteButton = document.createElement('button');
-                // tr.appendChild(tdDelete)
-                // tdDelete.appendChild(tdDeleteButton)
-                // tdDeleteButton.innerHTML = 'Delete'
-                // tdDeleteButton.addEventListener('click', function() {
-                //     flashCards.deleteCard(card['uid'])
-                // })
+                // Delete button
+                this.tdDelete = document.createElement('td');
+                this.tdDeleteButton = document.createElement('button');
+                this.tr.appendChild(this.tdDelete)
+                this.tdDelete.appendChild(this.tdDeleteButton)
+                this.tdDeleteButton.className = 'delete'
+                this.tdDeleteButton.setAttribute('data-uid', card['uid'])
+                this.tdDeleteButton.innerHTML = 'Delete'
+                
         
-                // // Edit button
-                // let tdEdit = document.createElement('td');
-                // let tdEditButton = document.createElement('button');
-                // tr.appendChild(tdEdit)
-                // tdEdit.appendChild(tdEditButton)
-                // tdEditButton.innerHTML = 'Edit'
+                // Edit button
+                this.tdEdit = document.createElement('td');
+                this.tdEditButton = document.createElement('button');
+                this.tr.appendChild(this.tdEdit)
+                this.tdEdit.appendChild(this.tdEditButton)
+                this.tdEditButton.className = 'edit'
+                this.tdEditButton.setAttribute('data-uid', card['uid'])
+                this.tdEditButton.innerHTML = 'Edit'
                 // tdEditButton.addEventListener('click', function() {
                     
                 //     const editFields = `
@@ -240,6 +237,124 @@ class View{
             }
     }
 
+    // Getters and Setters for input
+
+    get _inputText() {
+        return [this.addQuestionInput.value, this.addAnswerInput.value]
+    }
+
+    get _editText() {
+        console.log( [this.editQuestionInput.value, this.editAnswerInput.value] );
+    }
+
+
+    _resetInput() {
+        this.addQuestionInput.value = ''
+        this.addAnswerInput.value = ''
+    }
+
+    // Event Handling
+    bindAddCard(handler) {
+        this.form.addEventListener('submit', event => {
+            event.preventDefault()
+
+            if (this._inputText) {
+                handler(this._inputText)
+                this._resetInput()
+            }
+        })
+    }
+
+    
+
+    bindOpenEditCard(handler) {
+        
+        document.addEventListener('click', function(event) {
+                if (event.target.className === 'edit') {
+                    
+                    handler()
+                }
+                
+                })
+    }
+
+    bindEditCard(handler) {
+        
+        document.addEventListener('click', function(event) {
+                if (event.target.className === 'edit-submit') {
+                    event.preventDefault()
+
+                    const uid = parseInt(event.target.dataset.uid)
+                    console.log(uid, this._editText)
+                    handler(uid, this._editText)
+                }
+                
+                })
+    }
+
+    bindDeleteCard(handler) {
+        document.addEventListener('click', function(event) {
+                if (event.target.className === 'delete') {
+                    const uid = parseInt(event.target.dataset.uid)
+                    handler(uid)
+                }
+                
+                })
+    }
+
+    displayEdit(id) {
+
+        // Somehow display the card's original text about edit fields...
+
+        // Card Edit Form
+        this.editForm = this.createElement('form')
+        this.editForm.id = 'edit-card'
+
+        this.editQuestionInput = this.createElement('input')
+        this.editQuestionInput.name = 'editQuestion'
+        this.editQuestionInput.type = 'text'
+        this.editQuestionInput.placeholder = 'Edit Question'
+
+        this.editAnswerInput = this.createElement('input')
+        this.editAnswerInput.name = 'editAnswer'
+        this.editAnswerInput.type = 'text'
+        this.editAnswerInput.placeholder = 'Edit Answer'
+
+        this.editCardButton = this.createElement('button')
+        this.editCardButton.textContent = "Edit Card"
+        this.editCardButton.setAttribute('data-uid', id)
+        this.editCardButton.type = 'submit'
+        this.editCardButton.className = 'edit-submit'
+             
+
+        // append input and button to form
+        this.editForm.append(this.editQuestionInput, this.editAnswerInput, this.editCardButton)
+
+        // append other title, heading and form to app
+        this.app.append(this.editForm)
+    
+        //         let editedQuestion = document.querySelector('#editQuestion').value;
+        //         let editedAnswer = document.querySelector('#editAnswer').value;
+
+        //         flashCards.editQuestion(card['uid'], editedQuestion);
+        //         flashCards.editAnswer(card['uid'], editedAnswer);
+                
+        //         document.querySelector('#editQuestion').value = '';
+        //         document.querySelector('#editAnswer').value = '';
+                
+        //         displayTable();
+        //     })
+        // })
+    }
+
+    bindDisplayTable(handler) {
+        this.displayTableButton.addEventListener('click', function() {
+            handler()
+        })
+    }
+
+
+
     // html get and create elements
     createElement(tag, className) {
         const element = document.createElement(tag)
@@ -261,13 +376,40 @@ class Controller{
     constructor(model, view){
         this.model = model
         this.view = view
+        this.cards = this.model.cards
+        this.view.bindAddCard(this.handleAddCard)
+        this.view.bindDisplayTable(this.handleRenderCardTable)
+        this.view.bindDeleteCard(this.handleDeleteCard)
+        this.view.bindOpenEditCard(this.handleOpenEditCard)
+        this.view.bindEditCard(this.handleEditCard)
 
-        this.renderCardTable(this.model.cards)
     }
 
-    renderCardTable = cards => {
-        this.view.displayTable(cards)
+    handleRenderCardTable = () => {
+        this.view.displayTable(this.cards)
     }
+
+    handleAddCard = questionAnswerArray => {
+        this.model.addCard(...questionAnswerArray)
+        this.handleRenderCardTable()
+    }
+
+    handleOpenEditCard = () => {
+        this.view.displayEdit()
+    }
+
+    handleEditCard = (id, questionAnswerArray) => {
+        console.log(id, questionAnswerArray)
+        // this.model.editQuestion(id, questionAnswerArray[0])
+        // this.model.editAnswer(id, questionAnswerArray[1])
+    }
+
+    handleDeleteCard = (id) => {
+        this.model.deleteCard(id)
+        this.handleRenderCardTable()
+    }
+
+    
 }
 
 const app = new Controller(new Model(), new View())
