@@ -245,7 +245,13 @@ class View{
         return [parseInt(this.editCardUid), this.editQuestionInput.value, this.editAnswerInput.value]
     }
 
-    _resetInput() {
+    _resetEdit() {
+        this.editQuestionInput.value = ''
+        this.editAnswerInput.value = ''
+        this.editForm.remove()
+    }
+
+    _resetInput(input) {
         this.addQuestionInput.value = ''
         this.addAnswerInput.value = ''
     }
@@ -267,7 +273,6 @@ class View{
         document.addEventListener('click', function(event) {
                 if (event.target.className === 'edit') {
                     const uid = parseInt(event.target.dataset.uid)
-                    console.log('uid: ', uid)
                     handler(uid)
                 }
                 
@@ -280,7 +285,8 @@ class View{
                     event.preventDefault()
 
                     handler(this._editText)
-                
+                    this._resetEdit()
+                    
                 })
     }
 
@@ -374,23 +380,21 @@ class Controller{
         this.handleRenderCardTable()
     }
 
-    handleOpenEditCard = (id) => {
+    handleOpenEditCard= id => {
         this.view.bindDisplayEdit(id)
         this.view.bindEditCard(this.handleEditCard)
     }
 
-    handleEditCard = (questionAnswerArray) => {
-        
+    handleEditCard = questionAnswerArray => {
         this.model.editQuestion(questionAnswerArray[0], questionAnswerArray[1])
         this.model.editAnswer(questionAnswerArray[0], questionAnswerArray[2])
         this.handleRenderCardTable()
     }
 
-    handleDeleteCard = (id) => {
+    handleDeleteCard = id => {
         this.model.deleteCard(id)
         this.handleRenderCardTable()
     }
-
     
 }
 
