@@ -1,489 +1,511 @@
-'use strict';
+"use strict";
 
 class Model {
-    constructor( ){
-        // Unique Card Id
-        this._idCount = 8
+  constructor() {
+    // Unique Card Id
+    this._idCount = 8;
 
-        // Card Collection (contains sample data)
-        // Structure: {uid: int, 'question: string, 'answer': string, 'correct': int, 'incorrect': int}
-        this.cards = [
-            {uid: 0, 'question': 'What is New Mexico\'s Capital?', 'answer': 'Santa Fe', 'correct': 0, 'incorrect': 0},
-            {uid: 1, 'question': 'What is Colorado\'s Capital?', 'answer': 'Denver', 'correct': 1, 'incorrect': 1},
-            {uid: 2, 'question': 'What is Wyoming\'s Capital?', 'answer': 'Chyenne', 'correct': 2, 'incorrect': 5},
-            {uid: 7, 'question': 'What is Britain\'s Capital?', 'answer': 'London', 'correct': 3, 'incorrect': 1},
-        ]
+    // Card Collection (contains sample data)
+    // Structure: {uid: int, 'question: string, 'answer': string, 'correct': int, 'incorrect': int}
+    this.cards = [
+      {
+        uid: 0,
+        question: "What is New Mexico's Capital?",
+        answer: "Santa Fe",
+        correct: 0,
+        incorrect: 0
+      },
+      {
+        uid: 1,
+        question: "What is Colorado's Capital?",
+        answer: "Denver",
+        correct: 1,
+        incorrect: 1
+      },
+      {
+        uid: 2,
+        question: "What is Wyoming's Capital?",
+        answer: "Chyenne",
+        correct: 2,
+        incorrect: 5
+      },
+      {
+        uid: 7,
+        question: "What is Britain's Capital?",
+        answer: "London",
+        correct: 3,
+        incorrect: 1
+      }
+    ];
+  }
+
+  // Display card collection - only useful for console debugging now
+  displayCards() {
+    if (this.cards.length === 0) {
+      console.log("Your study deck is empty");
     }
 
-    // Display card collection - only useful for console debugging now
-    displayCards() {
-        if (this.cards.length === 0) {
-            console.log('Your study deck is empty')
-        }
+    for (let card of this.cards) {
+      console.log(card);
+    }
+  }
 
-        for (let card of this.cards) {
-            console.log(card);
-        }
+  // Get current Id
+  currentId() {
+    return this._idCount;
+  }
+
+  // Find index based on id of card
+  findIndex(id) {
+    return this.cards.findIndex(({ uid }) => uid === id);
+  }
+
+  // Add Card
+  addCard(q, a) {
+    const id = this.currentId();
+    this.cards.push({
+      uid: id,
+      question: q,
+      answer: a,
+      correct: 0,
+      incorrect: 0
+    });
+    this._idCount += 1;
+    this.displayCards(); // Only for Testing Model
+  }
+
+  // Delete Card
+  deleteCard(id) {
+    let idx = this.findIndex(id);
+    if (idx !== -1) {
+      this.cards.splice(idx, 1);
+    } else {
+      return "This card id doesn't exit";
+    }
+    this.displayCards(); // Only for Testing Model
+  }
+
+  // Edit Question
+  editQuestion(id, q) {
+    let index = this.findIndex(id);
+
+    if (q === "") {
+      return;
     }
 
-    // Get current Id
-    currentId() {
-        return this._idCount;
+    if (index !== -1) {
+      // let q = prompt('Enter an updated question');
+      this.cards[index]["question"] = q;
+    } else {
+      return "Can't edit card. This card id doesn't exist";
+    }
+    this.displayCards(); // Only for Testing Model
+  }
+
+  // Edit Answer
+  editAnswer(id, a) {
+    let index = this.findIndex(id);
+
+    if (a === "") {
+      return;
     }
 
-    // Find index based on id of card
-    findIndex(id) {
-        return this.cards.findIndex( ({uid}) => uid === id);
+    if (index !== -1) {
+      this.cards[index]["answer"] = a;
+    } else {
+      return "Can't edit card. This card id doesn't exist";
     }
+    this.displayCards(); // Only for Testing Model
+  }
 
-    // Add Card
-    addCard(q, a) {
-        const id = this.currentId();
-        this.cards.push({uid: id, 'question': q, 'answer': a, 'correct': 0, 'incorrect': 0});
-        this._idCount += 1;
-        this.displayCards(); // Only for Testing Model
-    }
-
-    // Delete Card
-    deleteCard(id) {
-        let idx = this.findIndex(id);
-        if (idx !== -1) {
-            this.cards.splice(idx, 1);
-        } else {
-            return 'This card id doesn\'t exit';
-        }
-        this.displayCards(); // Only for Testing Model
-    }
-
-    // Edit Question
-    editQuestion(id, q) {
-        let index = this.findIndex(id);
-        
-        if (q === '') {
-            return;
-        }
-
-        if (index !== -1) {
-            // let q = prompt('Enter an updated question');
-            this.cards[index]['question'] = q;
-        } else {
-            return 'Can\'t edit card. This card id doesn\'t exist';
-        }
-        this.displayCards(); // Only for Testing Model
-    }
-
-    // Edit Answer
-    editAnswer(id,a) {
-        let index = this.findIndex(id);
-        
-        if (a === '') {
-            return;
-        }
-
-        if (index !== -1) {
-            this.cards[index]['answer'] = a;
-        } else {
-            return 'Can\'t edit card. This card id doesn\'t exist';
-        }
-        this.displayCards(); // Only for Testing Model
-    }
-
-    // To keep seperation clear, shouldn't the tally function be in here?
-    // You could just rewrite the whole entry, and include the updated tally
-    // in the rewrite (ie, just use editCard) - I'll figure this out once I get to the quiz section.
+  // To keep seperation clear, shouldn't the tally function be in here?
+  // You could just rewrite the whole entry, and include the updated tally
+  // in the rewrite (ie, just use editCard) - I'll figure this out once I get to the quiz section.
 }
 
-class View{
-    constructor(){
-        // root element
-        this.app = this.getElement('#app')
+class View {
+  constructor() {
+    // root element
+    this.app = this.getElement("#app");
 
-        // app title
-        this.title = this.createElement('h1')
-        this.title.textContent = 'Minderva: A Modern Learning Tool'
+    // app title
+    this.title = this.createElement("h1");
+    this.title.textContent = "Minderva: A Modern Learning Tool";
 
-        // Card Creation Form
-        this.form = this.createElement('form')
-        this.form.id = 'add-card'
+    // Card Creation Form
+    this.form = this.createElement("form");
+    this.form.id = "add-card";
 
-        // Add a card to the collection (inputs)
-        this.addQuestionInput = this.createElement('input')
-        this.addQuestionInput.name = 'addQuestion'
-        this.addQuestionInput.type = 'text'
-        this.addQuestionInput.placeholder = 'Add Question'
+    // Add a card to the collection (inputs)
+    this.addQuestionInput = this.createElement("input");
+    this.addQuestionInput.name = "addQuestion";
+    this.addQuestionInput.type = "text";
+    this.addQuestionInput.placeholder = "Add Question";
 
-        this.addAnswerInput = this.createElement('input')
-        this.addAnswerInput.name = 'addAnswer'
-        this.addAnswerInput.type = 'text'
-        this.addAnswerInput.placeholder = 'Add Answer'
+    this.addAnswerInput = this.createElement("input");
+    this.addAnswerInput.name = "addAnswer";
+    this.addAnswerInput.type = "text";
+    this.addAnswerInput.placeholder = "Add Answer";
 
-        this.addCardButton = this.createElement('button')
-        this.addCardButton.textContent = "Add Card"
-        this.addCardButton.type = 'submit'
+    this.addCardButton = this.createElement("button");
+    this.addCardButton.textContent = "Add Card";
+    this.addCardButton.type = "submit";
 
-        // append input and button to form
-        this.form.append(this.addQuestionInput, this.addAnswerInput, this.addCardButton)
+    // append input and button to form
+    this.form.append(
+      this.addQuestionInput,
+      this.addAnswerInput,
+      this.addCardButton
+    );
 
-        // append other title, heading and form to app
-        this.app.append(this.title, this.form)
+    // append other title, heading and form to app
+    this.app.append(this.title, this.form);
 
-        // DISPLAY CARDS BUTTON
-        this.displayTableButton = this.createElement('button')
-        this.displayTableButton.id = 'display-table'
-        this.displayTableButton.textContent = 'Display Cards'
-        this.app.append(this.displayTableButton)
+    // DISPLAY CARDS BUTTON
+    this.displayTableButton = this.createElement("button");
+    this.displayTableButton.id = "display-table";
+    this.displayTableButton.textContent = "Display Cards";
+    this.app.append(this.displayTableButton);
+  }
 
+  displayTable(cards) {
+    this.cardTable = this.getElement("#card-table");
+    this.cardTable.innerHTML = "";
+
+    if (cards.length === 0) {
+      this.div = this.createElement("div");
+      this.cardTable.innerHTML = "Your study deck is empty";
     }
 
-    displayTable(cards) {
-      
-            this.cardTable = this.getElement('#card-table');
-            this.cardTable.innerHTML = '';
+    // Build a table
 
-            if (cards.length === 0) {
-                this.div = this.createElement('div')
-                this.cardTable.innerHTML = 'Your study deck is empty';
-            }
+    // Build the heading
+    this.table = this.createElement("table");
+    this.cardTable.appendChild(this.table);
 
-            // Build a table
+    this.thead = this.createElement("thead");
+    this.table.appendChild(this.thead);
 
-            // Build the heading
-            this.table = this.createElement('table')
-            this.cardTable.appendChild(this.table);
+    // Also create body
+    this.tbody = this.createElement("tbody");
+    this.table.appendChild(this.tbody);
 
-            this.thead = this.createElement('thead')
-            this.table.appendChild(this.thead);
+    this.theadtr = this.createElement("tr");
+    this.thead.appendChild(this.theadtr);
 
-            // Also create body
-            this.tbody = this.createElement('tbody')
-            this.table.appendChild(this.tbody);
-
-            this.theadtr = this.createElement('tr');
-            this.thead.appendChild(this.theadtr);
-
-            for (let heading of Object.keys(cards[0])) { 
-                this.th = this.createElement('th')
-                this.theadtr.appendChild(this.th)
-                this.th.innerHTML = heading;
-            }
-
-            // Create Delete Column
-            this.thDelete = this.createElement('th');
-            this.theadtr.appendChild(this.thDelete);
-            this.thDelete.innerHTML = 'Delete';
-
-            // Create Edit Column
-            this.thEdit = this.createElement('th');
-            this.theadtr.appendChild(this.thEdit);
-            this.thEdit.innerHTML = 'Edit';
-
-            for (let card of cards) {
-
-                this.tr = this.createElement('tr')
-                for (let data of Object.values(card)) {
-                    this.td = document.createElement('td');
-                    this.tr.appendChild(this.td);
-                    this.td.innerHTML = data;
-                    
-                }
-        
-                // Delete button
-                this.tdDelete = document.createElement('td');
-                this.tdDeleteButton = document.createElement('button');
-                this.tr.appendChild(this.tdDelete)
-                this.tdDelete.appendChild(this.tdDeleteButton)
-                this.tdDeleteButton.className = 'delete'
-                this.tdDeleteButton.setAttribute('data-uid', card['uid'])
-                this.tdDeleteButton.innerHTML = 'Delete'
-                
-        
-                // Edit button
-                this.tdEdit = document.createElement('td');
-                this.tdEditButton = document.createElement('button');
-                this.tr.appendChild(this.tdEdit)
-                this.tdEdit.appendChild(this.tdEditButton)
-                this.tdEditButton.className = 'edit'
-                this.tdEditButton.setAttribute('data-uid', card['uid'])
-                this.tdEditButton.innerHTML = 'Edit'
-                // tdEditButton.addEventListener('click', function() {
-                    
-                //     const editFields = `
-                //             <input id="editQuestion" type="text" placeholder="Edit Question">
-                //             <input id="editAnswer" type="text" placeholder="Edit Answer">
-                //             <button id="editCard">Edit Card</button>
-                //     `
-                //     let editDiv = document.createElement('div');
-                //     cardTable.appendChild(editDiv);
-                //     editDiv.innerHTML = editFields;
-        
-                //     let editCardButton = document.querySelector('#editCard');
-                //     editCardButton.addEventListener('click', function() {
-                //         let editedQuestion = document.querySelector('#editQuestion').value;
-                //         let editedAnswer = document.querySelector('#editAnswer').value;
-        
-                //         flashCards.editQuestion(card['uid'], editedQuestion);
-                //         flashCards.editAnswer(card['uid'], editedAnswer);
-                        
-                //         document.querySelector('#editQuestion').value = '';
-                //         document.querySelector('#editAnswer').value = '';
-                        
-                //         displayTable();
-                //     })
-                // })
-        
-                this.tbody.appendChild(this.tr);
-            }
+    for (let heading of Object.keys(cards[0])) {
+      this.th = this.createElement("th");
+      this.theadtr.appendChild(this.th);
+      this.th.innerHTML = heading;
     }
 
-    startQuiz(cards) {
-        // let quizButton = document.querySelector('#quiz');
-        // quizButton.addEventListener('click', function () {
-        //     quiz(0);
-        // })
-        let quizCanvas = document.querySelector('#quiz-canvas');
-        quiz(0)
+    // Create Delete Column
+    this.thDelete = this.createElement("th");
+    this.theadtr.appendChild(this.thDelete);
+    this.thDelete.innerHTML = "Delete";
 
-        // Start Quiz
-        function quiz(counter) {
-            let availableCards = [...cards];
+    // Create Edit Column
+    this.thEdit = this.createElement("th");
+    this.theadtr.appendChild(this.thEdit);
+    this.thEdit.innerHTML = "Edit";
 
-            if (counter < availableCards.length) {
-                let cardCounter = counter;
-                quizCanvas.innerHTML = '';
-            
-                let div = document.createElement('div');
-                div.innerHTML = showCardFront(availableCards[cardCounter])
-                quizCanvas.appendChild(div);
+    for (let card of cards) {
+      this.tr = this.createElement("tr");
+      for (let data of Object.values(card)) {
+        this.td = document.createElement("td");
+        this.tr.appendChild(this.td);
+        this.td.innerHTML = data;
+      }
 
-                let flipButton = document.querySelector('#flip-button');
-                flipButton.addEventListener('click', function() {
-                    div.innerHTML = showCardBack(availableCards[cardCounter])
-                    quizCanvas.appendChild(div);
-                    getNextCard(cardCounter);
-                })
-            } else {
-                let div = document.createElement('div')
-                quizCanvas.innerHTML = 'Quiz Complete';
-            }
+      // Delete button
+      this.tdDelete = document.createElement("td");
+      this.tdDeleteButton = document.createElement("button");
+      this.tr.appendChild(this.tdDelete);
+      this.tdDelete.appendChild(this.tdDeleteButton);
+      this.tdDeleteButton.className = "delete";
+      this.tdDeleteButton.setAttribute("data-uid", card["uid"]);
+      this.tdDeleteButton.innerHTML = "Delete";
 
-            function getNextCard(counter) {
-                
-                let correctCardButton = document.querySelector('#correct-answer');
-                let wrongCardButton = document.querySelector('#wrong-answer');
-                
-                // These are the functions that are accessing the model directly
-                // How can we switch burden over to controller
-                // It may take a rewrite of the whole quiz function.
-                correctCardButton.addEventListener('click', function() {
-                    availableCards[counter]['correct'] ++;
-                    counter += 1;
-                    quiz(counter);
-                })
+      // Edit button
+      this.tdEdit = document.createElement("td");
+      this.tdEditButton = document.createElement("button");
+      this.tr.appendChild(this.tdEdit);
+      this.tdEdit.appendChild(this.tdEditButton);
+      this.tdEditButton.className = "edit";
+      this.tdEditButton.setAttribute("data-uid", card["uid"]);
+      this.tdEditButton.innerHTML = "Edit";
+      // tdEditButton.addEventListener('click', function() {
 
-                wrongCardButton.addEventListener('click', function() {
-                    availableCards[counter]['incorrect'] ++;
-                    counter += 1;
-                    quiz(counter);
-                })
-            
-            };
+      //     const editFields = `
+      //             <input id="editQuestion" type="text" placeholder="Edit Question">
+      //             <input id="editAnswer" type="text" placeholder="Edit Answer">
+      //             <button id="editCard">Edit Card</button>
+      //     `
+      //     let editDiv = document.createElement('div');
+      //     cardTable.appendChild(editDiv);
+      //     editDiv.innerHTML = editFields;
 
-            function showCardFront(card) {
-                const cardFront = `
-                    <p>${card['question']}</p>
+      //     let editCardButton = document.querySelector('#editCard');
+      //     editCardButton.addEventListener('click', function() {
+      //         let editedQuestion = document.querySelector('#editQuestion').value;
+      //         let editedAnswer = document.querySelector('#editAnswer').value;
+
+      //         flashCards.editQuestion(card['uid'], editedQuestion);
+      //         flashCards.editAnswer(card['uid'], editedAnswer);
+
+      //         document.querySelector('#editQuestion').value = '';
+      //         document.querySelector('#editAnswer').value = '';
+
+      //         displayTable();
+      //     })
+      // })
+
+      this.tbody.appendChild(this.tr);
+    }
+  }
+
+  startQuiz(cards) {
+    // let quizButton = document.querySelector('#quiz');
+    // quizButton.addEventListener('click', function () {
+    //     quiz(0);
+    // })
+    let quizCanvas = document.querySelector("#quiz-canvas");
+    quiz(0);
+
+    // Start Quiz
+    function quiz(counter) {
+      let availableCards = [...cards];
+
+      if (counter < availableCards.length) {
+        let cardCounter = counter;
+        quizCanvas.innerHTML = "";
+
+        let div = document.createElement("div");
+        div.innerHTML = showCardFront(availableCards[cardCounter]);
+        quizCanvas.appendChild(div);
+
+        let flipButton = document.querySelector("#flip-button");
+        flipButton.addEventListener("click", function() {
+          div.innerHTML = showCardBack(availableCards[cardCounter]);
+          quizCanvas.appendChild(div);
+          getNextCard(cardCounter);
+        });
+      } else {
+        let div = document.createElement("div");
+        quizCanvas.innerHTML = "Quiz Complete";
+      }
+
+      function getNextCard(counter) {
+        let correctCardButton = document.querySelector("#correct-answer");
+        let wrongCardButton = document.querySelector("#wrong-answer");
+
+        // These are the functions that are accessing the model directly
+        // How can we switch burden over to controller
+        // It may take a rewrite of the whole quiz function.
+        correctCardButton.addEventListener("click", function() {
+          availableCards[counter]["correct"]++;
+          counter += 1;
+          quiz(counter);
+        });
+
+        wrongCardButton.addEventListener("click", function() {
+          availableCards[counter]["incorrect"]++;
+          counter += 1;
+          quiz(counter);
+        });
+      }
+
+      function showCardFront(card) {
+        const cardFront = `
+                    <p>${card["question"]}</p>
                     <button id="flip-button">Flip</button>
-                `
-                return cardFront;
-            }
-            
-            function showCardBack(card) {
-                const cardBack = `
-                    <p>${card['answer']}</p>
+                `;
+        return cardFront;
+      }
+
+      function showCardBack(card) {
+        const cardBack = `
+                    <p>${card["answer"]}</p>
                     <p>Did you remember?</p>
                     <button id="correct-answer">Yes</button>
                     <button id="wrong-answer">No</button>
-                `
-                return cardBack;
-            }
+                `;
+        return cardBack;
+      }
     }
-    }
+  }
 
-    // Getters and Setters for input
+  // Getters and Setters for input
 
-    get _inputText() {
-        return [this.addQuestionInput.value, this.addAnswerInput.value]
-    }
+  get _inputText() {
+    return [this.addQuestionInput.value, this.addAnswerInput.value];
+  }
 
-    get _editText() {
-        return [parseInt(this.editCardUid), this.editQuestionInput.value, this.editAnswerInput.value]
-    }
+  get _editText() {
+    return [
+      parseInt(this.editCardUid),
+      this.editQuestionInput.value,
+      this.editAnswerInput.value
+    ];
+  }
 
-    _resetEdit() {
-        this.editQuestionInput.value = ''
-        this.editAnswerInput.value = ''
-        this.editForm.remove()
-    }
+  _resetEdit() {
+    this.editQuestionInput.value = "";
+    this.editAnswerInput.value = "";
+    this.editForm.remove();
+  }
 
-    _resetInput(input) {
-        this.addQuestionInput.value = ''
-        this.addAnswerInput.value = ''
-    }
+  _resetInput(input) {
+    this.addQuestionInput.value = "";
+    this.addAnswerInput.value = "";
+  }
 
-    // Event Handling
-    bindAddCard(handler) {
-        this.form.addEventListener('submit', event => {
-            event.preventDefault()
+  // Event Handling
+  bindAddCard(handler) {
+    this.form.addEventListener("submit", event => {
+      event.preventDefault();
 
-            if (this._inputText) {
-                handler(this._inputText)
-                this._resetInput()
-            }
-        })
-    }
+      if (this._inputText) {
+        handler(this._inputText);
+        this._resetInput();
+      }
+    });
+  }
 
-    bindOpenEditCard(handler) {
-        
-        document.addEventListener('click', function(event) {
-                if (event.target.className === 'edit') {
-                    const uid = parseInt(event.target.dataset.uid)
-                    handler(uid)
-                }
-                
-                })
-    }
+  bindOpenEditCard(handler) {
+    document.addEventListener("click", function(event) {
+      if (event.target.className === "edit") {
+        const uid = parseInt(event.target.dataset.uid);
+        handler(uid);
+      }
+    });
+  }
 
-    bindEditCard(handler) {
-        this.editForm.addEventListener('submit', event => {
-                    
-                    event.preventDefault()
+  bindEditCard(handler) {
+    this.editForm.addEventListener("submit", event => {
+      event.preventDefault();
 
-                    handler(this._editText)
-                    this._resetEdit()
-                    
-                })
-    }
+      handler(this._editText);
+      this._resetEdit();
+    });
+  }
 
-    bindDeleteCard(handler) {
-        document.addEventListener('click', function(event) {
-                if (event.target.className === 'delete') {
-                    const uid = parseInt(event.target.dataset.uid)
-                    handler(uid)
-                }
-                
-                })
-    }
+  bindDeleteCard(handler) {
+    document.addEventListener("click", function(event) {
+      if (event.target.className === "delete") {
+        const uid = parseInt(event.target.dataset.uid);
+        handler(uid);
+      }
+    });
+  }
 
-    bindDisplayEdit(id) {
+  bindDisplayEdit(id) {
+    // Somehow display the card's original text about edit fields...
 
-        // Somehow display the card's original text about edit fields...
+    // Card Edit Form
+    this.editForm = this.createElement("form");
+    this.editForm.id = "edit-card";
 
-        // Card Edit Form
-        this.editForm = this.createElement('form')
-        this.editForm.id = 'edit-card'
+    this.editQuestionInput = this.createElement("input");
+    this.editQuestionInput.name = "editQuestion";
+    this.editQuestionInput.type = "text";
+    this.editQuestionInput.placeholder = "Edit Question";
 
-        this.editQuestionInput = this.createElement('input')
-        this.editQuestionInput.name = 'editQuestion'
-        this.editQuestionInput.type = 'text'
-        this.editQuestionInput.placeholder = 'Edit Question'
+    this.editAnswerInput = this.createElement("input");
+    this.editAnswerInput.name = "editAnswer";
+    this.editAnswerInput.type = "text";
+    this.editAnswerInput.placeholder = "Edit Answer";
 
-        this.editAnswerInput = this.createElement('input')
-        this.editAnswerInput.name = 'editAnswer'
-        this.editAnswerInput.type = 'text'
-        this.editAnswerInput.placeholder = 'Edit Answer'
+    this.editCardButton = this.createElement("button");
+    this.editCardButton.textContent = "Edit Card";
+    this.editCardButton.setAttribute("data-uid", id);
+    this.editCardUid = this.editCardButton.dataset.uid;
+    this.editCardButton.type = "submit";
+    this.editCardButton.className = "edit-submit";
 
-       
+    // append input and button to form
+    this.editForm.append(
+      this.editQuestionInput,
+      this.editAnswerInput,
+      this.editCardButton
+    );
 
-        this.editCardButton = this.createElement('button')
-        this.editCardButton.textContent = "Edit Card"
-        this.editCardButton.setAttribute('data-uid', id)
-        this.editCardUid = this.editCardButton.dataset.uid
-        this.editCardButton.type = 'submit'
-        this.editCardButton.className = 'edit-submit'
-             
+    // append other title, heading and form to app
+    this.app.append(this.editForm);
+  }
 
-        // append input and button to form
-        this.editForm.append(this.editQuestionInput, this.editAnswerInput, this.editCardButton)
+  bindDisplayTable(handler) {
+    this.displayTableButton.addEventListener("click", function() {
+      handler();
+    });
+  }
 
-        // append other title, heading and form to app
-        this.app.append(this.editForm)
-    }
+  bindStartQuiz(handler) {
+    document.addEventListener("click", function(event) {
+      if (event.target.id === "quiz") {
+        console.log("Quiz Button Clicked");
+        handler();
+      }
+    });
+  }
 
-    bindDisplayTable(handler) {
-        this.displayTableButton.addEventListener('click', function() {
-            handler()
-        })
-    }
-
-    bindStartQuiz(handler) {
-        document.addEventListener('click', function(event) {
-            if (event.target.id === 'quiz') {
-                console.log('Quiz Button Clicked')
-                handler()
-            }
-            
-            })
-    }
-
-
-
-    // html get and create elements
-    createElement(tag, className) {
-        const element = document.createElement(tag)
-        if (className) {
-            element.classList.add(className)
-        }
-
-        return element
+  // html get and create elements
+  createElement(tag, className) {
+    const element = document.createElement(tag);
+    if (className) {
+      element.classList.add(className);
     }
 
-    getElement(selector) {
-        const element = document.querySelector(selector)
+    return element;
+  }
 
-        return element
-    }
+  getElement(selector) {
+    const element = document.querySelector(selector);
+
+    return element;
+  }
 }
 
-class Controller{
-    constructor(model, view){
-        this.model = model
-        this.view = view
-        this.cards = this.model.cards
-        this.view.bindAddCard(this.handleAddCard)
-        this.view.bindDisplayTable(this.handleRenderCardTable)
-        this.view.bindDeleteCard(this.handleDeleteCard)
-        this.view.bindOpenEditCard(this.handleOpenEditCard)
-        this.view.bindStartQuiz(this.handleOpenQuiz)
-    }
+class Controller {
+  constructor(model, view) {
+    this.model = model;
+    this.view = view;
+    this.cards = this.model.cards;
+    this.view.bindAddCard(this.handleAddCard);
+    this.view.bindDisplayTable(this.handleRenderCardTable);
+    this.view.bindDeleteCard(this.handleDeleteCard);
+    this.view.bindOpenEditCard(this.handleOpenEditCard);
+    this.view.bindStartQuiz(this.handleOpenQuiz);
+  }
 
-    handleRenderCardTable = () => {
-        this.view.displayTable(this.cards)
-    }
+  handleRenderCardTable = () => {
+    this.view.displayTable(this.cards);
+  };
 
-    handleAddCard = questionAnswerArray => {
-        this.model.addCard(...questionAnswerArray)
-        this.handleRenderCardTable()
-    }
+  handleAddCard = questionAnswerArray => {
+    this.model.addCard(...questionAnswerArray);
+    this.handleRenderCardTable();
+  };
 
-    handleOpenEditCard= id => {
-        this.view.bindDisplayEdit(id)
-        this.view.bindEditCard(this.handleEditCard)
-    }
+  handleOpenEditCard = id => {
+    this.view.bindDisplayEdit(id);
+    this.view.bindEditCard(this.handleEditCard);
+  };
 
-    handleEditCard = questionAnswerArray => {
-        this.model.editQuestion(questionAnswerArray[0], questionAnswerArray[1])
-        this.model.editAnswer(questionAnswerArray[0], questionAnswerArray[2])
-        this.handleRenderCardTable()
-    }
+  handleEditCard = questionAnswerArray => {
+    this.model.editQuestion(questionAnswerArray[0], questionAnswerArray[1]);
+    this.model.editAnswer(questionAnswerArray[0], questionAnswerArray[2]);
+    this.handleRenderCardTable();
+  };
 
-    handleDeleteCard = id => {
-        this.model.deleteCard(id)
-        this.handleRenderCardTable()
-    }
+  handleDeleteCard = id => {
+    this.model.deleteCard(id);
+    this.handleRenderCardTable();
+  };
 
-    handleOpenQuiz = () => {
-        this.view.startQuiz(this.cards)
-    }
-    
+  handleOpenQuiz = () => {
+    this.view.startQuiz(this.cards);
+  };
 }
 
-const app = new Controller(new Model(), new View())
+const app = new Controller(new Model(), new View());
