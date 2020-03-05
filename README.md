@@ -3,6 +3,9 @@
 
 A modern spaced-repetition-system (SRS) for knowledge retention.
 
+##### Current Design
+[Link to Current Figma Design (WIP)] (https://www.figma.com/file/1172J1ZkHdxIk26jtRmoye/minderva?node-id=1%3A2)
+
 ##### VERSION 0.005 (WIP)
 
 - Core flashcard functionality is there, now the goals are:
