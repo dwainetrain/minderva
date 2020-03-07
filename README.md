@@ -6,29 +6,9 @@ A modern spaced-repetition-system (SRS) for knowledge retention.
 ##### Current Design
 [Link to Current Figma Design (WIP)](https://www.figma.com/file/1172J1ZkHdxIk26jtRmoye/minderva?node-id=1%3A2)
 
-##### VERSION 0.005 (WIP)
-
-- Core flashcard functionality is there, now the goals are:
-
-- MAKE SORTA PRETTY(leads to SPA)
-
-- STORE DATA(leads to SRS Algo)
-
-- IMPROVED VALIDATION (leads to less bugs)
-
-- REFACTOR AS MVC (leads to better readability/editability)
-- IMPLEMENT TESTING (leads to better complexity management)
-  
-- [ ] it should be refactored into MVC pattern
-- [ ] utilize event delegation for edit and delete buttons (tentative)
-- [x] it should have the option to indicate a in/correct answer and tally answer
-- [x] it should show an error if a card doesn't exist for edit or delete (NA)
-- [x] display cards should use the display method? (the method is now obsolete, refactor logic)
-- [x] remove quiz from flashcard object
-
-
-  
-
+##### VERSION 0.006 (WIP)
+- CURRENT GOAL: Create current version of app in React
+- 
 Notes:
 
 - Perhaps a validate input function that I can easily apply to any form field
@@ -41,6 +21,26 @@ SOMEDAY MAYBE:
   
 
 ### Version History 
+
+##### VERSION 0.005
+
+- Core flashcard functionality is there, now the goals are:
+
+- MAKE SORTA PRETTY(leads to SPA)
+
+- STORE DATA(leads to SRS Algo)
+
+- IMPROVED VALIDATION (leads to less bugs)
+
+- REFACTOR AS MVC (leads to better readability/editability)
+- IMPLEMENT TESTING (leads to better complexity management)
+  
+- [x] it should be refactored into MVC pattern
+- [x] utilize event delegation for edit and delete buttons
+- [x] it should have the option to indicate a in/correct answer and tally answer
+- [x] it should show an error if a card doesn't exist for edit or delete (NA)
+- [x] display cards should use the display method? (the method is now obsolete, refactor logic)
+- [x] remove quiz from flashcard object
 
 ##### VERSION 0.004
 
