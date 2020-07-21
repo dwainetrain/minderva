@@ -35,9 +35,7 @@ function App() {
 
   // Create
   const handleAdd = (e) => {
-    e.preventDefault();
-    console.log(e)
-    console.log('You added something!s')
+    e.preventDefault(); 
     setCardCollection([{
       id:id,
       front:front,
@@ -45,13 +43,21 @@ function App() {
     }, ...cardCollection])
   }
 
+  // Delete
+  const handleDelete = (e) => {
+    e.preventDefault(); 
+    const filterCollection = cardCollection.filter(card => card.id !== id)
+    setCardCollection(filterCollection);
+  }
 
+
+  // Read
   const cardsDisplay = Object.keys(cardCollection).map(
     card => 
     <div key={cardCollection[card].id}>
-      <h4>{cardCollection[card].front}</h4>
-      <h5>{cardCollection[card].back}</h5>
-      <h6>{cardCollection[card].id}</h6>
+      <h4>Front: {cardCollection[card].front}</h4>
+      <h5>Back: {cardCollection[card].back}</h5>
+      <h6>ID: {cardCollection[card].id}</h6>
       <hr />
     </div>
   )
@@ -59,7 +65,7 @@ function App() {
   // Update
 
 
-  // Delete
+  
 
   return (
     <div className="App">
@@ -93,6 +99,22 @@ function App() {
           </input>
           <button>Add Card</button>
         </form>
+
+        <div>
+          <h5>Delete a card</h5>
+          <form onSubmit={handleDelete}>
+            <input 
+              type="text" 
+              name="id" 
+              value={id} 
+              onChange={ e => setId(e.target.value) } 
+              placeholder="id"
+              >
+            </input>
+          
+            <button>Delete Card</button>
+          </form>
+          </div>
       </header>
       <div>
         {/* {cardList} */}
