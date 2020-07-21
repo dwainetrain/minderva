@@ -50,6 +50,17 @@ function App() {
     setCardCollection(filterCollection);
   }
 
+  // Update
+  const handleEdit = (e) => {
+    e.preventDefault();
+    const filterCollection = cardCollection.filter(card => card.id !== id)
+    setCardCollection([{
+      id:id,
+      front:front,
+      back:back
+    }, ...filterCollection])
+  }
+
 
   // Read
   const cardsDisplay = Object.keys(cardCollection).map(
@@ -62,7 +73,7 @@ function App() {
     </div>
   )
 
-  // Update
+  
 
 
   
@@ -114,6 +125,36 @@ function App() {
           
             <button>Delete Card</button>
           </form>
+
+            <p>Edit a Card</p>
+            {/* Controlled component form, takes in the form data into state and then updates database */}
+            <form onSubmit={handleEdit}>
+              <input 
+                type="text" 
+                name="id" 
+                value={id} 
+                onChange={ e => setId(e.target.value) } 
+                placeholder="id"
+                >
+              </input>
+              <input 
+                type="text" 
+                name="front" 
+                placeholder="front"
+                value={front} 
+                onChange={ e => setFront(e.target.value) }
+                >
+              </input>
+              <input 
+              type="text" 
+              name="back" 
+              placeholder="back"
+              value={back} 
+              onChange={ e => setBack(e.target.value) }
+              >
+              </input>
+              <button>Edit Card</button>
+            </form>
           </div>
       </header>
       <div>
