@@ -1,24 +1,9 @@
 import React from 'react';
 
-const DeleteCard = ({ handleDelete, id, setId }) => {
+const DeleteCard = ({ handleDelete, id}) => {
     return(
-        <div>
-          <h5>Delete a card</h5>
-          <form onSubmit={handleDelete}>
-            <input 
-              type="text" 
-              name="id" 
-              value={id} 
-              onChange={ e => setId(e.target.value) } 
-              placeholder="id"
-              >
-            </input>
-          
-            <button>Delete Card</button>
-          </form>
-          </div>
+            <button value={id} onClick={handleDelete}>Delete Card</button>
     )
 }
-
 
 export default DeleteCard;

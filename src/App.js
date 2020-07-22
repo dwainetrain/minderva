@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import DisplayCards from './components/DisplayCards';
+
+import Nav from './components/Nav';
+import UserProfile from './components/UserProfile'
 import AddCard from './components/AddCard';
-import DeleteCard from './components/DeleteCard';
-import EditCard from './components/EditCard';
+import CardCollection from './components/CardCollection';
 import Quiz from './components/Quiz';
-import { Link, Router } from '@reach/router';
+import EditCard from './components/EditCard';
+import { Router } from '@reach/router';
 // import './App.css';
 
 function App() {
@@ -52,8 +54,8 @@ function App() {
 
   // Delete
   const handleDelete = (e) => {
-    e.preventDefault(); 
-    const filterCollection = cardCollection.filter(card => card.id !== id)
+    e.preventDefault();
+    const filterCollection = cardCollection.filter(card => card.id !== e.target.value)
     setCardCollection(filterCollection);
   }
 
@@ -70,31 +72,43 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Reach Router Tests</h1>
-      <nav>
-        <Link to ="/">Home</Link>{" "}
-        <Link to="card-collection">Display Cards</Link>
-      </nav>
-      <Router>
-        <DisplayCards path="card-collection" cardCollection={cardCollection}/>
-      </Router>
+      <h1>Minderva - MVP Build 0.03</h1>
+      
       <header className="App-header">
+        <Nav />
 
         {/* You may need to restructure state to make alll these props easier to pass */}
-        
-        <AddCard handleAdd={handleAdd}
-          setBack={setBack} setId={setId} setFront={setFront} 
-          id={id} front={front} back={back}/>
-
-        <DeleteCard handleDelete={handleDelete} setId={setId} id={id}/>
-
-        <EditCard handleEdit={handleEdit}
-          setBack={setBack} setId={setId} setFront={setFront} 
-          id={id} front={front} back={back}/>
-          
+         
       </header>
       <div>
+      <Router>
         
+        <CardCollection path="card-collection" 
+        cardCollection={cardCollection}
+        handleDelete={handleDelete} 
+        handleEdit={handleEdit}
+        setId={setId} id={id}
+        setBack={setBack} back={back}
+        setFront={setFront} front={front}>
+          <EditCard path="edit-card" 
+                handleAdd={handleEdit}
+                setBack={setBack}
+                setId={setId}
+                setFront={setFront} 
+                id={id}
+                front={front}
+                back={back}/>
+        </CardCollection>
+
+        <AddCard path="add-card" handleAdd={handleAdd}
+          setBack={setBack} setId={setId} setFront={setFront} 
+          id={id} front={front} back={back}/>
+
+        <Quiz path="quiz" />
+        
+        <UserProfile path="user-profile" />
+      
+      </Router>
       </div>
     </div>
   );
