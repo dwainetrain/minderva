@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 import Nav from './components/Nav';
+import Dashboard from './components/Dashboard'
 import UserProfile from './components/UserProfile'
 import AddCard from './components/AddCard';
 import CardCollection from './components/CardCollection';
 import Quiz from './components/Quiz';
 import EditCard from './components/EditCard';
-import { Router } from '@reach/router';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import DisplayCards from './components/DisplayCards';
 // import './App.css';
 
 function App() {
@@ -76,39 +78,45 @@ function App() {
       
       <header className="App-header">
         <Nav />
-
-        {/* You may need to restructure state to make alll these props easier to pass */}
-         
       </header>
       <div>
-      <Router>
-        
-        <CardCollection path="card-collection" 
-        cardCollection={cardCollection}
-        handleDelete={handleDelete} 
-        handleEdit={handleEdit}
-        setId={setId} id={id}
-        setBack={setBack} back={back}
-        setFront={setFront} front={front}>
-          <EditCard path="edit-card" 
-                handleAdd={handleEdit}
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+          <Route path="/quiz" render={Quiz} />
+          <Route exact path="/card-collection" render=
+          {() => 
+            <CardCollection 
+              path="card-collection" 
+              cardCollection={cardCollection}
+              handleDelete={handleDelete}>
+              <EditCard 
+                path="edit-card" 
+                handleEdit={handleEdit}
                 setBack={setBack}
                 setId={setId}
                 setFront={setFront} 
                 id={id}
                 front={front}
-                back={back}/>
-        </CardCollection>
-
-        <AddCard path="add-card" handleAdd={handleAdd}
-          setBack={setBack} setId={setId} setFront={setFront} 
-          id={id} front={front} back={back}/>
-
-        <Quiz path="quiz" />
-        
-        <UserProfile path="user-profile" />
-      
-      </Router>
+                back={back} />
+            </CardCollection>
+          }/>
+          <Route path="/add-cards" render=
+          {() => 
+            <AddCard 
+              path="add-card"
+              handleAdd={handleAdd}
+              setBack={setBack}
+              setId={setId}
+              setFront={setFront} 
+              id={id}
+              front={front}
+              back={back}/>
+          }/>
+          <Route path="/user-profile" render=
+          {() =>
+            <UserProfile path="user-profile" />
+          } />
+        </Switch>
       </div>
     </div>
   );

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from '@reach/router'
+import { Link } from 'react-router-dom';
+// import { Link } from '@reach/router'
 
 const Nav = () => (
     <nav>
-        <Link to ="/">Home</Link>{" "}
-        <Link to="card-collection">Display Cards</Link>{" "}
-        <Link to="add-card">Add Cards</Link>{" "}
-        <Link to="quiz">Review Cards</Link>{" "}
-        <Link to="user-profile">User Profile</Link>{" "}
+        <Link exact to ="/">Home</Link>{" "}
+        <Link exact to="card-collection">Display Cards</Link>{" "}
+        <Link exact to="add-cards">Add Cards</Link>{" "}
+        <Link exact to="quiz">Review Cards</Link>{" "}
+        <Link exact to="user-profile">User Profile</Link>{" "}
     </nav>
 )
 

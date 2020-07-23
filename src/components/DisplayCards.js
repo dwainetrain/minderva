@@ -1,6 +1,6 @@
 import React from 'react';
 import DeleteCard from '../components/DeleteCard';
-import { Link } from '@reach/router'
+import { Link } from 'react-router-dom';
 
 const DisplayCards = ({ cardCollection, handleEdit, handleDelete, id, setId, front, setFront, back, setBack })  =>{
 
