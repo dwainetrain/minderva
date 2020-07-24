@@ -1,7 +1,6 @@
 import React from 'react';
 
 const EditCard = ({ handleEdit, id, setId, front, setFront, back, setBack}) => {
-  console.log('You made it into the component!')
     return(
         <div>
             <p>Edit a Card</p>

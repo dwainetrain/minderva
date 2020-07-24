@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Nav from './components/Nav';
 import Dashboard from './components/Dashboard'
@@ -7,57 +7,33 @@ import AddCard from './components/AddCard';
 import CardCollection from './components/CardCollection';
 import Quiz from './components/Quiz';
 import EditCard from './components/EditCard';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import DisplayCards from './components/DisplayCards';
+
+import { Route, Switch } from 'react-router-dom';
+
+import { firestore } from './firebase';
+import { collectIdsAndDocs } from './utilities';
 // import './App.css';
 
 function App() {
 
-  // Cards Database
-  const cards = [ {
-    id: '001',
-    front: "What is the capital of New Mexico?",
-    back: "Santa Fe"
-  },
-  {
-    id: '002',
-    front: "What is the capital of Colorado?",
-    back: "Denver"
-  },
-  {
-    id: '003',
-    front: "What is the capital of Wyoming?",
-    back: "Laramie"
-  },
-  {
-    id: '004',
-    front: "What is the capital of California?",
-    back: "Sacromento"
-  } ]
-
-  // Add Card State
-  // I think you may need to rethink this structure to be
-  // [cardDetail, setCardDetail] = useState({id: '', front: '', back: ''})
-  // but I may save resturcturing this until I have firebase setup...
+  // Add Card State - to be pushed into their own respective components
   const [id, setId] = useState('');
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
-  const [cardCollection, setCardCollection] = useState(cards);
+  const [cardCollection, setCardCollection] = useState([]);
 
-  // Create
-  const handleAdd = (e) => {
-    e.preventDefault(); 
-    setCardCollection([{
-      id:id,
-      front:front,
-      back:back
-    }, ...cardCollection])
+  // Create on firebase
+  const handleCreate = async (front, back) => {
+    const card = {front:front, back:back}
+    const docRef = await firestore.collection('cards').add(card);
+    const doc = await docRef.get();
+    console.log(doc);
   }
 
   // Delete
   const handleDelete = (e) => {
     e.preventDefault();
-    const filterCollection = cardCollection.filter(card => card.id !== e.target.value)
+    const filterCollection = cardCollection.filter(card => card.id !== e.target.value);
     setCardCollection(filterCollection);
   }
 
@@ -72,6 +48,17 @@ function App() {
     }, ...filterCollection])
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const snapshot = await firestore.collection('cards').get();
+      const entries = snapshot.docs.map(collectIdsAndDocs);
+      setCardCollection(entries);
+    }
+
+    fetchData();
+    
+  }, []);
+    
   return (
     <div className="App">
       <h1>Minderva - MVP Build 0.03</h1>
@@ -82,7 +69,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/" component={Dashboard} />
-          <Route path="/quiz" render={Quiz} />
+          <Route exact path="/quiz" render={Quiz} />
           <Route exact path="/card-collection" render=
           {() => 
             <CardCollection 
@@ -100,19 +87,14 @@ function App() {
                 back={back} />
             </CardCollection>
           }/>
-          <Route path="/add-cards" render=
+          <Route exact path="/add-cards" render=
           {() => 
             <AddCard 
               path="add-card"
-              handleAdd={handleAdd}
-              setBack={setBack}
-              setId={setId}
-              setFront={setFront} 
-              id={id}
-              front={front}
-              back={back}/>
+              handleCreate={handleCreate}
+            />
           }/>
-          <Route path="/user-profile" render=
+          <Route exact path="/user-profile" render=
           {() =>
             <UserProfile path="user-profile" />
           } />
