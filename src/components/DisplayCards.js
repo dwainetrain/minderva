@@ -2,7 +2,7 @@ import React from 'react';
 import DeleteCard from '../components/DeleteCard';
 import { Link } from 'react-router-dom';
 
-const DisplayCards = ({ cardCollection, handleEdit, handleDelete, id, setId, front, setFront, back, setBack })  =>{
+const DisplayCards = ({ cardCollection, handleEdit, handleRemove, id, setId, front, setFront, back, setBack })  =>{
 
     return(
         cardCollection.map(
@@ -12,7 +12,7 @@ const DisplayCards = ({ cardCollection, handleEdit, handleDelete, id, setId, fro
                 <h5>Back: {card.back}</h5>
                 <h6>ID: {card.id}</h6>
                 <Link to='edit-card'>Edit</Link>{' '}
-                <DeleteCard handleDelete={handleDelete} id={card.id}/>
+                <DeleteCard handleRemove={handleRemove} id={card.id}/>
                 <hr />
             </div>
         )
