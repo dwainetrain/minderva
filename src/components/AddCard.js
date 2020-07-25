@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { firestore } from '../firebase';
 
 // It works, but there's got to be an easier way of passing all this info...
-const AddCard = ({ handleCreate }) => {
+const AddCard = () => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
 
-    const handleSubmit = (e) => {
+    const create = async (e) => {
         e.preventDefault();
-        handleCreate(front, back)
+        const card = {front:front, back:back}
+        await firestore.collection('cards').add(card);
+        setFront('');
+        setBack('');
     }
     
     return (
@@ -17,7 +21,7 @@ const AddCard = ({ handleCreate }) => {
         {/* Controlled component form, 
         takes in the form data into state 
         and then updates database on submit*/}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={create}>
             <input
             type="text"
             name="front"

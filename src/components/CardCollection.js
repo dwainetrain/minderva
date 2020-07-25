@@ -1,12 +1,12 @@
 import React from 'react';
 import DisplayCards from './DisplayCards';
 
-const CardCollection = ({ children, handleRemove, cardCollection }) => (
+const CardCollection = ({ children, cardCollection }) => (
     <div>
     <h2>Card Collection</h2>
         <div>
-            {children}
-            <DisplayCards path="/" cardCollection={cardCollection} handleRemove={handleRemove}/>
+            {/* {children} */}
+            <DisplayCards path="/" cardCollection={cardCollection} />
         </div>
     </div>
 )

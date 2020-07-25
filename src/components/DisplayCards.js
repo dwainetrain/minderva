@@ -11,7 +11,7 @@ const DisplayCards = ({ cardCollection, handleEdit, handleRemove, id, setId, fro
                 <h4>Front: {card.front}</h4>
                 <h5>Back: {card.back}</h5>
                 <h6>ID: {card.id}</h6>
-                <Link to='edit-card'>Edit</Link>{' '}
+                <Link to={`edit-card/${card.id}`} id={card.id}>Edit</Link>{' '}
                 <DeleteCard handleRemove={handleRemove} id={card.id}/>
                 <hr />
             </div>

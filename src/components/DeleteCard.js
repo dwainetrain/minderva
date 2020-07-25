@@ -1,14 +1,15 @@
 import React from 'react';
+import { firestore } from '../firebase'
 
-const DeleteCard = ({ handleRemove, id}) => {
+const DeleteCard = ({id}) => {
 
-    const handleDelete = (e) => {
+    const remove = async (e) => {
         e.preventDefault();
-        handleRemove(e.target.value);
+        await firestore.doc(`cards/${id}`).delete(); 
     }
 
     return(
-            <button value={id} onClick={handleDelete}>Delete Card</button>
+        <button value={id} onClick={remove}>Delete Card</button>
     )
 }
 
