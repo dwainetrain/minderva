@@ -38,7 +38,6 @@ function App() {
       const unsubscribe = firestore.collection('cards').onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
         setCardCollection(entries);
-        console.log('Rerendered!')
       });
 
     return () => {
@@ -57,7 +56,9 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/" component={Dashboard} />
+          
           <Route exact path="/quiz" render={Quiz} />
+
           <Route exact path="/card-collection" render=
           {() => 
             <CardCollection path="/card-collection" cardCollection={cardCollection} />
