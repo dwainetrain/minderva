@@ -48,7 +48,7 @@ function App() {
     
   return (
     <div className="App">
-      <h1>Minderva - MVP Build 0.04</h1>
+      <h1>Minderva - MVP Build 0.05</h1>
       
       <header className="App-header">
         <Nav />
