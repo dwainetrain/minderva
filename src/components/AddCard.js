@@ -10,8 +10,10 @@ const AddCard = () => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
-    const [toLanguage, setToLanguage] = useState('es'); //This will eventually be a default set in user profile
-    const [fromLanguage, setFrontLanguage] = useState('');
+    
+    //This will eventually be a default set in user profile
+    const [fromLanguage, setFromLanguage] = useState('en');
+    const [toLanguage, setToLanguage] = useState('es'); 
 
     const create = async (e) => {
         e.preventDefault();
@@ -28,20 +30,31 @@ const AddCard = () => {
           });
     }
 
-    const handleLanguageSelect = (e) => {
+    const handleFromLanguageSelect = (e) => {
+        setFromLanguage(e.target.value)
+    }
+
+    const handleToLanguageSelect = (e) => {
         setToLanguage(e.target.value)
     }
 
     // usability would be enter word, tab over enter to manual entry, tab tab enter would translate
-    
     return (
         <div>
             <p>Add a Card</p>
         {/* Controlled component form, 
         takes in the form data into state 
         and then updates database on submit*/}
-            <div><p>Translate To:</p><SelectLanguage handleLanguageSelect={handleLanguageSelect}/></div>
+
+            <span>Translate From: <SelectLanguage 
+                handleLanguageSelect={handleFromLanguageSelect}
+                selected={fromLanguage}/></span>{' '}
+                
+            <span>Translate To: <SelectLanguage 
+                handleLanguageSelect={handleToLanguageSelect}
+                selected={toLanguage}/></span>
             <form onSubmit={create}>
+
                 <input
                 type="text"
                 name="front"

@@ -1,36 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { languagesMap } from './languagesMap';
 import { translate_key } from '../apis';
+import { getKeyByValue } from '../utilities'
 const googleTranslate = require('google-translate')(translate_key);
 
-const SelectLanguage = ({ handleLanguageSelect }) => {
 
-    // so I don't want to call the api everytime we just need to list out available languages,
-    // instead just call once and store it
-    // 
-    // const testArray = ['a', 'b', 'c', 'd', 'e', 'f']
+const SelectLanguage = ({ handleLanguageSelect, selected }) => {
 
-    // const testList = () => {
-    //     return testArray
-    //     .map(letter => console.log(letter))
-    // }
+    // TODO: Only Load these languages once per session! Otherwise you're making a call
+    // everytime you add a card. I'm thinking the supported languages don't change that often.
+    const [languages, setLanguages] = useState('');
+    const [loaded, setLoaded] = useState(false);
 
-    // console.log(testList())
+    useEffect(() => {
+       googleTranslate.getSupportedLanguages((err, languageCodes) => {
+        const languageNames = languageCodes
+        // TODO: Current language map is just a static sample, chance of inaccuracy is high
+        // Find some better method of matching code to language names
+        .map(code => [code, getKeyByValue(languagesMap, code)])
+        .filter(name => name[1] !== undefined)
+        setLanguages(languageNames);
+        setLoaded(true)
+      })  
 
-    // This is tripping you up! It works in console.log but not when trying to map over it?????
-    const languageList = () => {
-        googleTranslate.getSupportedLanguages(async (err, languageCodes) => {
-        // return languageCodes.map(code => console.log(typeof code));
-        // => ['af', 'ar', 'be', 'bg', 'ca', 'cs', ...]
-        // [...languageCodes].map(code => <option value={code}>{code}</option>)
-        return await languageCodes;
-      })
-    }
-
-    console.log(languageList())
+    }, [])
     
       return (
-        <select onChange={handleLanguageSelect}>
-            {/* {languageList} */}
+        <select onChange={handleLanguageSelect} value={selected}>
+            {loaded ? 
+            languages.map(language => <option value={language[0]} key={language[0]}>{language[1]}</option>) : 
+            <option>Loading...</option>}
         </select>
     )
 }
