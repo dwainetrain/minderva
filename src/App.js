@@ -16,22 +16,7 @@ import { collectIdsAndDocs } from './utilities';
 
 function App() {
 
-  // Add Card State - to be pushed into their own respective components
-  // const [id, setId] = useState('');
-  // const [front, setFront] = useState('');
-  // const [back, setBack] = useState('');
   const [cardCollection, setCardCollection] = useState([]);
-
-  // Update
-  // const handleEdit = (e) => {
-  //   e.preventDefault();
-  //   const filterCollection = cardCollection.filter(card => card.id !== id)
-  //   setCardCollection([{
-  //     id:id,
-  //     front:front,
-  //     back:back
-  //   }, ...filterCollection])
-  // }
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
@@ -48,8 +33,9 @@ function App() {
     
   return (
     <div className="App">
-      <h1>Minderva - A Language Learning Tool</h1>
-      <h4>MVP Build 0.05</h4>
+      <h1>Minderva</h1>
+      <h2>A Wicked Language Learning Tool</h2>
+      <h4>MVP Build 0.06</h4>
       
       <header className="App-header">
         <Nav />
@@ -58,27 +44,30 @@ function App() {
         <Switch>
           <Route exact path="/" component={Dashboard} />
           
-          <Route exact path="/quiz" render={Quiz} />
+          <Route exact path="/quiz" render=
+            {() => 
+              <Quiz path="/quiz" cardCollection={cardCollection} />
+            }/>
 
           <Route exact path="/card-collection" render=
-          {() => 
-            <CardCollection path="/card-collection" cardCollection={cardCollection} />
-          }/>
+            {() => 
+              <CardCollection path="/card-collection" cardCollection={cardCollection} />
+            }/>
           
           <Route exact path="/edit-card/:id" render=
-          {(cardDetails) => 
-            <EditCard {...cardDetails}/>
-          }/>
+            {(cardDetails) => 
+              <EditCard {...cardDetails}/>
+            }/>
 
           <Route exact path="/add-cards" render=
-          {() => 
-            <AddCard />
-          }/>
+            {() => 
+              <AddCard />
+            }/>
           
           <Route exact path="/user-profile" render=
-          {() =>
-            <UserProfile />
-          } />
+            {() =>
+              <UserProfile />
+            } />
         </Switch>
       </div>
     </div>
