@@ -38,13 +38,9 @@ const AddCard = () => {
         setToLanguage(e.target.value)
     }
 
-    // usability would be enter word, tab over enter to manual entry, tab tab enter would translate
     return (
         <div>
             <p>Add a Card</p>
-        {/* Controlled component form, 
-        takes in the form data into state 
-        and then updates database on submit*/}
 
             <span>Translate From: <SelectLanguage 
                 handleLanguageSelect={handleFromLanguageSelect}
@@ -75,7 +71,6 @@ const AddCard = () => {
                 <button type='button' onClick={translation}>Translate Word</button>
                 <button>Add Card</button>
             </form>
-            
         </div>
     )}
 

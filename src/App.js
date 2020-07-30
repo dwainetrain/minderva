@@ -12,11 +12,14 @@ import { Route, Switch } from 'react-router-dom';
 
 import { firestore } from './firebase';
 import { collectIdsAndDocs } from './utilities';
+import Authentication from './components/Authentication';
 // import './App.css';
 
 function App() {
 
   const [cardCollection, setCardCollection] = useState([]);
+  // Auth state
+  const [user, setUser] = useState(null);
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
@@ -40,6 +43,7 @@ function App() {
       <header className="App-header">
         <Nav />
       </header>
+      <Authentication user={user}/>
       <div>
         <Switch>
           <Route exact path="/" component={Dashboard} />
