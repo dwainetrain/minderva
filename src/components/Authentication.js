@@ -6,7 +6,7 @@ const Authentication = ({ user })  => {
 
     return (
     <div>
-        {user ? <CurrentUser /> : <SignInAndSignUp />}
+        {user ? <CurrentUser {...user}/> : <SignInAndSignUp />}
     </div>
     )
 }

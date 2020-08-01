@@ -10,7 +10,7 @@ import EditCard from './components/EditCard';
 
 import { Route, Switch } from 'react-router-dom';
 
-import { firestore } from './firebase';
+import { firestore, auth } from './firebase';
 import { collectIdsAndDocs } from './utilities';
 import Authentication from './components/Authentication';
 // import './App.css';
@@ -23,13 +23,19 @@ function App() {
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
-      const unsubscribe = firestore.collection('cards').onSnapshot(snapshot => {
+      const unsubscribeFromFirestore = firestore.collection('cards').onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
         setCardCollection(entries);
       });
 
+      const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+        setUser(user)
+        console.log(user)
+      })
+
     return () => {
-      unsubscribe();
+      unsubscribeFromFirestore();
+      unsubscribeFromAuth();
     }
     
   }, []);
