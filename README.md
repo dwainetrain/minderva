@@ -63,7 +63,7 @@ Notes:
 
 Version 0.06, 7.28.2020:
 
-- ~~It should have a working quiz section
+- ~~It should have a working quiz section~~
 
 Version 0.07:
 
@@ -84,7 +84,7 @@ Notes:
 
 Overall Notes:
 
-- Roadmap: Firebase CRUD → Basic Quiz → Basic User Profiles → UX and Data Integrity
+- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → Basic User Profiles → UX and Data Integrity
 - Currently in Test Mode!
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow
 - git ignore firebase.js for the time being, until I find a better way to sercure my api
