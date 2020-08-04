@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 
-import { firestore } from '../firebase';
+import { firestore, auth } from '../firebase';
 import { translate_key } from '../apis';
 const translate = require('google-translate')(translate_key).translate;
 
@@ -10,15 +10,16 @@ const AddCard = () => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
+    const [uid, setUid] = useState('');
     
     //This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');
-    const [toLanguage, setToLanguage] = useState('es'); 
+    const [toLanguage, setToLanguage] = useState('es');
 
     const create = async (e) => {
         e.preventDefault();
-        const card = {front:front, back:back}
-        await firestore.collection('cards').add(card);
+        const card = {front:front, back:back, userID:auth.currentUser.uid}
+        await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
         setFront('');
         setBack('');
     }

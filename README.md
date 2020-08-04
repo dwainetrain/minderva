@@ -50,7 +50,7 @@ Version 0.04, 7.23.2020, 7.24.2020, 7.25.2020, 7.26.2020:
 
 Version 0.05, 7.26.2020, 7.27.2020, 7.28.2020:
 
-- ~~It should pull translations from the Google API~~ ([Issue tracking here](https://www.notion.so/dwainebest/Google-Translate-API-e8b72079e5974a318da98b5c67105d67))
+- ~~It should pull translations from the Google API~~
 - ~~It should have the ability to enter a word and have it translated into another language~~
 - ~~It should allow you to select translate 'to' languages~~
 - ~~It should allow you to select translate 'from' languages~~
@@ -67,25 +67,23 @@ Version 0.06, 7.28.2020:
 
 Version 0.07:
 
-- It should allow users to sign up
-- It should allow users to sign in
-- It should allow users to sign out
-- It should allow users to create and edit their own card collection
-- It should allow users to change profile information
-- It should allow users to delete their account
-- It should have a dummy account that anyone can sign into for demo purposes
+- ~~It should allow users to sign-up/sign-in with Google Account~~
+- ~~It should allow users to sign out~~
+- ~~It shoud allow users to view their card collection~~
+- ~~It should allow users to add cards to their collection~~
+- It should allow users to delete cards from their collection
+- It should allow user to edit cards in their collection
 
 Notes:
 
-- Data Structure: Going for the simplest form, collection:users -> document:user
-- The user document will contain an array of the user's added cards
-- Not very future proof, but sufficent for this proof of concept
+- Data Structure: Going for the simplest form, collection:users -> document:user -> collection:cards -> document:card
 - The Google Sign in with Pop up is giving a cross-site resource warning
+- The page is not refreshing on user sign in or sign out
 
 Overall Notes:
 
-- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → Basic User Profiles → UX and Data Integrity
-- Currently in Test Mode!
+- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → Basic User Functions → UX and Data Integrity and Security Audit
+- ~~Currently in Test Mode!~~
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow
 - git ignore firebase.js for the time being, until I find a better way to sercure my api
 - Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection
@@ -95,6 +93,7 @@ Overall Notes:
 
 Future Version Considerations:
 
+- Allow users to sign-in/sign-up with other services, especially email
 - It should be moved to its own github location (wait until final is graded)
 - It should have the five most popular languages up top of language selection
 - It should have the users most frequently used languages up top of language selection
@@ -123,3 +122,14 @@ Future Version Considerations:
 Obsolete:
 
 - ~~Roadmap: Basics → Split into Components → Routing → Firebase → Refine Functionality → Design~~
+
+Current Security Rules, check against best practices:
+rules_version = '2';
+service cloud.firestore {
+match /databases/{database}/documents {
+match /users/{uid}/cards/{id} {
+allow read: if request.auth.uid != null && request.auth.uid == uid;
+allow write: if request.auth.uid != null && request.auth.uid == uid;
+}
+}
+}

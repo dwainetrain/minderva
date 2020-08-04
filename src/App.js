@@ -23,14 +23,15 @@ function App() {
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
-      const unsubscribeFromFirestore = firestore.collection('cards').onSnapshot(snapshot => {
+    // This is possibly super unsecure! Check to see if exposing user ids in a firestore database is good or bad practice
+      const unsubscribeFromFirestore = firestore.collection(`${user ? `users/${user.uid}/cards` : null}`)
+      .onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
         setCardCollection(entries);
       });
 
       const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
         setUser(user)
-        console.log(user)
       })
 
     return () => {
@@ -38,7 +39,7 @@ function App() {
       unsubscribeFromAuth();
     }
     
-  }, []);
+  }, [user]);
     
   return (
     <div className="App">
