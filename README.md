@@ -82,7 +82,33 @@ Notes:
 **Version 0.08:**
 
 - First UX Pass:
+- Overall: Remove the profile that's on every page, and just put it on user profile page
 - Homepage: If user is logged in, they should get main navigation, otherwise they should only see login/signup.
+- Navigation: A sign out link should be provided if the user is logged in
+- Display Cards: Cards should be shown in a table, with edit and delete buttons beside them
+- Display Cards: Rename link to Card Collection
+- Display Cards: The page should refresh if the users signs in or out.
+- Security: Are the paths blocked if the user is logged out? ie, the add card route?
+- Edit Card: The page should flash message on edit, either error or success.
+- Edit card: After editing, it should return to card collection
+- Edit card: There should be a delete card button in edit
+- Edit card: There should be a disable button
+- Edit card: There should be a 'back to card collection" button, or cancel button
+- Edit Card: The routing bug should be fixed
+- Delete Card: A confirmation alert should pop up
+- Delete Card: A status message should flash in
+- Delete Card: consider confirmation with undo function (like gmail undo)
+- Add Card: It should flash a status message on add
+- Add Card: It should add the created date to the database
+- Add Card: Better organization of languages
+- Add Card: It should have the option to study the reverse(? maybe)
+- Add Card: It should have a little better seperation of functions (ie, translate not right next to add card)
+- Quiz Page: It should show the number of cards in the quiz, and what number you are on.
+- Quiz Page: It should have better seperation of flip card from next card
+- Quiz Page: It should show whether you are on the front or back of a card
+- Quiz Page: At the end of the quiz, it should show a congratulations message
+- User Profile: It should show the actual user profile
+- User Profile: It should remove the date element, that's just the current time
 
 Overall Notes:
 
