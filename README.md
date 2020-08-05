@@ -30,7 +30,7 @@ Version 0.03, 7.21.2020, 7.22.2020:
 
 - ~~It should have a Home - Dashboard Page~~
 - ~~It should have an Add Cards Page~~
-- It should have a Cards Collection Page
+- ~~It should have a Cards Collection Page~~
 - ~~It should have a Quiz Page~~
 - ~~It should have a Basic User Profile Page~~
 - ~~It should have navigation split into a separate component~~
@@ -71,25 +71,31 @@ Version 0.07:
 - ~~It should allow users to sign out~~
 - ~~It shoud allow users to view their card collection~~
 - ~~It should allow users to add cards to their collection~~
-- It should allow users to delete cards from their collection
-- It should allow user to edit cards in their collection
+- ~~It should allow users to delete cards from their collection~~
+- ~~It should allow user to edit cards in their collection~~
+- ~~It should allow users to quiz on cards in their collection~~
 
 Notes:
 
 - Data Structure: Going for the simplest form, collection:users -> document:user -> collection:cards -> document:card
-- The Google Sign in with Pop up is giving a cross-site resource warning
-- The page is not refreshing on user sign in or sign out
+
+**Version 0.08:**
+
+- First UX Pass:
+- Homepage: If user is logged in, they should get main navigation, otherwise they should only see login/signup.
 
 Overall Notes:
 
-- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → Basic User Functions → UX and Data Integrity and Security Audit
+- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass -> Revisit UX -> Refine Visual
 - ~~Currently in Test Mode!~~
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow
 - git ignore firebase.js for the time being, until I find a better way to sercure my api
 - Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection
 - Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...
+- The Google Sign in with Pop up is giving a cross-site resource warning
 - At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.
 - Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...
+- The page is not refreshing on user sign in or sign out
 
 Future Version Considerations:
 

@@ -4,7 +4,7 @@ import Nav from './components/Nav';
 import Dashboard from './components/Dashboard'
 import UserProfile from './components/UserProfile'
 import AddCard from './components/AddCard';
-import CardCollection from './components/CardCollection';
+// import CardCollection from './components/CardCollection';
 import Quiz from './components/Quiz';
 import EditCard from './components/EditCard';
 
@@ -13,6 +13,7 @@ import { Route, Switch } from 'react-router-dom';
 import { firestore, auth } from './firebase';
 import { collectIdsAndDocs } from './utilities';
 import Authentication from './components/Authentication';
+import DisplayCards from './components/DisplayCards';
 // import './App.css';
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
     <div className="App">
       <h1>Minderva</h1>
       <h2>A Wicked Language Learning Tool</h2>
-      <h4>MVP Build 0.06</h4>
+      <h4>MVP Build 0.07</h4>
       
       <header className="App-header">
         <Nav />
@@ -62,12 +63,12 @@ function App() {
 
           <Route exact path="/card-collection" render=
             {() => 
-              <CardCollection path="/card-collection" cardCollection={cardCollection} />
+              <DisplayCards path="/card-collection" cardCollection={cardCollection} user={user}/>
             }/>
           
           <Route exact path="/edit-card/:id" render=
-            {(cardDetails) => 
-              <EditCard {...cardDetails}/>
+            {(cardDetails) =>
+              <EditCard {...cardDetails} user={user}/>
             }/>
 
           <Route exact path="/add-cards" render=

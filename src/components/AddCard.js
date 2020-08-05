@@ -10,7 +10,6 @@ const AddCard = () => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
-    const [uid, setUid] = useState('');
     
     //This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');

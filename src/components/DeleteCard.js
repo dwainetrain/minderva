@@ -1,11 +1,11 @@
 import React from 'react';
 import { firestore } from '../firebase'
 
-const DeleteCard = ({id}) => {
+const DeleteCard = ({id, user}) => {
 
     const remove = async (e) => {
         e.preventDefault();
-        await firestore.doc(`cards/${id}`).delete(); 
+        await firestore.doc(`users/${user.uid}/cards/${id}`).delete();
     }
 
     return(
