@@ -27,7 +27,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
                             <td>
                                 <Link to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Link>
                             </td>
-                            <td><DeleteCard user={user} id={card.id} /></td>
+                            <td><DeleteCard user={user} id={card.id} handleMessage={handleMessage}/></td>
                         </tr>
                     )}
                 </tbody>

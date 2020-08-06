@@ -41,7 +41,7 @@ function App() {
     setMessage(message);
     setTimeout(() => {
       setMessage(null)
-    }, 1600)
+    }, 2400)
   }
     
   return (

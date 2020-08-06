@@ -33,7 +33,7 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
                 }/>
 
                 <Route exact path="/edit-card/:id" render=
-                // cardDetails - What's in it and where is it coming from?
+                // cardDetails - What's in it and where is it coming from? I've forgotten
                 {(cardDetails) =>
                 <EditCard {...cardDetails} user={user} handleMessage={handleMessage}/>
                 }/>

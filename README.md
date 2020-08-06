@@ -88,15 +88,10 @@ Notes:
 - ~~Edit Card: The page should flash message on edit.~~
 - ~~Edit card: After editing, it should return to card collection~~
 - ~~Edit card: There should be a 'back to card collection" button, or cancel button~~
-- Edit Card: The routing bug should be fixed (Tricky! Learn about subpage. )
-- Delete Card: A confirmation alert should pop up
-- Delete Card: A status message should flash in
-- Delete Card: consider confirmation with undo function (like gmail undo)
-- Add Card: It should flash a status message on add
-- Add Card: It should add the created date to the database
-- Add Card: Better organization of languages
-- Add Card: It should have the option to study the reverse(? maybe)
-- Add Card: It should have a little better seperation of functions (ie, translate not right next to add card)
+- ~~Edit Card: The routing bug should be fixed (Tricky! Learn about subpage. )~~
+- ~~Delete Card: A confirmation alert should pop up~~
+- ~~Delete Card: A status message should flash in~~
+- ~~Add Card: It should flash a status message on add~~
 - Quiz Page: It should show the number of cards in the quiz, and what number you are on.
 - Quiz Page: It should have better seperation of flip card from next card
 - Quiz Page: It should show whether you are on the front or back of a card
@@ -104,14 +99,16 @@ Notes:
 - Quiz Page: The cards should be reviewed in random order
 - User Profile: It should show the actual user profile
 - User Profile: It should remove the date element, that's just the current time
+- User Profile: User should be able to select default to and from languages
 
 Overall Notes:
 
+- Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...
 - Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass -> Revisit UX -> Refine Visual
 - ~~Currently in Test Mode!~~
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow
 - git ignore firebase.js for the time being, until I find a better way to sercure my api
-- Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection
+- ~~Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection~~
 - Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...
 - The Google Sign in with Pop up is giving a cross-site resource warning
 - At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.
@@ -122,6 +119,11 @@ Overall Notes:
 
 Future Version Considerations:
 
+- Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
+- Add Card: It should have the option to study the reverse(? maybe)
+- Add Card: Better organization of languages
+- Add Card: It should add the created date to the database (for SRS algorithm)
+- Delete Card: consider flash message with undo function (like gmail undo)
 - Should it have a translate button in the edit screen?
 - Allow users to sign-in/sign-up with other services, especially email
 - It should be moved to its own github location (wait until final is graded)

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { firestore } from '../firebase';
 import { collectIdsAndDocs } from '../utilities';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const EditCard = ({ match, user, handleMessage }) => {
+// match and history are props provided by React Router
+const EditCard = ({ match, user, handleMessage, history }) => {
     
       const [front, setFront] = useState('')
       const [back, setBack] = useState('')
       const [cardId] = useState(match.params.id)
-      const [redirect, setRedirect] = useState(null);
 
       useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +30,7 @@ const EditCard = ({ match, user, handleMessage }) => {
         setFront('');
         setBack('');
         handleMessage('updated');
-        setRedirect(true)
+        history.push('/card-collection')
       }
 
     return(
@@ -56,7 +56,6 @@ const EditCard = ({ match, user, handleMessage }) => {
               </input>
               <button>Edit Card</button>
             </form>
-            {redirect ? <Redirect to="/card-collection" /> : null}
             <Link to="/card-collection">Cancel</Link>
           </div>
           
