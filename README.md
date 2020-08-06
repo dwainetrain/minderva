@@ -103,8 +103,10 @@ Notes:
 
 Overall Notes:
 
+- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
+
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
-- Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass -> Revisit UX -> Refine Visual
+
 - ~~Currently in Test Mode!~~
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow
 - git ignore firebase.js for the time being, until I find a better way to sercure my api
@@ -116,6 +118,7 @@ Overall Notes:
 - The page is not refreshing on user sign in or sign out
 - My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 - The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
+-
 
 Future Version Considerations:
 
