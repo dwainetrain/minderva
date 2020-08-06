@@ -1,21 +1,38 @@
 import React from 'react';
 import DeleteCard from '../components/DeleteCard';
 import { Link } from 'react-router-dom';
+import "./DisplayCards.css"
 
-const DisplayCards = ({ cardCollection, user })  =>{
+const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
 
     return(
-        cardCollection.map(
-            card => 
-            <div key={card.id}>
-                <h4>Front: {card.front}</h4>
-                <h5>Back: {card.back}</h5>
-                <h6>ID: {card.id}</h6>
-                <Link to={`edit-card/${card.id}`} user={user} id={card.id}>Edit</Link>{' '}
-                <DeleteCard user={user} id={card.id} />
-                <hr />
-            </div>
-        )
+        <div>
+            
+            <table width="100%">
+
+                <tbody>
+                    <tr>
+                        <th>Front</th>
+                        <th>Back</th>
+                        <th>Card ID</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {cardCollection.map(
+                    card =>
+                        <tr key={card.id}>
+                            <td>{card.front}</td>
+                            <td>{card.back}</td>
+                            <td>{card.id}</td>
+                            <td>
+                                <Link to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Link>
+                            </td>
+                            <td><DeleteCard user={user} id={card.id} /></td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
   )}
 
 export default DisplayCards;

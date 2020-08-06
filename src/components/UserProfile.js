@@ -1,10 +1,10 @@
 import React from 'react';
-import CurrentUser from './CurrentUser'
+import Authentication from '../components/Authentication';
 
-const UserProfile = () => (
+const UserProfile = ({ user }) => (
     <div>
         <h2>User Profile Page</h2>
-        <CurrentUser />
+        <Authentication user={user}/>
     </div>
 )
 

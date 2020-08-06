@@ -6,7 +6,7 @@ import { translate_key } from '../apis';
 const translate = require('google-translate')(translate_key).translate;
 
 
-const AddCard = () => {
+const AddCard = ({ handleMessage }) => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
@@ -21,6 +21,7 @@ const AddCard = () => {
         await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
         setFront('');
         setBack('');
+        handleMessage('saved');
     }
 
     const translation = async (e) => {

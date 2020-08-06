@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import Nav from './components/Nav';
-import Dashboard from './components/Dashboard'
-import UserProfile from './components/UserProfile'
-import AddCard from './components/AddCard';
-// import CardCollection from './components/CardCollection';
-import Quiz from './components/Quiz';
-import EditCard from './components/EditCard';
-
-import { Route, Switch } from 'react-router-dom';
+import UserRoute from './components/UserRoute';
+import SignInAndSignUp from './components/SignInAndSignUp';
 
 import { firestore, auth } from './firebase';
 import { collectIdsAndDocs } from './utilities';
-import Authentication from './components/Authentication';
-import DisplayCards from './components/DisplayCards';
+
+import Message from './components/Messages'
+
 // import './App.css';
 
 function App() {
@@ -21,6 +15,7 @@ function App() {
   const [cardCollection, setCardCollection] = useState([]);
   // Auth state
   const [user, setUser] = useState(null);
+  const [message, setMessage] = useState(null);
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
@@ -41,47 +36,21 @@ function App() {
     }
     
   }, [user]);
+
+  const handleMessage = (message) => {
+    setMessage(message);
+    setTimeout(() => {
+      setMessage(null)
+    }, 1600)
+  }
     
   return (
     <div className="App">
       <h1>Minderva</h1>
       <h2>A Wicked Language Learning Tool</h2>
       <h4>MVP Build 0.07</h4>
-      
-      <header className="App-header">
-        <Nav />
-      </header>
-      <Authentication user={user}/>
-      <div>
-        <Switch>
-          <Route exact path="/" component={Dashboard} />
-          
-          <Route exact path="/quiz" render=
-            {() => 
-              <Quiz path="/quiz" cardCollection={cardCollection} />
-            }/>
-
-          <Route exact path="/card-collection" render=
-            {() => 
-              <DisplayCards path="/card-collection" cardCollection={cardCollection} user={user}/>
-            }/>
-          
-          <Route exact path="/edit-card/:id" render=
-            {(cardDetails) =>
-              <EditCard {...cardDetails} user={user}/>
-            }/>
-
-          <Route exact path="/add-cards" render=
-            {() => 
-              <AddCard />
-            }/>
-          
-          <Route exact path="/user-profile" render=
-            {() =>
-              <UserProfile />
-            } />
-        </Switch>
-      </div>
+        {message && <Message type={message} />}
+        {user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :<SignInAndSignUp />}
     </div>
   );
 }

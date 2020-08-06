@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { firestore } from '../firebase';
 import { collectIdsAndDocs } from '../utilities';
-const EditCard = ({ match, user }) => {
+import { Link, Redirect } from 'react-router-dom';
+
+const EditCard = ({ match, user, handleMessage }) => {
     
       const [front, setFront] = useState('')
       const [back, setBack] = useState('')
       const [cardId] = useState(match.params.id)
+      const [redirect, setRedirect] = useState(null);
 
       useEffect(() => {
         const fetchData = async () => {
@@ -13,7 +16,6 @@ const EditCard = ({ match, user }) => {
           const cardDetail = collectIdsAndDocs(response);
           setFront(cardDetail.front)
           setBack(cardDetail.back)
-          
         }
         fetchData()
       }, [cardId, user.uid])
@@ -23,11 +25,12 @@ const EditCard = ({ match, user }) => {
         e.preventDefault();
         const card = {front:front, back:back};
         const cardRef = firestore.doc(`users/${user.uid}/cards/${cardId}`);
-        console.log(cardRef)
         const response = await cardRef.update(card);
-        console.log(response)
+        console.log(response) // should this be a form of error handling, try catch?
         setFront('');
         setBack('');
+        handleMessage('updated');
+        setRedirect(true)
       }
 
     return(
@@ -53,7 +56,10 @@ const EditCard = ({ match, user }) => {
               </input>
               <button>Edit Card</button>
             </form>
+            {redirect ? <Redirect to="/card-collection" /> : null}
+            <Link to="/card-collection">Cancel</Link>
           </div>
+          
     )
 }
 

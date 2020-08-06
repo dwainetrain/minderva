@@ -57,10 +57,6 @@ Version 0.05, 7.26.2020, 7.27.2020, 7.28.2020:
 - ~~It should have names, not just codes, for languages~~
 - ~~It should have the ability to save the word and translation to the firebase database~~
 
-Notes:
-
-- My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
-
 Version 0.06, 7.28.2020:
 
 - ~~It should have a working quiz section~~
@@ -82,19 +78,17 @@ Notes:
 **Version 0.08:**
 
 - First UX Pass:
-- Overall: Remove the profile that's on every page, and just put it on user profile page
-- Homepage: If user is logged in, they should get main navigation, otherwise they should only see login/signup.
-- Navigation: A sign out link should be provided if the user is logged in
-- Display Cards: Cards should be shown in a table, with edit and delete buttons beside them
-- Display Cards: Rename link to Card Collection
-- Display Cards: The page should refresh if the users signs in or out.
-- Security: Are the paths blocked if the user is logged out? ie, the add card route?
-- Edit Card: The page should flash message on edit, either error or success.
-- Edit card: After editing, it should return to card collection
-- Edit card: There should be a delete card button in edit
-- Edit card: There should be a disable button
-- Edit card: There should be a 'back to card collection" button, or cancel button
-- Edit Card: The routing bug should be fixed
+- ~~Overall: Remove the profile that's on every page, and just put it on user profile page for now~~
+- ~~Homepage: If user is logged in, they should get main navigation, otherwise they should only see login/signup.~~
+- ~~Navigation: A sign out link should be provided if the user is logged in~~
+- ~~Display Cards: Cards should be shown in a table, with edit and delete buttons beside them~~
+- ~~Display Cards: Rename link to Card Collection~~
+- ~~Display Cards: The page should refresh if the users signs in or out.~~
+- ~~Security: Are the paths blocked if the user is logged out? ie, the add card route?~~
+- ~~Edit Card: The page should flash message on edit.~~
+- ~~Edit card: After editing, it should return to card collection~~
+- ~~Edit card: There should be a 'back to card collection" button, or cancel button~~
+- Edit Card: The routing bug should be fixed (Tricky! Learn about subpage. )
 - Delete Card: A confirmation alert should pop up
 - Delete Card: A status message should flash in
 - Delete Card: consider confirmation with undo function (like gmail undo)
@@ -107,6 +101,7 @@ Notes:
 - Quiz Page: It should have better seperation of flip card from next card
 - Quiz Page: It should show whether you are on the front or back of a card
 - Quiz Page: At the end of the quiz, it should show a congratulations message
+- Quiz Page: The cards should be reviewed in random order
 - User Profile: It should show the actual user profile
 - User Profile: It should remove the date element, that's just the current time
 
@@ -122,9 +117,12 @@ Overall Notes:
 - At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.
 - Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...
 - The page is not refreshing on user sign in or sign out
+- My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
+- The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
 
 Future Version Considerations:
 
+- Should it have a translate button in the edit screen?
 - Allow users to sign-in/sign-up with other services, especially email
 - It should be moved to its own github location (wait until final is graded)
 - It should have the five most popular languages up top of language selection
@@ -150,18 +148,22 @@ Future Version Considerations:
 - It should track right and wrong answers with a fluency score
 - Take the user's google photo and apply filters to it, like outline, or flip around, or invert colors, you get it from the google user object...when they upload a photo, instead use some other photo of a goofy looking animal.
 - What kind of data do you need to have a working quiz?
+- UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
+- Edit card: There should be a disable button
 
 Obsolete:
 
 - ~~Roadmap: Basics → Split into Components → Routing → Firebase → Refine Functionality → Design~~
 
-Current Security Rules, check against best practices:
+Current Security Rules, check against best practices. Basic idea is that a user can edit card in their cards collection:
+
+```
 rules_version = '2';
 service cloud.firestore {
-match /databases/{database}/documents {
-match /users/{uid}/cards/{id} {
-allow read: if request.auth.uid != null && request.auth.uid == uid;
-allow write: if request.auth.uid != null && request.auth.uid == uid;
+    match /databases/{database}/documents {
+        match /users/{uid}/cards/{id} {
+            allow read, write, update, delete: if request.auth.uid != null && request.auth.uid == uid;
+        }
+    }
 }
-}
-}
+```

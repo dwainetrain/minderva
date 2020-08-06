@@ -1,13 +1,13 @@
 import React from 'react';
-import SignUpAndSignIn from './SignInAndSignUp'
+import SignInAndSignUp from './SignInAndSignUp'
 
-const Dashboard = () => {
+const Dashboard = ({ user }) => {
     ///// Imports the Google Cloud client library
         
         return(
         <div>
         <h1>Dashboard</h1>
-            <SignUpAndSignIn />
+            {user ? "Welcome!" : <SignInAndSignUp />}
         </div>
 
     )}
