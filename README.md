@@ -103,7 +103,7 @@ Notes:
 
 Overall Notes:
 
-- Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...
+- Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - Roadmap: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass -> Revisit UX -> Refine Visual
 - ~~Currently in Test Mode!~~
 - If you Build, your API Keys will be exposed! Don't forget to secure them somehow

@@ -34,8 +34,8 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
 
                 <Route exact path="/edit-card/:id" render=
                 // cardDetails - What's in it and where is it coming from? I've forgotten
-                {(cardDetails) =>
-                <EditCard {...cardDetails} user={user} handleMessage={handleMessage}/>
+                {(routeParams) =>
+                <EditCard {...routeParams} user={user} handleMessage={handleMessage}/>
                 }/>
                 
                 <Route exact path="/add-cards" render=

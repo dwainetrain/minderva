@@ -25,11 +25,9 @@ const EditCard = ({ match, user, handleMessage, history }) => {
         e.preventDefault();
         const card = {front:front, back:back};
         const cardRef = firestore.doc(`users/${user.uid}/cards/${cardId}`);
-        const response = await cardRef.update(card);
-        console.log(response) // should this be a form of error handling, try catch?
-        setFront('');
-        setBack('');
+        await cardRef.update(card);
         handleMessage('updated');
+        // Redirects back to card collectioin using React Router history
         history.push('/card-collection')
       }
 
