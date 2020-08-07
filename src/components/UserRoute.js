@@ -7,6 +7,7 @@ import Quiz from './Quiz';
 import EditCard from './EditCard';
 import { Route, Switch } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
+import NotFound from './NotFound'
 
 
 const UserRoute = ({ user, cardCollection, handleMessage }) => {
@@ -47,6 +48,8 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
                 {() =>
                 <UserProfile user={user}/>
                 } />
+
+                <Route component={NotFound} />
             </Switch>
         </div>
       </>

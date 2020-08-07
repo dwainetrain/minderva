@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import SignOut from './SignOut';
 
 const CurrentUser = ({ displayName, email, createdAt }) => {
@@ -8,8 +7,6 @@ const CurrentUser = ({ displayName, email, createdAt }) => {
         <div>
             <p>Hello {displayName}!</p>
             <p>Your email: {email}</p>
-            <p>The time is: {moment(createdAt).calendar()}</p>
-
             <SignOut />
         </div>
     )

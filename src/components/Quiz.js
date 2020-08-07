@@ -6,13 +6,20 @@ const Quiz = ({ cardCollection }) => {
     const [cardNumber, setCardNumber] = useState(0);
     const [cardSide, setCardSide] = useState('front');
     
-    // I'm not using the original index, because in the future I want to assign random order to the cards
+    // Function to shuffle the cards
+    const shuffleCards = (cards) => cards 
+    .map((a) => ({sort: Math.random(), value: a}))
+    .sort((a, b) => a.sort - b.sort)
+    .map((a) => a.value)
 
     useEffect(() => {
         const quizData = () => {
-            return cardCollection.map((card, index) => { return {'order':index, ...card} })
+            const cards = cardCollection.map((card, index) => { return {'order':index, ...card} })
+            return shuffleCards(cards)
         }
+
         setQuizCards(quizData())
+        
     }, [cardCollection])
 
     const nextCard = () =>{
@@ -31,9 +38,20 @@ const Quiz = ({ cardCollection }) => {
     return(
     <div>
         <h3>Quiz Page</h3>
-        <h3>{displayCard(cardSide)}</h3>
-        <button onClick={flipCard}>Flip Card</button>
-        <button onClick={nextCard}>Next Card</button>
+        {cardNumber+1 <= quizCards.length ?
+            <div>
+                <h2>{cardNumber+1} Total Cards: {quizCards.length}</h2>
+                <h3>{displayCard(cardSide)}</h3>
+                <p>{cardSide}</p>
+                <button onClick={flipCard}>Flip Card</button>
+                <button onClick={nextCard}>Next Card</button>
+            </div>
+            :
+            <div>
+                <p>Quiz Complete</p>
+                <button onClick={() => setCardNumber(0)}>Review Again</button>
+            </div>
+        }      
     </div>
      
     )

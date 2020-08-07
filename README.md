@@ -75,7 +75,7 @@ Notes:
 
 - Data Structure: Going for the simplest form, collection:users -> document:user -> collection:cards -> document:card
 
-**Version 0.08:**
+Version 0.08:
 
 - First UX Pass:
 - ~~Overall: Remove the profile that's on every page, and just put it on user profile page for now~~
@@ -92,18 +92,27 @@ Notes:
 - ~~Delete Card: A confirmation alert should pop up~~
 - ~~Delete Card: A status message should flash in~~
 - ~~Add Card: It should flash a status message on add~~
-- Quiz Page: It should show the number of cards in the quiz, and what number you are on.
-- Quiz Page: It should have better seperation of flip card from next card
-- Quiz Page: It should show whether you are on the front or back of a card
-- Quiz Page: At the end of the quiz, it should show a congratulations message
-- Quiz Page: The cards should be reviewed in random order
-- User Profile: It should show the actual user profile
-- User Profile: It should remove the date element, that's just the current time
-- User Profile: User should be able to select default to and from languages
+- ~~Quiz Page: It should show the number of cards in the quiz, and what number you are on.~~
+- ~~Quiz Page: It should show whether you are on the front or back of a card~~
+- ~~Quiz Page: At the end of the quiz, it should show a congratulations message~~
+- ~~Quiz Page: The cards should be reviewed in random order~~
+- ~~User Profile: It should show the actual user profile~~
+- ~~User Profile: It should remove the date element, that's just the current time~~
+- ~~Overall: It should have a 404 page.~~
+
+**Version 0.09:**
+
+1st Data Integrity and Security Audit Pass
+
+- Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
+- Add Card, Edit Card: It should have limit on the amount of characters you can translate per card.
+- You should disconnect from the internet and apis and see how they handle failing, this is a way to start tackling all the error handling that needs to take place
+- It should have protected api keys so you can deploy it
+- See other security considerations in your notes
 
 Overall Notes:
 
-- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → First UX Pass → Data Integrity and Security Audit Pass -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
+- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → Data Integrity and Security Audit Pass -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 
@@ -118,43 +127,49 @@ Overall Notes:
 - The page is not refreshing on user sign in or sign out
 - My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 - The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
--
+- Not
 
 Future Version Considerations:
 
-- Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
-- Add Card: It should have the option to study the reverse(? maybe)
-- Add Card: Better organization of languages
-- Add Card: It should add the created date to the database (for SRS algorithm)
-- Delete Card: consider flash message with undo function (like gmail undo)
-- Should it have a translate button in the edit screen?
-- Allow users to sign-in/sign-up with other services, especially email
-- It should be moved to its own github location (wait until final is graded)
-- It should have the five most popular languages up top of language selection
-- It should have the users most frequently used languages up top of language selection
 - KEY FEATURE: It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day)
-- KEY FEATURE: Add pronunciation with Google TTS or Forvo
-- It should give native language equivalent pronunciation guides. [Start Here](https://easypronunciation.com/en/english-phonetic-transcription-converter) or with International Phonetic Alphabet (IPA) (maybe an api exists?) Also, see [this](https://support.google.com/translate/thread/22827704?hl=en)
-- Can you just pass the front and back values to the edit component to prefill in the forms, instead of querying the database again for them?
-- How do I simplify all this prop passing??????!!??? (Refactoring)
-- Delete button should be in edit screen also, or only. Just thinking if the user wants to delete a slew of cards. (UX)
-- Forms validation (UX and Data Persistence)
-- Add Warning to Delete (UX)
-- Add confirmation Flashes to various actions (UX)
-- Edit should pop up as modal instead of at top of display card screen (UX)
-- Wouldn't you also add cards from the card collection screen? (UX)
-- Check out NavLink for React Router (Cole lecture) for nav styling...
-- Test speaking with speech commands...for instance, you'll see Hello World, then you speak the equivalent Spanish phrase and it tests to see how right you got it...
-- Languages listed are all out of order, etc, because of the map you're using, I would like this to be more user friendly...
-- Build your own implementation of the Google Translate API module, allowing for more robust use of its features
-- Implement SRS algorithm for quiz
-- It should pull supported languages only once per session, right now it's calling it every time the add card screen is loaded.
-- The quiz cards should be in random order...
-- It should track right and wrong answers with a fluency score
-- Take the user's google photo and apply filters to it, like outline, or flip around, or invert colors, you get it from the google user object...when they upload a photo, instead use some other photo of a goofy looking animal.
-- What kind of data do you need to have a working quiz?
-- UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
-- Edit card: There should be a disable button
+- KEY FEATURE: Add pronunciation with Google TTS
+- User Profile: User should be able to select default to and from languages
+
+* Edit Page: Add translation api to screen
+* The sign in and sign up pages should be seperate
+* Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
+* Add Card: It should have the option to study the reverse(? maybe)
+* Add Card: Better organization of languages
+* Add Card: It should add the created date to the database (for SRS algorithm)
+* Delete Card: consider flash message with undo function (like gmail undo)
+* Quiz Page: It should have better seperation of flip card from next card
+* Should it have a translate button in the edit screen?
+* Allow users to sign-in/sign-up with other services, especially email
+* It should be moved to its own github location (wait until final is graded)
+* It should have the five most popular languages up top of language selection
+* It should have the users most frequently used languages up top of language selection
+* It should give native language equivalent pronunciation guides. [Start Here](https://easypronunciation.com/en/english-phonetic-transcription-converter) or with International Phonetic Alphabet (IPA) (maybe an api exists?) Also, see [this](https://support.google.com/translate/thread/22827704?hl=en)
+* Can you just pass the front and back values to the edit component to prefill in the forms, instead of querying the database again for them?
+* How do I simplify all this prop passing??????!!??? (Refactoring)
+* Delete button should be in edit screen also, or only. Just thinking if the user wants to delete a slew of cards. (UX)
+* Forms validation (UX and Data Persistence)
+* Add Warning to Delete (UX)
+* Add confirmation Flashes to various actions (UX)
+* Edit should pop up as modal instead of at top of display card screen (UX)
+* Wouldn't you also add cards from the card collection screen? (UX)
+* Check out NavLink for React Router (Cole lecture) for nav styling...
+* Test speaking with speech commands...for instance, you'll see Hello World, then you speak the equivalent Spanish phrase and it tests to see how right you got it...
+* Languages listed are all out of order, etc, because of the map you're using, I would like this to be more user friendly...
+* Build your own implementation of the Google Translate API module, allowing for more robust use of its features
+* Implement SRS algorithm for quiz
+* It should pull supported languages only once per session, right now it's calling it every time the add card screen is loaded.
+* The quiz cards should be in random order...
+* It should track right and wrong answers with a fluency score
+* Take the user's google photo and apply filters to it, like outline, or flip around, or invert colors, you get it from the google user object...when they upload a photo, instead use some other photo of a goofy looking animal.
+* What kind of data do you need to have a working quiz?
+* UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
+* Edit card: There should be a disable button
+* How do I protect users privacy from me, at the moment I can see all users cards, that is not the scenario I want. Apprently this would take end-to-end encryption, and if the user would want to sort/filter data, it would need to be done on the client side, since the database wouldn't have access to the data. Just something to consider.
 
 Obsolete:
 
