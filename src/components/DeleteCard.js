@@ -10,7 +10,7 @@ const DeleteCard = ({id, user, handleMessage}) => {
     }
 
     return(
-        <button value={id} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) remove(e) } }>Delete Card</button>
+        <button value={id} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this card?')) remove(e) } }>Delete Card</button>
     )
 }
 

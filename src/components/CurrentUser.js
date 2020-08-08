@@ -1,7 +1,7 @@
 import React from 'react';
 import SignOut from './SignOut';
 
-const CurrentUser = ({ displayName, email, createdAt }) => {
+const CurrentUser = ({ displayName, email }) => {
 
     return(
         <div>

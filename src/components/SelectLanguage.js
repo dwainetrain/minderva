@@ -8,12 +8,12 @@ const googleTranslate = require('google-translate')(translate_key);
 const SelectLanguage = ({ handleLanguageSelect, selected }) => {
 
     // TODO: Only Load these languages once per session! Otherwise you're making a call
-    // everytime you add a card. I'm thinking the supported languages don't change that often.
+    // everytime you render the add card component. I'm thinking the supported languages don't change that often so its safe to store them once per session.
     const [languages, setLanguages] = useState('');
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-       googleTranslate.getSupportedLanguages((err, languageCodes) => {
+       const unsubscribeFromLanguages = () => googleTranslate.getSupportedLanguages((err, languageCodes) => {
         const languageNames = languageCodes
         // TODO: Current language map is just a static sample, chance of inaccuracy is high
         // Find some better method of matching code to language names
@@ -21,8 +21,10 @@ const SelectLanguage = ({ handleLanguageSelect, selected }) => {
         .filter(name => name[1] !== undefined)
         setLanguages(languageNames);
         setLoaded(true)
-      })  
+      })
 
+      unsubscribeFromLanguages();
+      
     }, [])
     
       return (

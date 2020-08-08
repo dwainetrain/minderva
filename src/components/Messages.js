@@ -4,7 +4,9 @@ const Message = ({ type }) => {
     const messages = {
         saved: "Your new card has been added",
         updated: "Edit successful",
-        deleted: "Card deleted"
+        deleted: "Card deleted",
+        frontRequired: "Front of the card can't be blank",
+        backRequired: "Back of the card can't be blank"
     }
 
     return (

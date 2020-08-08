@@ -6,16 +6,16 @@ import { Link } from 'react-router-dom';
 // match and history are props provided by React Router
 const EditCard = ({ match, user, handleMessage, history }) => {
     
-      const [front, setFront] = useState('')
-      const [back, setBack] = useState('')
-      const [cardId] = useState(match.params.id)
+      const [front, setFront] = useState('');
+      const [back, setBack] = useState('');
+      const cardId = match.params.id;
 
       useEffect(() => {
         const fetchData = async () => {
           const response = await firestore.doc(`users/${user.uid}/cards/${cardId}`).get();
           const cardDetail = collectIdsAndDocs(response);
-          setFront(cardDetail.front)
-          setBack(cardDetail.back)
+          setFront(cardDetail.front);
+          setBack(cardDetail.back);
         }
         fetchData()
       }, [cardId, user.uid])

@@ -47,7 +47,7 @@ function App() {
     <div className="App">
       <h1>Minderva</h1>
       <h2>A Wicked Language Learning Tool</h2>
-      <h4>MVP Build 0.07</h4>
+      <h4>MVP Build 0.08</h4>
         {message && <Message type={message} />}
         {user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :<SignInAndSignUp />}
     </div>

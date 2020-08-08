@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
-
 import { firestore, auth } from '../firebase';
 import { translate_key } from '../apis';
 const translate = require('google-translate')(translate_key).translate;
@@ -17,11 +16,22 @@ const AddCard = ({ handleMessage }) => {
 
     const create = async (e) => {
         e.preventDefault();
-        const card = {front:front, back:back, userID:auth.currentUser.uid}
-        await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
-        setFront('');
-        setBack('');
-        handleMessage('saved');
+        if (front === '') {
+            handleMessage('frontRequired')
+        } else if (back === ''){
+            handleMessage('backRequired')
+        } else {
+            try {
+                const card = {front:front, back:back, userID:auth.currentUser.uid}
+                await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
+                setFront('');
+                setBack('');
+                handleMessage('saved');
+            } catch(error) {
+                console.error('Error Adding Card: ', error.message)
+            }
+            
+        }
     }
 
     const translation = async (e) => {

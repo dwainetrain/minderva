@@ -107,8 +107,9 @@ Version 0.08:
 - Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
 - Add Card, Edit Card: It should have limit on the amount of characters you can translate per card.
 - You should disconnect from the internet and apis and see how they handle failing, this is a way to start tackling all the error handling that needs to take place
-- It should have protected api keys so you can deploy it
+- It should have protected api keys so you can deploy it (implement through Cloud Functions?)
 - See other security considerations in your notes
+- ~~Either the front-end or the database to make sure that the front and back of the cards are not null. BOTH~~
 
 Overall Notes:
 
@@ -132,7 +133,7 @@ Overall Notes:
 Future Version Considerations:
 
 - KEY FEATURE: It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day)
-- KEY FEATURE: Add pronunciation with Google TTS
+- KEY FEATURE TO ADD: Add pronunciation with Google TTS
 - User Profile: User should be able to select default to and from languages
 
 * Edit Page: Add translation api to screen
@@ -144,7 +145,7 @@ Future Version Considerations:
 * Delete Card: consider flash message with undo function (like gmail undo)
 * Quiz Page: It should have better seperation of flip card from next card
 * Should it have a translate button in the edit screen?
-* Allow users to sign-in/sign-up with other services, especially email
+* Allow users to sign-in/sign-up with other services, especially email (See FEM video starting at 31)
 * It should be moved to its own github location (wait until final is graded)
 * It should have the five most popular languages up top of language selection
 * It should have the users most frequently used languages up top of language selection
@@ -170,6 +171,13 @@ Future Version Considerations:
 * UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
 * Edit card: There should be a disable button
 * How do I protect users privacy from me, at the moment I can see all users cards, that is not the scenario I want. Apprently this would take end-to-end encryption, and if the user would want to sort/filter data, it would need to be done on the client side, since the database wouldn't have access to the data. Just something to consider.
+* Display Cards: User should be able to sort cards by front, back, date created, last date reviewed
+* Display Cards: User should be able to search for cards
+* Add card page should have a flip to and from languages button
+* Add card should have a study reverse option
+* Better slow-internet connection experience...some kind of pwa, or some way to indicate loading or working...
+* It should check for duplicate cards??
+* implement Context API for better state management
 
 Obsolete:
 
