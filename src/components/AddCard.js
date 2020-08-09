@@ -5,6 +5,8 @@ import { translate_key } from '../apis';
 const translate = require('google-translate')(translate_key).translate;
 
 
+
+
 const AddCard = ({ handleMessage }) => {
 
     const [front, setFront] = useState('');

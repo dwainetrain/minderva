@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/cards/{id} {
+    	allow write, update: if request.auth.uid != null && request.auth.uid == uid && request.resource.data.front != '' && request.resource.data.back != ''; 
+    	allow read, delete: if request.auth.uid != null && request.auth.uid == uid;
+    }
+  }
+}
