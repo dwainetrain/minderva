@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
-import { firestore, auth } from '../firebase';
+import { firestore, auth, functions } from '../firebase';
 import { translate_key } from '../apis';
 const translate = require('google-translate')(translate_key).translate;
 
@@ -51,6 +51,22 @@ const AddCard = ({ handleMessage }) => {
         setToLanguage(e.target.value)
     }
 
+    /////////TESTING CLOUD FUNCTION/////////////
+    const translationCall = functions.httpsCallable('translate');
+    
+    const testTranslation = (text) => {
+        try{
+            translationCall(text).then((result) => {
+                console.log(result)
+            })
+        }
+        catch(error) {
+                console.log(error)
+        }
+    }
+
+    ///////////////////////
+
     return (
         <div>
             <p>Add a Card</p>
@@ -84,6 +100,7 @@ const AddCard = ({ handleMessage }) => {
                 <button type='button' onClick={translation}>Translate Word</button>
                 <button>Add Card</button>
             </form>
+            <button onClick={() => testTranslation(front)}>Test Translation</button>
         </div>
     )}
 
