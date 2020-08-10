@@ -37,7 +37,7 @@ const {Translate} = require('@google-cloud/translate').v2;
 
 // Imports the Google Cloud client library
 
-exports.translate = functions.https.onCall(async (original) => {
+exports.translate = functions.https.onCall(async (data, context) => {
 
     const projectId = 'minderva-17770';
     
@@ -45,18 +45,20 @@ exports.translate = functions.https.onCall(async (original) => {
     const translate = new Translate({projectId});
     
     // The text to translate
-    const text = original;
+    const text = data.text;
     
     // The target language
-    const target = 'ja';
+    const target = data.target;
     
     // Translates some text into Japanese
     const [translation] = await translate.translate(text, target);
-    const writeTranslation = await admin.firestore().collection('messages')
-    .add({text:text, translation: translation});
+    //const writeTranslation = await admin.firestore().collection('messages')
+    //.add({text:text, translation: translation});
+
+    return {translation:translation}
     // response.json({ result: `Translation with ID: ${writeTranslation.id} added.`})
-    console.log(`Text: ${text}`);
-    console.log(`Translation: ${translation}`);
+    // console.log(`Text: ${text}`);
+    // console.log(`Translation: ${translation}`);
     
 })
  

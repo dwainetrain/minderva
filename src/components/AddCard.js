@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
-import { translate_key } from '../apis';
-const translate = require('google-translate')(translate_key).translate;
-
-
 
 
 const AddCard = ({ handleMessage }) => {
@@ -36,13 +32,6 @@ const AddCard = ({ handleMessage }) => {
         }
     }
 
-    const translation = async (e) => {
-        e.preventDefault();
-        await translate(front, toLanguage, function(err, translation) {
-            setBack(translation.translatedText);
-          });
-    }
-
     const handleFromLanguageSelect = (e) => {
         setFromLanguage(e.target.value)
     }
@@ -51,21 +40,23 @@ const AddCard = ({ handleMessage }) => {
         setToLanguage(e.target.value)
     }
 
-    /////////TESTING CLOUD FUNCTION/////////////
     const translationCall = functions.httpsCallable('translate');
     
-    const testTranslation = (text) => {
-        try{
-            translationCall(text).then((result) => {
-                console.log(result)
-            })
-        }
-        catch(error) {
-                console.log(error)
+    const translation = (e) => {
+        if (front === '') {
+            handleMessage('frontRequired')
+        } else {
+        e.preventDefault();
+            try{
+                translationCall({text:front,target:toLanguage}).then((result) => {
+                    setBack(result.data.translation)
+                })
+            }
+            catch(error) {
+                    console.log(error)
+            }
         }
     }
-
-    ///////////////////////
 
     return (
         <div>
@@ -97,10 +88,9 @@ const AddCard = ({ handleMessage }) => {
                 onChange={e => setBack(e.target.value)}
                 >
                 </input>
-                <button type='button' onClick={translation}>Translate Word</button>
+                <button type='button' onClick={translation}>Translate</button>
                 <button>Add Card</button>
             </form>
-            <button onClick={() => testTranslation(front)}>Test Translation</button>
         </div>
     )}
 
