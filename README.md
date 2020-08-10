@@ -100,39 +100,49 @@ Version 0.08:
 - ~~User Profile: It should remove the date element, that's just the current time~~
 - ~~Overall: It should have a 404 page.~~
 
-**Version 0.09:**
-
+Version 0.09:
 1st Data Integrity and Security Audit Pass
 
-- Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
-- Add Card, Edit Card: It should have limit on the amount of characters you can translate per card.
-- You should disconnect from the internet and apis and see how they handle failing, this is a way to start tackling all the error handling that needs to take place
-- It should have protected api keys so you can deploy it (implement through Cloud Functions?)
-- See other security considerations in your notes
+- ~~Add Card, Edit Card: It should have limit on the amount of characters you can translate per card.~~
+- ~~You should disconnect from the internet and apis and see how they handle failing, this is a way to start tackling all the error handling that needs to take place~~
+- ~~It should have protected api keys so you can deploy it (implement through Cloud Functions)~~
 - ~~Either the front-end or the database to make sure that the front and back of the cards are not null. BOTH~~
+
+**Version 0.10**
 
 Overall Notes:
 
 - Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → Data Integrity and Security Audit Pass -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - ~~Currently in Test Mode!~~
-- If you Build, your API Keys will be exposed! Don't forget to secure them somehow
-- git ignore firebase.js for the time being, until I find a better way to sercure my api
+- ~~If you Build, your API Keys will be exposed! Don't forget to secure them somehow~~
+- ~~git ignore firebase.js for the time being, until I find a better way to sercure my api (this is actually acceptable, since it can only be used from select ip addressess)~~
 - ~~Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection~~
-- Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...
+- ~~Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...~~
 - The Google Sign in with Pop up is giving a cross-site resource warning
-- At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.
+- ~~At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.~~
 - Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...
 - The page is not refreshing on user sign in or sign out
 - My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 - The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
 - I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
 
+Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
+
+- Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
+- No internet dashboard: local server keeps trying to access firestore (UX issue, or some kind of timeout?)
+- No internet card collection: blank table (UX issue)
+- No internet review cards: blank quiz, reads quiz complete (UX issue)
+- Sign Up: Cross site Error
+- What other failures could there be? Trying to add, edit or delete a card and they fail for some reason, you'll want the error on that
+
 Future Version Considerations:
 
 - KEY FEATURE: It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day)
 - KEY FEATURE TO ADD: Add pronunciation with Google TTS
 - User Profile: User should be able to select default to and from languages
+- Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...
+- Let the user know when internet is lost and you can't contact database
 
 * Edit Page: Add translation api to screen
 * The sign in and sign up pages should be seperate

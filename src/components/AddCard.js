@@ -69,13 +69,13 @@ const AddCard = ({ handleMessage }) => {
                 handleLanguageSelect={handleToLanguageSelect}
                 selected={toLanguage} keyTo="target"/></span>
             <form onSubmit={create}>
-
                 <input
                 type="text"
                 name="front"
                 placeholder="front"
                 value={front}
                 onChange={e => setFront(e.target.value)}
+                maxLength="50"
                 >
                 </input>
 
