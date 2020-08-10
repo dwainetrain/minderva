@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
 
-
 const AddCard = ({ handleMessage }) => {
 
     const [front, setFront] = useState('');
@@ -64,11 +63,11 @@ const AddCard = ({ handleMessage }) => {
 
             <span>Translate From: <SelectLanguage 
                 handleLanguageSelect={handleFromLanguageSelect}
-                selected={fromLanguage}/></span>{' '}
+                selected={fromLanguage} keyTo="text"/></span>{' '}
                 
             <span>Translate To: <SelectLanguage 
                 handleLanguageSelect={handleToLanguageSelect}
-                selected={toLanguage}/></span>
+                selected={toLanguage} keyTo="target"/></span>
             <form onSubmit={create}>
 
                 <input
