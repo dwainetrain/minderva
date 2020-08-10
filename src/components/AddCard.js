@@ -44,6 +44,8 @@ const AddCard = ({ handleMessage }) => {
     const translation = (e) => {
         if (front === '') {
             handleMessage('frontRequired')
+        } else if (front.length > 100) {
+            handleMessage('characterLimit')
         } else {
         e.preventDefault();
             try{
@@ -75,7 +77,7 @@ const AddCard = ({ handleMessage }) => {
                 placeholder="front"
                 value={front}
                 onChange={e => setFront(e.target.value)}
-                maxLength="50"
+                maxLength="100"
                 >
                 </input>
 

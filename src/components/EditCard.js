@@ -41,7 +41,7 @@ const EditCard = ({ match, user, handleMessage, history }) => {
                 name="front" 
                 placeholder="front"
                 value={front}
-                maxLength="50"
+                maxLength="100"
                 onChange={ e => setFront(e.target.value) }>
               </input>
 
