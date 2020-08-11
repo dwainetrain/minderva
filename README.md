@@ -110,9 +110,17 @@ Version 0.09:
 
 **Version 0.10**
 
+- Design Notes: Start mobile. In order of what I want to try
+- https://chakra-ui.com/getting-started (does it have table designs?)
+- https://evergreen.segment.com/components/table (has tables, looks a little coporate)
+- https://react.semantic-ui.com/elements/button/ (not bad)
+- https://blueprintjs.com/docs/#core/components/overflow-list (extensive)
+- https://material-ui.com/components/tables/ (the king, figma file costs \$69, or use google material to get close enough)
+- v2 of Gray Box is complete, now going to try to implement in blueprint.
+
 Overall Notes:
 
-- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → Data Integrity and Security Audit Pass -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
+- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - ~~Currently in Test Mode!~~
 - ~~If you Build, your API Keys will be exposed! Don't forget to secure them somehow~~
