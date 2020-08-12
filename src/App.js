@@ -8,7 +8,10 @@ import { collectIdsAndDocs } from './utilities';
 
 import Message from './components/Messages'
 
-// import './App.css';
+/// Styling
+import 'semantic-ui-css/semantic.min.css'
+import { Container } from 'semantic-ui-react'
+import './App.css';
 
 function App() {
 
@@ -45,11 +48,18 @@ function App() {
     
   return (
     <div className="App">
-      <h1>Minderva</h1>
-      <h2>A Wicked Language Learning Tool</h2>
-      <h4>MVP Build 0.09</h4>
         {message && <Message type={message} />}
-        {user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :<SignInAndSignUp />}
+        {user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :
+        <>
+          <h1>Minderva - A Language Learning Tool</h1>
+          <SignInAndSignUp />
+        </>
+        }
+        <footer>
+          <Container>
+            <p>MVP Build 0.09</p>
+          </Container>
+        </footer>
     </div>
   );
 }

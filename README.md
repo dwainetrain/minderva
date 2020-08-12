@@ -110,19 +110,23 @@ Version 0.09:
 
 **Version 0.10**
 
-- Design Notes: Start mobile. In order of what I want to try
-- https://chakra-ui.com/getting-started (does it have table designs?)
-- https://evergreen.segment.com/components/table (has tables, looks a little coporate)
 - https://react.semantic-ui.com/elements/button/ (not bad)
-- https://blueprintjs.com/docs/#core/components/overflow-list (extensive)
-- https://material-ui.com/components/tables/ (the king, figma file costs \$69, or use google material to get close enough)
-- v2 of Gray Box is complete, now going to try to implement in blueprint.
+- v2 of Gray Box is complete, now going to try to implement in Semantic UI.
+- Dashboard - It should show available cards for review
+- Dashboard - It should have a link to reviews under the number of cards to review
+- Dashboard - It should have a memory quote placeholder
+- ~~Menu - It should have some indication of being on an active page~~
+- ~~Menu - It should remove the Dashboard link and just make that the Minderva title link~~
+- Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu
+- Quiz - It should somehow (modal?) Fade to the Quiz design
+- It should have a Login Screen Designed
 
 Overall Notes:
 
 - Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - ~~Currently in Test Mode!~~
+- **NPM Security Vunerability surfaced** See here for solution: https://github.com/facebook/create-react-app/issues/9469
 - ~~If you Build, your API Keys will be exposed! Don't forget to secure them somehow~~
 - ~~git ignore firebase.js for the time being, until I find a better way to sercure my api (this is actually acceptable, since it can only be used from select ip addressess)~~
 - ~~Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection~~
@@ -151,8 +155,10 @@ Future Version Considerations:
 - User Profile: User should be able to select default to and from languages
 - Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...
 - Let the user know when internet is lost and you can't contact database
+- After Quiz: See you tomorrow! Let’s schedule a review time now. (and link out to calendar)
+- UX - Add Card: Add a loading animation to the translate function, because it takes a second or two to fire up from cold start, then it seems to be speedier.
 
-* Edit Page: Add translation api to screen
+* Edit Page: Add translation api to edit screen
 * The sign in and sign up pages should be seperate
 * Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
 * Add Card: It should have the option to study the reverse(? maybe)

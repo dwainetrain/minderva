@@ -89,7 +89,7 @@ const AddCard = ({ handleMessage }) => {
                 onChange={e => setBack(e.target.value)}
                 >
                 </input>
-                <button type='button' onClick={translation}>Translate</button>
+                <button type='button' onClick={translation} as='a'>Translate</button>
                 <button>Add Card</button>
             </form>
         </div>
