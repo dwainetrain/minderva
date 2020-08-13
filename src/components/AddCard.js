@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
+import { Grid, Card, Button, Input, Form } from 'semantic-ui-react'
 
 const AddCard = ({ handleMessage }) => {
 
@@ -44,7 +45,7 @@ const AddCard = ({ handleMessage }) => {
     const translation = (e) => {
         if (front === '') {
             handleMessage('frontRequired')
-        } else if (front.length > 100) {
+        } else if (front.length > 60) {
             handleMessage('characterLimit')
         } else {
         e.preventDefault();
@@ -63,35 +64,63 @@ const AddCard = ({ handleMessage }) => {
         <div>
             <p>Add a Card</p>
 
-            <span>Translate From: <SelectLanguage 
-                handleLanguageSelect={handleFromLanguageSelect}
-                selected={fromLanguage} keyTo="text"/></span>{' '}
-                
-            <span>Translate To: <SelectLanguage 
-                handleLanguageSelect={handleToLanguageSelect}
-                selected={toLanguage} keyTo="target"/></span>
-            <form onSubmit={create}>
-                <input
-                type="text"
-                name="front"
-                placeholder="front"
-                value={front}
-                onChange={e => setFront(e.target.value)}
-                maxLength="100"
-                >
-                </input>
+            {/*  */}
+            <Form onSubmit={create}>
+            <Grid columns="equal">
+                <Grid.Row>
+                    <Grid.Column width="12">
+                        <Card.Group>
+                        <Card fluid>
+                            <Card.Content>
+                                <Input
+                                fluid
+                                transparent
+                                size='massive'
+                                name="front" 
+                                placeholder="Front" 
+                                value={front}
+                                onChange={e => setFront(e.target.value)}
+                                maxLength="60"
+                                autoComplete="off"/>
+                            </Card.Content>
+                        </Card>
+                        <Card fluid>
+                            <Card.Content>
+                                <span>Translate From: <SelectLanguage 
+                                handleLanguageSelect={handleFromLanguageSelect}
+                                selected={fromLanguage} keyTo="text"/></span>{' '}
+                                
+                                <span>Translate To: <SelectLanguage 
+                                handleLanguageSelect={handleToLanguageSelect}
+                                selected={toLanguage} keyTo="target"/></span>
 
-                <input
-                type="text"
-                name="back"
-                placeholder="back"
-                value={back}
-                onChange={e => setBack(e.target.value)}
-                >
-                </input>
-                <button type='button' onClick={translation} as='a'>Translate</button>
-                <button>Add Card</button>
-            </form>
+                                <h3>{back}</h3>
+                                <Button type='button' onClick={translation} as='a'>Translate</Button>
+                            </Card.Content>
+                            <Card.Content extra>
+                                <input
+                                    type="text"
+                                    name="back"
+                                    placeholder="back"
+                                    value={back}
+                                    onChange={e => setBack(e.target.value)}
+                                >
+                                </input>
+                            </Card.Content>
+                        </Card>
+                        </Card.Group>
+                    </Grid.Column>
+                    
+                    <Grid.Column>
+                            <Button>Add Card</Button>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+            
+            </Form>
+            {/*  */}
+
+            
         </div>
     )}
 

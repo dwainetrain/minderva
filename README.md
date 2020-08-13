@@ -120,6 +120,8 @@ Version 0.09:
 - Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu
 - Quiz - It should somehow (modal?) Fade to the Quiz design
 - It should have a Login Screen Designed
+- Overall - It shouldn't flash the login screen when first loading up (have loading animation)
+- Quiz - It should show what langugage you're expected to translate to...
 
 Overall Notes:
 
@@ -131,6 +133,7 @@ Overall Notes:
 - ~~git ignore firebase.js for the time being, until I find a better way to sercure my api (this is actually acceptable, since it can only be used from select ip addressess)~~
 - ~~Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection~~
 - ~~Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...~~
+- **DISABLED STRICT MODE** Semantic UI is giving an error in strict mode. You can learn more about it and the progress on the error here: https://github.com/Semantic-Org/Semantic-UI-React/issues/3819. Before deploying, I'll reenable strictmode and just accept the error for now. It should be near the top of my fix list though.
 - The Google Sign in with Pop up is giving a cross-site resource warning
 - ~~At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.~~
 - Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...
@@ -138,6 +141,7 @@ Overall Notes:
 - My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 - The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
 - I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
+- Dashboard, if there are no cards, give the user an option to prefill their database with Hello World in the 10 most popular languages...
 
 Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
 
