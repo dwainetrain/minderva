@@ -25,7 +25,7 @@ export const speechLanguages = {
     'pl':'pl-PL',
     'pt':'pt-PT',
     'ru':'ru-RU',
-    'sk','sk-SK',
+    'sk':'sk-SK',
     'sv':'sv-SE',
     'ta':'ta-IN',
     'te':'te-IN',

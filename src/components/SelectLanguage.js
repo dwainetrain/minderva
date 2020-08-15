@@ -1,5 +1,6 @@
 import React from 'react';
 import { languagesMap } from './languagesMap';
+import { speechLanguages } from './speechLanguagesMap';
 import { getKeyByValue } from '../utilities'
 
 const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
@@ -12,11 +13,15 @@ const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
     const languages = languageISO
                       .map(code => [code, getKeyByValue(languagesMap, code)])
                       .filter(name => name[1] !== undefined)
+    
+    const languagesMapping = languages
+
 
       return (
         <div>
         <select onChange={handleLanguageSelect} value={selected}>
             {languages.map(language => <option value={language[0]} key={language[0]+keyTo}>{language[1]}</option>)}
+            <p><pre>{JSON.stringify(languagesMapping, null, 2)}</pre></p>
         </select>
         </div>
     )
