@@ -1,3 +1,4 @@
+// hand crafted list of google translate codes to google tts codes
 export const speechLanguages = {
     'ar':'ar-XA',
     'bn':'bn-IN',

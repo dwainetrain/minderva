@@ -1,33 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
 import { Grid, Card, Button, Input, Form } from 'semantic-ui-react'
+import { speechLanguages } from './speechLanguagesMap';
 
 const AddCard = ({ handleMessage }) => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
     const [audio, setAudio] = useState('');
+
+    // For automatically updating translation audio when a new phrase is translated
+    const [generateAudio, setGenerateAudio] = useState(false)
     
-    //This will eventually be a default set in user profile
+    // This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');
     const [toLanguage, setToLanguage] = useState('ja');
 
-    // TODO: Map this between the google translate languages and tts languages
-    // Basic idea, when the toLanguage state changes, look up the corresponding
-    // value in the speechLanguages and set that to the setSpeechLanguage, if undefined, don't show
-    // generate audio button. For languages that are there, setSpeechLanguage to matching value
-    // Set gender and name to neutral right now, customizing those will be a future concern
-    
-    //////////// So, the new plan, since this is all static anyway, is just build the document to begin with
-    // It should have long Languages name, translate code and if available, voice code,
-    // If it does have voice, it will say so in the drop down menu
-    // There will be no option to generate audio on entries that don't have it
-    // Somehow also map out the voice names, at least one high quality male and one high quality female
-    // and the option for neutral, though I don't know the effect of wavenet on that
-
-    /////////////// You should just have a helper file that you can build out anytime you need to update languages
-    // 
+    // Specific code for Google text-to-speech
     const [speechLanguage, setSpeechLanguage] = useState('ja-JP')
 
     const create = async (e) => {
@@ -38,10 +28,23 @@ const AddCard = ({ handleMessage }) => {
             handleMessage('backRequired')
         } else {
             try {
-                const card = {front:front, back:back, userID:auth.currentUser.uid}
+                const card = {
+                    front:front, 
+                    back:back, 
+                    audioURL:audio, 
+                    userID:auth.currentUser.uid,
+                    origin: fromLanguage,
+                    target: toLanguage,
+                    reverse: false,
+                    enabled: true,
+                    dateCreated: new Date(),
+                    lastReview: new Date(),
+                    nextReview: ''
+                }
                 await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
                 setFront('');
                 setBack('');
+                setAudio('');
                 handleMessage('saved');
             } catch(error) {
                 console.error('Error Adding Card: ', error.message)
@@ -54,13 +57,15 @@ const AddCard = ({ handleMessage }) => {
         setFromLanguage(e.target.value)
     }
 
-    const handleToLanguageSelect = (e) => {
-        setToLanguage(e.target.value)
+    const handleToLanguageSelect = async (e) => {
+        const languageCode = await e.target.value
+        setToLanguage(languageCode)
+        setSpeechLanguage(speechLanguages[languageCode])
     }
 
     const translationCall = functions.httpsCallable('translate');
     
-    const translation = async (e) => {
+    const translation = (e) => {
         if (front === '') {
             handleMessage('frontRequired')
         } else if (front.length > 60) {
@@ -68,8 +73,9 @@ const AddCard = ({ handleMessage }) => {
         } else {
         e.preventDefault();
             try{
-                await translationCall({text:front,target:toLanguage}).then((result) => {
+                 translationCall({text:front,target:toLanguage}).then((result) => {
                     setBack(result.data.translation)
+                    setGenerateAudio(true)
                 })
             }
             catch(error) {
@@ -81,15 +87,24 @@ const AddCard = ({ handleMessage }) => {
     const text2SpeechCall = functions.httpsCallable('gt2s');
 
     const textToSpeech = (e) => {
-        try{
-            text2SpeechCall({text:back,target:speechLanguage}).then((result) => {
-                setAudio(result.data)
-            })
-        }
-        catch(error) {
-                console.log(error)
+        // if set to true, audio will be generated
+        if(generateAudio === true) {
+            try{
+                text2SpeechCall({text:back,target:speechLanguage}).then((result) => {
+                    setAudio(result.data)
+                    setGenerateAudio(false)
+                })
+            }
+            catch(error) {
+                    console.log(error)
+            }
         }
     }
+
+    // only generate audio when set to true by translation results
+    useEffect(() => {
+        textToSpeech();
+      }, [generateAudio]);
 
     return (
         <div>
@@ -127,7 +142,7 @@ const AddCard = ({ handleMessage }) => {
 
                                 <h3>{back}</h3>
                                 <Button type='button' onClick={translation} as='a'>Translate</Button>
-                                <Button type='button' onClick={textToSpeech} as='a'>Generate Audio</Button>
+                                <Button type='button' onClick={() => setGenerateAudio(true)} as='a'>Generate Audio</Button>
                             </Card.Content>
                             <Card.Content extra>
                                 <input

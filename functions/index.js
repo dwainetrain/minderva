@@ -94,7 +94,7 @@ exports.gt2s = functions.https.onCall(async (data, context) => {
       const request = { // Construct the request
         input: {text: word},
         // Select the language and SSML Voice Gender (optional)
-        voice: {languageCode: data.target, name: 'ja-JP-Wavenet-B', ssmlGender: 'FEMALE'},
+        voice: {languageCode: data.target, ssmlGender: 'FEMALE'},
         // Select the type of audio encoding
         audioConfig: {audioEncoding: 'MP3'},
       };
