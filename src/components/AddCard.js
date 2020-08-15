@@ -7,10 +7,28 @@ const AddCard = ({ handleMessage }) => {
 
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
+    const [audio, setAudio] = useState('');
     
     //This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');
-    const [toLanguage, setToLanguage] = useState('es');
+    const [toLanguage, setToLanguage] = useState('ja');
+
+    // TODO: Map this between the google translate languages and tts languages
+    // Basic idea, when the toLanguage state changes, look up the corresponding
+    // value in the speechLanguages and set that to the setSpeechLanguage, if undefined, don't show
+    // generate audio button. For languages that are there, setSpeechLanguage to matching value
+    // Set gender and name to neutral right now, customizing those will be a future concern
+    
+    //////////// So, the new plan, since this is all static anyway, is just build the document to begin with
+    // It should have long Languages name, translate code and if available, voice code,
+    // If it does have voice, it will say so in the drop down menu
+    // There will be no option to generate audio on entries that don't have it
+    // Somehow also map out the voice names, at least one high quality male and one high quality female
+    // and the option for neutral, though I don't know the effect of wavenet on that
+
+    /////////////// You should just have a helper file that you can build out anytime you need to update languages
+    // 
+    const [speechLanguage, setSpeechLanguage] = useState('ja-JP')
 
     const create = async (e) => {
         e.preventDefault();
@@ -42,7 +60,7 @@ const AddCard = ({ handleMessage }) => {
 
     const translationCall = functions.httpsCallable('translate');
     
-    const translation = (e) => {
+    const translation = async (e) => {
         if (front === '') {
             handleMessage('frontRequired')
         } else if (front.length > 60) {
@@ -50,13 +68,26 @@ const AddCard = ({ handleMessage }) => {
         } else {
         e.preventDefault();
             try{
-                translationCall({text:front,target:toLanguage}).then((result) => {
+                await translationCall({text:front,target:toLanguage}).then((result) => {
                     setBack(result.data.translation)
                 })
             }
             catch(error) {
                     console.log(error)
             }
+        }
+    }
+
+    const text2SpeechCall = functions.httpsCallable('gt2s');
+
+    const textToSpeech = (e) => {
+        try{
+            text2SpeechCall({text:back,target:speechLanguage}).then((result) => {
+                setAudio(result.data)
+            })
+        }
+        catch(error) {
+                console.log(error)
         }
     }
 
@@ -96,6 +127,7 @@ const AddCard = ({ handleMessage }) => {
 
                                 <h3>{back}</h3>
                                 <Button type='button' onClick={translation} as='a'>Translate</Button>
+                                <Button type='button' onClick={textToSpeech} as='a'>Generate Audio</Button>
                             </Card.Content>
                             <Card.Content extra>
                                 <input
@@ -118,6 +150,16 @@ const AddCard = ({ handleMessage }) => {
             </Grid>
             
             </Form>
+
+            <figure>
+                <figcaption>Listen to the Somthing:</figcaption>
+                <audio
+                    controls
+                    src={audio}>
+                        Your browser does not support the
+                        <code>audio</code> element.
+                </audio>
+            </figure>
             {/*  */}
 
             

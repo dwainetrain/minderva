@@ -110,7 +110,24 @@ Version 0.09:
 
 **Version 0.10**
 
-- https://react.semantic-ui.com/elements/button/ (not bad)
+- Add Key Feature of Audio Generation
+- ~~It should take the translated front and send it to google translate~~
+- ~~Google translate should return an audio file~~
+- It should provide the correct language to synthesize
+- It should provide options for the user to select voice choice (maybe later)
+- It should save the location of the audio file to the card entry
+- It should appear in card review
+- It should have a play button in the table
+- It should have an options to regenerate audio in the edit screen
+- It should only allow audio generation of supported voice languages
+- The onUpdate function version should be removed from functions
+
+Version 0.11 - Future:
+
+- Implement visual framework to create a basic, coherent experience
+- https://react.semantic-ui.com/elements/button/
+- or https://elastic.github.io/eui/#/forms/super-select
+- or https://github.com/microsoft/fluentui (https://fluentsite.z22.web.core.windows.net/components/divider/definition) more and more I link this one...
 - v2 of Gray Box is complete, now going to try to implement in Semantic UI.
 - Dashboard - It should show available cards for review
 - Dashboard - It should have a link to reviews under the number of cards to review
@@ -118,10 +135,13 @@ Version 0.09:
 - ~~Menu - It should have some indication of being on an active page~~
 - ~~Menu - It should remove the Dashboard link and just make that the Minderva title link~~
 - Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu
-- Quiz - It should somehow (modal?) Fade to the Quiz design
+- ~~Quiz - It should modal to the Quiz~~
 - It should have a Login Screen Designed
 - Overall - It shouldn't flash the login screen when first loading up (have loading animation)
 - Quiz - It should show what langugage you're expected to translate to...
+
+Notes:
+For the overall layout, I'm taking guidance from: https://semantic-ui-forest.com/templates/
 
 Overall Notes:
 
@@ -136,11 +156,11 @@ Overall Notes:
 - **DISABLED STRICT MODE** Semantic UI is giving an error in strict mode. You can learn more about it and the progress on the error here: https://github.com/Semantic-Org/Semantic-UI-React/issues/3819. Before deploying, I'll reenable strictmode and just accept the error for now. It should be near the top of my fix list though.
 - The Google Sign in with Pop up is giving a cross-site resource warning
 - ~~At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.~~
-- Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...
-- The page is not refreshing on user sign in or sign out
+- ~~Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...~~
+- ~~The page is not refreshing on user sign in or sign out~~
 - My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 - The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
-- I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
+
 - Dashboard, if there are no cards, give the user an option to prefill their database with Hello World in the 10 most popular languages...
 
 Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
@@ -204,6 +224,14 @@ Future Version Considerations:
 * Better slow-internet connection experience...some kind of pwa, or some way to indicate loading or working...
 * It should check for duplicate cards??
 * implement Context API for better state management
+* I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
+
+Notes on Audio Retrieval:
+You should just be able to structure the function to be called when translate in invoked, and then send back a link to the file once the request is finished...then store that link with the card.
+
+So very close, I've now got it producing a link to the public file. So now, to return that link and create an audio player on the page, and then when the card is saved, just save that location with card data.
+
+Then I can move on to customization!
 
 Obsolete:
 
