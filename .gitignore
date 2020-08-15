@@ -6,6 +6,7 @@
 .pnp.js
 firebase.js
 apis.js
+/apis
 
 # testing
 /coverage
