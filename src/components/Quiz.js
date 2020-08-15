@@ -10,10 +10,6 @@ const Quiz = ({ cardCollection }) => {
 
     const [open, setOpen] = React.useState(false)
     
-    // User comes to review page, page shows number of reviews that are ready, then they can click review
-    // Then a modal pops up with the quiz
-
-
 
     // Function to shuffle the cards
     const shuffleCards = (cards) => cards 
@@ -43,7 +39,23 @@ const Quiz = ({ cardCollection }) => {
     }
 
     const displayCard = (side) => {
-        return (quizCards[cardNumber] === undefined ? 'Loading...': quizCards[cardNumber][side])
+        
+        if (quizCards[cardNumber] === undefined) {
+            return <p>Review Loading...</p>
+        } else if (cardSide === 'front'){
+            return <p>{quizCards[cardNumber].front}</p>
+        } else {
+            return (<figure>
+                <figcaption>{quizCards[cardNumber].back}</figcaption>
+                {quizCards[cardNumber].audioURL ? <audio
+                    controls
+                    src={quizCards[cardNumber].audioURL}>
+                        Your browser does not support the
+                        <code>audio</code> element.
+                </audio> :
+                null }
+            </figure>)
+        }
     }
 
     return(
@@ -98,7 +110,6 @@ const Quiz = ({ cardCollection }) => {
                 </Modal.Actions>
                 </Modal>
 {/* END MODAL */}
-
 
     </div>
      

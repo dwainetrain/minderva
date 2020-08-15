@@ -15,12 +15,8 @@ const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
                       .map(code => [code, getKeyByValue(languagesMap, code)])
                       .filter(name => name[1] !== undefined)
 
-    console.log(languages)
-
     // This creates a map of languages that have Text-to-Speech synthesis             
     const speechLanguagesMapping = languages.map(code => [ code[0], code[1], speechLanguages[code[0]] ] ).filter(language => language[2] !== undefined)
-
-    console.log(speechLanguages)
 
       return (
         <div>

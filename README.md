@@ -113,14 +113,13 @@ Version 0.09:
 - Add Key Feature of Audio Generation
 - ~~It should take the translated front and send it to google translate~~
 - ~~Google translate should return an audio file~~
-- It should provide the correct language to synthesize
-- It should provide options for the user to select voice choice (maybe later)
-- It should save the location of the audio file to the card entry
-- It should appear in card review
+- ~~It should provide the correct language to synthesize~~
+- ~~It should save the location of the audio file to the card entry~~
+- ~~It should appear in card review~~
 - It should have a play button in the table
 - It should have an options to regenerate audio in the edit screen
-- It should only allow audio generation of supported voice languages
-- The onUpdate function version should be removed from functions
+- ~~It should only allow audio generation of supported voice languages~~
+- ~~The onUpdate function version should be removed from functions~~
 
 Version 0.11 - Future:
 
@@ -174,6 +173,9 @@ Data integrity, security and Error Handling, non critical but should be looked i
 
 Future Version Considerations:
 
+- Reverse card study, I think this just be included as an option in the review section?
+- Also, what if someone brings a japanese phrase and wants to generate its audio to study, that's where flipping the translation comes in. See main google translate for usability considerations here...
+- It should provide options for the user to select voice choice (maybe later)
 - KEY FEATURE: It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day)
 - KEY FEATURE TO ADD: Add pronunciation with Google TTS
 - User Profile: User should be able to select default to and from languages

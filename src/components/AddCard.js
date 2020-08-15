@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
 import { Grid, Card, Button, Input, Form } from 'semantic-ui-react'
@@ -101,10 +101,11 @@ const AddCard = ({ handleMessage }) => {
         }
     }
 
-    // only generate audio when set to true by translation results
-    useEffect(() => {
-        textToSpeech();
-      }, [generateAudio]);
+    // // only generate audio when set to true by translation results
+    // // This needs some work, because it's accomplishing the goal but spitting out a warning
+    // useEffect(() => {
+    //     textToSpeech();
+    //   }, [generateAudio]);
 
     return (
         <div>
@@ -142,7 +143,7 @@ const AddCard = ({ handleMessage }) => {
 
                                 <h3>{back}</h3>
                                 <Button type='button' onClick={translation} as='a'>Translate</Button>
-                                <Button type='button' onClick={() => setGenerateAudio(true)} as='a'>Generate Audio</Button>
+                                <Button type='button' onClick={textToSpeech} as='a'>Generate Audio</Button>
                             </Card.Content>
                             <Card.Content extra>
                                 <input
