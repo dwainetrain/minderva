@@ -4,6 +4,7 @@ import { signOut } from '../firebase'
 /// Styling ///
 import { Menu, Container } from 'semantic-ui-react'
 
+
 const Nav = () => (
         <Menu>
             <Container>

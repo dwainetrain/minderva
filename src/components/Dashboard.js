@@ -8,7 +8,12 @@ const Dashboard = ({ user }) => {
         return(
         <Container>
             <Header dividing as="h1" size="huge">Dashboard</Header>
-                {user ? "Welcome!" : <SignInAndSignUp />}
+                {user ? 
+                    <div>
+                        <h1>Welcome!</h1>
+                    </div> 
+                    : 
+                    <SignInAndSignUp />}
         </Container>
 
     )}

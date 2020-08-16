@@ -19,6 +19,7 @@ function App() {
   // Auth state
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
 
       const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
         setUser(user)
+        setLoading(false)
       })
 
     return () => {
@@ -48,13 +50,15 @@ function App() {
     
   return (
     <div className="App">
-        {message && <Message type={message} />}
-        {user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :
+      {loading ? <p>Loading...</p> : 
+      user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :
         <>
           <h1>Minderva - A Language Learning Tool</h1>
           <SignInAndSignUp />
         </>
-        }
+      }
+        {message && <Message type={message} />}
+        
         <footer>
           <Container>
             <p>MVP Build 0.09</p>

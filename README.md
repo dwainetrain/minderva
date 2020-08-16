@@ -116,8 +116,6 @@ Version 0.09:
 - ~~It should provide the correct language to synthesize~~
 - ~~It should save the location of the audio file to the card entry~~
 - ~~It should appear in card review~~
-- It should have a play button in the table
-- It should have an options to regenerate audio in the edit screen
 - ~~It should only allow audio generation of supported voice languages~~
 - ~~The onUpdate function version should be removed from functions~~
 
@@ -127,6 +125,8 @@ Version 0.11 - Future:
 - https://react.semantic-ui.com/elements/button/
 - or https://elastic.github.io/eui/#/forms/super-select
 - or https://github.com/microsoft/fluentui (https://fluentsite.z22.web.core.windows.net/components/divider/definition) more and more I link this one...
+- or ant design
+- Just know, it's gonna take some time to decouple semantic
 - v2 of Gray Box is complete, now going to try to implement in Semantic UI.
 - Dashboard - It should show available cards for review
 - Dashboard - It should have a link to reviews under the number of cards to review
@@ -173,6 +173,8 @@ Data integrity, security and Error Handling, non critical but should be looked i
 
 Future Version Considerations:
 
+- It should have an options to regenerate audio in the edit screen
+- It should have a play button in the table
 - Reverse card study, I think this just be included as an option in the review section?
 - Also, what if someone brings a japanese phrase and wants to generate its audio to study, that's where flipping the translation comes in. See main google translate for usability considerations here...
 - It should provide options for the user to select voice choice (maybe later)
