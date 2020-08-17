@@ -9,9 +9,8 @@ import { collectIdsAndDocs } from './utilities';
 import Message from './components/Messages'
 
 /// Styling
-import 'semantic-ui-css/semantic.min.css'
-import { Container } from 'semantic-ui-react'
 import './App.css';
+
 
 function App() {
 
@@ -60,9 +59,7 @@ function App() {
         {message && <Message type={message} />}
         
         <footer>
-          <Container>
             <p>MVP Build 0.09</p>
-          </Container>
         </footer>
     </div>
   );

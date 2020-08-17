@@ -3,6 +3,8 @@ import { languagesMap } from './languagesMap';
 import { speechLanguages } from './speechLanguagesMap';
 import { getKeyByValue } from '../utilities'
 
+import { Select } from '@chakra-ui/core'
+
 const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
 
     // Static List of Google Translate supported languages, will have to be periodically updated
@@ -19,11 +21,9 @@ const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
     const speechLanguagesMapping = languages.map(code => [ code[0], code[1], speechLanguages[code[0]] ] ).filter(language => language[2] !== undefined)
 
       return (
-        <div>
-        <select onChange={handleLanguageSelect} value={selected}>
+        <Select marginBottom={3} size="lg" variant="outline" onChange={handleLanguageSelect} value={selected}>
             {speechLanguagesMapping.map(language => <option value={language[0]} key={language[0]+keyTo}>{language[1]}</option>)}
-        </select>
-        </div>
+        </Select>
     )
 }
 

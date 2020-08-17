@@ -9,9 +9,6 @@ import { Route, Switch } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
 
-/// Styling ///
-import { Container } from 'semantic-ui-react'
-
 
 const UserRoute = ({ user, cardCollection, handleMessage }) => {
     return(
@@ -20,7 +17,6 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
             <Nav />
         </header>
         <div>
-            <Container>
             <Switch>
                 <Route exact path="/" render=
                 {() =>
@@ -55,7 +51,6 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
 
                 <Route component={NotFound} />
             </Switch>
-            </Container>
         </div>
       </>
     )

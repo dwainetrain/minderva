@@ -1,23 +1,45 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
-/// Styling ///
-import { Menu, Container } from 'semantic-ui-react'
+import { Link as ChaLink, Flex, Box, Stack } from '@chakra-ui/core'
 
+// Create a small component to carry over settings for each link
+const NavbarLink = ({ children, ...props }) => (
+    <ChaLink px={2} color="white" {...props}>
+      {children}
+    </ChaLink>
+  );
 
 const Nav = () => (
-        <Menu>
-            <Container>
-                <Menu.Item header as={Link} to="/">Minderva</Menu.Item>
-                <Menu.Item name="Review" as={NavLink} to="/quiz" />
-                <Menu.Item name="Add Cards" as={NavLink} to="/add-cards" />
-                <Menu.Item name="Card Collection" as={NavLink} to="/card-collection" />
-                <Menu.Item name="User Profile" as={NavLink} to="/user-profile" />
-                <Menu.Menu position="right">
-                    <Menu.Item name="Sign Out" as={Link} to="/" onClick={signOut}/>
-                </Menu.Menu>
-            </Container>
-        </Menu>
+        <Flex
+        bg="tomato"
+        w="100%"
+        px={5}
+        py={4}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Flex flexDirection="row" justifyContent="center" alignItems="center">
+                <Stack
+                isInline
+                align="center"
+                py={3}
+                fontSize="2xl"
+                fontWeight="extrabold"
+                >
+                    <ChaLink as={Link} to="/" color="white">
+                        Minderva
+                    </ChaLink>
+                </Stack>
+        </Flex>
+        <Box>
+            <NavbarLink as={NavLink} px={2} to="/quiz">Review</NavbarLink>
+            <NavbarLink as={NavLink} to="/add-cards">Add Cards</NavbarLink>
+            <NavbarLink as={NavLink} to="/card-collection">Card Collection</NavbarLink>
+            <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
+            <NavbarLink as={NavLink} to="/" onClick={signOut}>Sign Out</NavbarLink>
+        </Box>
+      </Flex>
 )
 
 export default Nav;
