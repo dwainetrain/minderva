@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
 import { speechLanguages } from './speechLanguagesMap';
+import { useStateWithCallbackInstant } from 'use-state-with-callback';
+
 
 // Styling
 import {
@@ -16,19 +18,13 @@ import {
   } from '@chakra-ui/core'
 
 
-  /// OK, something is fishy. Why does it send back japanese pronunciation of German, time to walk through the process and figure out! I'm making two different calls to the function, so the data shouldn't be mixing up, so somewhere, somehow, the front language declaration is getting mixed with the back.
-  // Refactoring might help.
-
 const AddCard = ({ handleMessage }) => {
-
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
     const [audio, setAudio] = useState('');
     const [frontAudio, setFrontAudio] = useState('');
     const [backAudio, setBackAudio] = useState('');
-
-    // For automatically updating translation audio when a new phrase is translated
-    const [generateAudio, setGenerateAudio] = useState(true)
+    const [manualEntry, setManualEntry] = useState(false)
     
     // This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');
@@ -37,6 +33,11 @@ const AddCard = ({ handleMessage }) => {
     // Specific code for Google text-to-speech
     const [speechLanguage, setSpeechLanguage] = useState('ja-JP')
     const [frontSpeechLanguage, setFrontSpeechLanguage] = useState('en-GB')
+
+    // Audio States
+    const [loadingAudio, setLoadingAudio] = useState('')
+
+   
 
     const create = async (e) => {
         e.preventDefault();
@@ -63,6 +64,8 @@ const AddCard = ({ handleMessage }) => {
                 setFront('');
                 setBack('');
                 setAudio('');
+                setFrontAudio('');
+                setBackAudio('');
                 handleMessage('saved');
             } catch(error) {
                 console.error('Error Adding Card: ', error.message)
@@ -85,7 +88,7 @@ const AddCard = ({ handleMessage }) => {
 
     const translationCall = functions.httpsCallable('translate');
     
-    const translation = (e) => {
+    const translation = async (e) => {
         if (front === '') {
             handleMessage('frontRequired')
         } else if (front.length > 60) {
@@ -94,7 +97,11 @@ const AddCard = ({ handleMessage }) => {
         e.preventDefault();
             try{
                  translationCall({text:front,target:toLanguage}).then((result) => {
+                    setFrontAudio('')
+                    setBackAudio('')
                     setBack(result.data.translation)
+                    setGenerateAudio(true)
+                    setLoadingAudio('loading')
                 })
             }
             catch(error) {
@@ -106,28 +113,57 @@ const AddCard = ({ handleMessage }) => {
     const text2SpeechCall = functions.httpsCallable('gt2s');
 
     const textToSpeech = (side, text, speechLanguage) => {
-        // if set to true, audio will be generated
-        if(generateAudio === true) {
             try{
                 text2SpeechCall({text:text,target:speechLanguage}).then((result) => {
-                    console.log(speechLanguage)
                     if(side === 'back') { 
-                    setBackAudio(result.data) } else if (side === 'front') { 
-                    setFrontAudio(result.data)
+                        setBackAudio(result.data) } else if (side === 'front') { 
+                        setFrontAudio(result.data)
                     }
                 })
             }
             catch(error) {
                     console.log(error)
             }
-        }
     }
 
-    // // only generate audio when set to true by translation results
-    // // This needs some work, because it's accomplishing the goal but spitting out a warning
-    // useEffect(() => {
-    //     textToSpeech();
-    //   }, [generateAudio]);
+    // Ain't pretty, but it works
+    const handleSwap = () => {
+        const swapSpace = {
+            oldFront:front,
+            oldBack:back,
+            oldFromLanguage:fromLanguage,
+            oldToLanguage: toLanguage,
+            oldSpeechLanguage: speechLanguage,
+            oldFrontSpeechLanguage: frontSpeechLanguage,
+            oldFrontAudio: frontAudio,
+            oldBackAudio: backAudio
+        }
+
+        setFront(swapSpace.oldBack);
+        setBack(swapSpace.oldFront);
+        setFromLanguage(swapSpace.oldToLanguage);
+        setToLanguage(swapSpace.oldFromLanguage);
+        setSpeechLanguage(swapSpace.oldFrontSpeechLanguage);
+        setFrontSpeechLanguage(swapSpace.oldSpeechLanguage);
+        setFrontAudio(swapSpace.oldBackAudio)
+        setBackAudio(swapSpace.oldFrontAudio)
+    }
+
+     // Testing out callback in use state
+     const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
+     if(generateAudio === true) {
+            textToSpeech('front', front, frontSpeechLanguage)
+            textToSpeech('back', back, speechLanguage)
+            setGenerateAudio(false)
+        }
+     })
+
+     function playAudio(side) {
+        console.log(side)
+        const audioEl = document.getElementsByClassName(side)[0]
+        console.log(audioEl)
+        audioEl.play()
+      }
 
     return (
         <Stack px={5} maxWidth="800px">
@@ -144,7 +180,7 @@ const AddCard = ({ handleMessage }) => {
 
                     <Box>
                         <Text textAlign="center" color="blackAlpha.500" >
-                        FRONT
+                        ORIGIN LANGUAGE
                         </Text>
                     </Box>
                     
@@ -156,17 +192,30 @@ const AddCard = ({ handleMessage }) => {
                         name="front" 
                         placeholder="Front" 
                         value={front}
-                        onChange={e => setFront(e.target.value)}
+                        onChange={e => {
+                            setFront(e.target.value)
+                            }}
                         maxLength="60"
                         autoComplete="off"
                         size="lg"/>
 
-                    <audio
-                        controls
-                        src={frontAudio}>
-                            Your browser does not support the
-                            <code>audio</code> element.
-                    </audio>
+                    {loadingAudio === '' ? 
+                        null 
+                        : loadingAudio === 'loading' && frontAudio === ''?
+                            <p>Loading Audio</p>
+                        :
+                        <figure>
+                            <audio className="front-audio"
+                                src={frontAudio}>
+                                    Your browser does not support the
+                                    <code>audio</code> element.
+                            </audio>
+                            <button onClick={() => playAudio('front-audio')}>
+                                <span>Play Audio</span>
+                            </button>
+                        </figure>
+                    }
+                            
                 </Stack>
 
                 <Stack
@@ -181,7 +230,7 @@ const AddCard = ({ handleMessage }) => {
                     
                     <Box width="100%">
                         <Text textAlign="center" color="blackAlpha.500">
-                        BACK
+                        TARGET LANGUAGE
                         </Text>
                     </Box>
 
@@ -189,22 +238,39 @@ const AddCard = ({ handleMessage }) => {
                     handleLanguageSelect={handleToLanguageSelect}
                     selected={toLanguage} keyTo="target"/>
                     
-                    <Heading as="h3">{back}</Heading>
+                    {manualEntry === true ? <Input
+                        name="back" 
+                        placeholder="Back" 
+                        value={back}
+                        onChange={e => setBack(e.target.value)}
+                        maxLength="60"
+                        autoComplete="off"
+                        size="lg"/> : <Heading as="h3">{back}</Heading>}
 
-                    <figure>
-                        <audio
-                            controls
-                            src={backAudio}>
-                                Your browser does not support the
-                                <code>audio</code> element.
-                        </audio>
-                    </figure>
+                    {loadingAudio === '' ? 
+                        null 
+                        : loadingAudio === 'loading' && backAudio === ''?
+                            <p>Loading Audio</p>
+                        :
+                        <figure>
+                            <audio className="back-audio"
+                                src={backAudio}>
+                                    Your browser does not support the
+                                    <code>audio</code> element.
+                            </audio>
+                            <button onClick={() => playAudio('back-audio')}>
+                                <span>Play Audio</span>
+                            </button>
+                        </figure>
+                    }
 
-                    <Button variantColor="twitter" leftIcon="arrow-right" onClick={translation}>
+                    <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {
+                        setLoadingAudio('')
+                        translation(e)}}>
                         Translate
                     </Button>
 
-                    <Button size="sm" variant="link" leftIcon="edit">
+                    <Button size="sm" variant="link" leftIcon="edit" onClick={() => setManualEntry(true)}>
                         Manual Entry
                     </Button>
                     
@@ -213,11 +279,12 @@ const AddCard = ({ handleMessage }) => {
 
             <Flex justifyContent="center">
                 <Flex width="100%" justifyContent="space-around">
-                    <Button variantColor="blackAlpha" leftIcon="repeat">
+                    <Button variantColor="blackAlpha" leftIcon="repeat" onClick={handleSwap}>
                     Swap Sides
                     </Button>
-                    <Button variantColor="cyan" leftIcon="chevron-right" onClick={() => {textToSpeech('back', back, speechLanguage)
-                    textToSpeech('front', front, frontSpeechLanguage)}
+                    <Button variantColor="cyan" leftIcon="chevron-right" onClick={() => {
+                    textToSpeech('front', front, frontSpeechLanguage)
+                    textToSpeech('back', back, speechLanguage)}
                     }>
                     Generate Audio
                     </Button>

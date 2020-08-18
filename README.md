@@ -122,10 +122,7 @@ Version 0.09:
 Version 0.11 - Future:
 
 - Implement visual framework to create a basic, coherent experience
-- https://react.semantic-ui.com/elements/button/
-- or https://elastic.github.io/eui/#/forms/super-select
-- or https://github.com/microsoft/fluentui (https://fluentsite.z22.web.core.windows.net/components/divider/definition) more and more I link this one...
-- or ant design
+- Using Chakra UI
 - Just know, it's gonna take some time to decouple semantic
 - v2 of Gray Box is complete, now going to try to implement in Semantic UI.
 - Dashboard - It should show available cards for review
@@ -138,6 +135,13 @@ Version 0.11 - Future:
 - It should have a Login Screen Designed
 - Overall - It shouldn't flash the login screen when first loading up (have loading animation)
 - Quiz - It should show what langugage you're expected to translate to...
+- Add Card - Audio should autogenerate after translate (nice to have, tough to pull off)
+- Add Card - Smaller icon for audio playback
+- Add Card - Audio Icons should have states (not loaded, greyed out)(loading icon)(loaded, playable icon)(when front or back changes, greyed out until audio generate on translate)
+- Add Card - Manual Entry button UX needs work
+- Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App
+- Overall - Chane favicon
+-
 
 Notes:
 For the overall layout, I'm taking guidance from: https://semantic-ui-forest.com/templates/

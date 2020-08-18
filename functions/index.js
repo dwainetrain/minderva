@@ -79,7 +79,7 @@ exports.gt2s = functions.https.onCall(async (data, context) => {
       
       const client = new textToSpeech.TextToSpeechClient(); // Creates a client
 
-      let myWordFile = word.replace(/ /g,"_"); // replace spaces with underscores in the file name
+      let myWordFile = word.replace(/ /g,"_").replace(/\?/g,"_q"); // replace spaces with underscores in the file name, and then replaces any question marks with _q (for google storage filename safety)
       myWordFile = myWordFile.toLowerCase(); // convert the file name to lower case
       myWordFile = myWordFile + audioFormat; // append .mp3 to the file name;
 
