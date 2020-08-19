@@ -4,17 +4,19 @@ import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
 import AddCard from './AddCard';
 import Quiz from './Quiz';
+import Review from './Review';
 import EditCard from './EditCard';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
 
 
 const UserRoute = ({ user, cardCollection, handleMessage }) => {
+    const location = useLocation();
     return(
         <>
         <header className="App-header">
-            <Nav />
+            {location.pathname === "/quiz" ? null : <Nav />}
         </header>
         <div>
             <Switch>
@@ -23,9 +25,14 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
                     <Dashboard user={user} />
                 }/>
                 
+                <Route exact path="/review" render=
+                {() =>
+                <Review path="/review" cardCollection={cardCollection} />
+                }/>
+
                 <Route exact path="/quiz" render=
                 {() =>
-                <Quiz path="/quiz" cardCollection={cardCollection} />
+                <Quiz path="/quiz" cardCollection={cardCollection}/>
                 }/>
                 
                 <Route exact path="/card-collection" render=
@@ -34,7 +41,7 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
                 }/>
 
                 <Route exact path="/edit-card/:id" render=
-                // cardDetails - What's in it and where is it coming from? I've forgotten
+                //
                 {(routeParams) =>
                 <EditCard {...routeParams} user={user} handleMessage={handleMessage}/>
                 }/>

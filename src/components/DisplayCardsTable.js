@@ -5,7 +5,7 @@ import "./DisplayCards.css"
 import moment from 'moment'
 
 // UI
-import { Input, SimpleGrid, Box } from '@chakra-ui/core'
+import { Input } from '@chakra-ui/core'
 
 const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
   
@@ -32,29 +32,38 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
 
 
     return(
-        <>
-        <Input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
-        <SimpleGrid columns={[2, null, 3]} spacing="40px">
-            
-                   
+        <div>
+            <Input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
+            <table width="100%">
+
+                <tbody>
+                    <tr>
+                        <th>Front</th>
+                        <th>Back</th>
+                        <th>Date Created</th>
+                        <th>Origin / Target</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
                     {searchResults.map(
                     card =>
-                        <Box key={card.id}>
-                            <h4>{card.front}</h4>
-                            <h3>{card.back}</h3>
-                            <p>{moment.unix(card.dateCreated.seconds).calendar()}</p>
-                            <p>{card.origin}/{card.target}</p>
-                            <p>
+                        <tr key={card.id}>
+                            <td>{card.front}</td>
+                            <td>{card.back}</td>
+                            <td>{moment.unix(card.dateCreated.seconds).calendar()}</td>
+                            <td>{card.origin}/{card.target}</td>
+                            <td>
                                 <Link to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Link>
-                            </p>
-                            <DeleteCard user={user} id={card.id} handleMessage={handleMessage} />
-                        </Box>
+                            </td>
+                            <td><DeleteCard user={user} id={card.id} handleMessage={handleMessage}/></td>
+                        </tr>
                     )}
+                </tbody>
+            </table>
 
             
            
-        </SimpleGrid>
-        </>
+        </div>
   )}
 
 export default DisplayCards;

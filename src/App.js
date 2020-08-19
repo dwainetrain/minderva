@@ -59,7 +59,7 @@ function App() {
         {message && <Message type={message} />}
         
         <footer>
-            <p>MVP Build 0.09</p>
+            <p>MVP Build 0.10</p>
         </footer>
     </div>
   );

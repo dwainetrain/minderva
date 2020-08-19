@@ -110,7 +110,7 @@ Version 0.09:
 
 **Version 0.10**
 
-- Add Key Feature of Audio Generation
+- ~~Add Key Feature of Audio Generation~~
 - ~~It should take the translated front and send it to google translate~~
 - ~~Google translate should return an audio file~~
 - ~~It should provide the correct language to synthesize~~
@@ -119,36 +119,39 @@ Version 0.09:
 - ~~It should only allow audio generation of supported voice languages~~
 - ~~The onUpdate function version should be removed from functions~~
 
-Version 0.11 - Future:
+Version 0.11 - Huge Push to get Core UX Functions working (not a visual pass):
 
-- Implement visual framework to create a basic, coherent experience
-- Using Chakra UI
-- Just know, it's gonna take some time to decouple semantic
-- v2 of Gray Box is complete, now going to try to implement in Semantic UI.
+- ~~Add Card - Refine UX for manual entry~~
+- ~~Add Card - Implement storing reverse study state in database~~
+- ~~Add Card - The generate audio function needs to be updated to work with audio state~~
+- Add Card - what other characters could cause problems, best to check the docs (https://cloud.google.com/storage/docs/naming-objects)
+- Implement visual framework to create a basic, coherent experience, Using Chakra UI (Too broad)
+- ~~v2 of Gray Box is complete, now going to try to implement in Chakra UI.~~
 - Dashboard - It should show available cards for review
 - Dashboard - It should have a link to reviews under the number of cards to review
 - Dashboard - It should have a memory quote placeholder
 - ~~Menu - It should have some indication of being on an active page~~
 - ~~Menu - It should remove the Dashboard link and just make that the Minderva title link~~
-- Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu
+- Menu - User Profile and Sign Out shouxld move to the right and go under an Account Drop Down Menu
 - ~~Quiz - It should modal to the Quiz~~
 - It should have a Login Screen Designed
-- Overall - It shouldn't flash the login screen when first loading up (have loading animation)
+- ~~Overall - It shouldn't flash the login screen when first loading up (have loading animation)~~
 - Quiz - It should show what langugage you're expected to translate to...
-- Add Card - Audio should autogenerate after translate (nice to have, tough to pull off)
-- Add Card - Smaller icon for audio playback
-- Add Card - Audio Icons should have states (not loaded, greyed out)(loading icon)(loaded, playable icon)(when front or back changes, greyed out until audio generate on translate)
-- Add Card - Manual Entry button UX needs work
+- ~~Add Card - Audio should autogenerate after translate (nice to have, tough to pull off)~~
+- ~~Add Card - Smaller icon for audio playback~~
+- ~~Add Card - Audio Icons should have states (not loaded, greyed out)(loading icon)(loaded, playable icon)(when front or back changes, greyed out until audio generate on translate)~~
+- ~~Add Card - Manual Entry button UX needs work~~
 - Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App
-- Overall - Chane favicon
--
-
-Notes:
-For the overall layout, I'm taking guidance from: https://semantic-ui-forest.com/templates/
+- Overall - Change favicon
+- Add Card - Test for focus, be aware of what you expect to happen
+- Add Card - Validate front and back are entered before send generate audio request
+- Add Card - disable adding card until audio is loaded
+- Add Card - What if translation or audio never loads, will it give back an error?
+- Add Card - It should have an option to not generate audio!
 
 Overall Notes:
 
-- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> 1st Visual Design Pass (Material UI - design in figma, implement in React Material UI package, see here (https://material-ui.com/getting-started/installation/ && https://material.io/resources) ) -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
+- Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> ~~Start UI framework tie-in with Chakra~~ -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - ~~Currently in Test Mode!~~
 - **NPM Security Vunerability surfaced** See here for solution: https://github.com/facebook/create-react-app/issues/9469

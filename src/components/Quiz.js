@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
+import { useHistory } from 'react-router-dom'
+
+// Chakra UI
+import {
+    Button
+} from '@chakra-ui/core'
+
+
 const Quiz = ({ cardCollection }) => {
 
     const [quizCards, setQuizCards] = useState('');
     const [cardNumber, setCardNumber] = useState(0);
     const [cardSide, setCardSide] = useState('front');
-    const [firstFlip, setFirstFlip] = useState(true)
+    const [firstFlip, setFirstFlip] = useState(true);
+    const [quizReset, setQuizReset] = useState(true)
+
+    let history = useHistory();
 
     // Function to shuffle the cards
     const shuffleCards = (cards) => cards 
@@ -21,7 +32,7 @@ const Quiz = ({ cardCollection }) => {
 
         setQuizCards(quizData())
         
-    }, [cardCollection])
+    }, [cardCollection, quizReset])
 
     const nextCard = () =>{
         setCardNumber(cardNumber + 1);
@@ -39,13 +50,23 @@ const Quiz = ({ cardCollection }) => {
         if (quizCards[cardNumber] === undefined) {
             return <p>Review Loading...</p>
         } else if (cardSide === 'front'){
-            return <p>{quizCards[cardNumber].front}</p>
+            return (
+            <div>
+            <p>{quizCards[cardNumber].front}</p>
+                {quizCards[cardNumber].frontAudioURL ? <audio
+                    controls
+                    src={quizCards[cardNumber].frontAudioURL}>
+                        Your browser does not support the
+                        <code>audio</code> element.
+                </audio> :
+                null }
+            </div>)
         } else {
             return (<figure>
                 <figcaption>{quizCards[cardNumber].back}</figcaption>
-                {quizCards[cardNumber].audioURL ? <audio
+                {quizCards[cardNumber].backAudioURL ? <audio
                     controls
-                    src={quizCards[cardNumber].audioURL}>
+                    src={quizCards[cardNumber].backAudioURL}>
                         Your browser does not support the
                         <code>audio</code> element.
                 </audio> :
@@ -55,13 +76,7 @@ const Quiz = ({ cardCollection }) => {
     }
 
     return(
-    <div>
-        <h3>Review Cards</h3>
-        <h4>You have {quizCards.length} cards up for review.</h4>
-        
-        
-{/* START MODAL */}
-        
+    <div>        
                     {cardNumber+1 <= quizCards.length ?
                         <div>
                             <h2>{cardNumber+1}/{quizCards.length}</h2>
@@ -75,7 +90,7 @@ const Quiz = ({ cardCollection }) => {
                                             <button onClick={flipCard}>Flip Card</button>
                                         
                                             {!firstFlip ? 
-                                                    <button basic color='red' onClick={nextCard}>
+                                                    <button color='red' onClick={nextCard}>
                                                         Next Card
                                                     </button> :
                                                 null}
@@ -87,9 +102,13 @@ const Quiz = ({ cardCollection }) => {
                         :
                         <div>
                             <p>Quiz Complete</p>
-                            <button onClick={() => setCardNumber(0)}>Review Again</button>
+                            <button onClick={() => {
+                            quizReset ? setQuizReset(false) : setQuizReset(true)
+                            setCardNumber(0)}}>
+                            Review Again</button>
                         </div>
                     }
+                    <Button onClick={() => history.goBack()}>Exit Review</Button>
 
     </div>
      

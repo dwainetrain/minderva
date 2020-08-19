@@ -25,6 +25,10 @@ const AddCard = ({ handleMessage }) => {
     const [frontAudio, setFrontAudio] = useState('');
     const [backAudio, setBackAudio] = useState('');
     const [manualEntry, setManualEntry] = useState(false)
+    const [reverseChecked, setReverseChecked] = useState(true)
+
+    // State Messages
+    const [loadingTranslation, setLoadingTranslation] = useState(false)
     
     // This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('en');
@@ -50,11 +54,12 @@ const AddCard = ({ handleMessage }) => {
                 const card = {
                     front:front, 
                     back:back, 
-                    audioURL:audio, 
+                    backAudioURL: backAudio,
+                    frontAudioURL: frontAudio,
                     userID:auth.currentUser.uid,
                     origin: fromLanguage,
                     target: toLanguage,
-                    reverse: false,
+                    reverse: reverseChecked,
                     enabled: true,
                     dateCreated: new Date(),
                     lastReview: new Date(),
@@ -66,6 +71,7 @@ const AddCard = ({ handleMessage }) => {
                 setAudio('');
                 setFrontAudio('');
                 setBackAudio('');
+                setLoadingAudio('')
                 handleMessage('saved');
             } catch(error) {
                 console.error('Error Adding Card: ', error.message)
@@ -100,8 +106,10 @@ const AddCard = ({ handleMessage }) => {
                     setFrontAudio('')
                     setBackAudio('')
                     setBack(result.data.translation)
+                    setLoadingTranslation(false)
                     setGenerateAudio(true)
                     setLoadingAudio('loading')
+                    
                 })
             }
             catch(error) {
@@ -158,12 +166,22 @@ const AddCard = ({ handleMessage }) => {
         }
      })
 
-     function playAudio(side) {
-        console.log(side)
-        const audioEl = document.getElementsByClassName(side)[0]
-        console.log(audioEl)
-        audioEl.play()
+     const playAudio = (side) => {
+        const audioURL = document.getElementsByClassName(side)[0]
+        audioURL.play()
       }
+
+    const handleManualGenerateAudio = () => {
+        if (front === '') {
+            handleMessage('frontRequired')
+        } else if (back === '') {
+            handleMessage('backRequired')
+        } else {
+            setFrontAudio('')
+            setBackAudio('')
+            setLoadingAudio('loading')
+            setGenerateAudio(true)}
+    }
 
     return (
         <Stack px={5} maxWidth="800px">
@@ -197,11 +215,12 @@ const AddCard = ({ handleMessage }) => {
                             }}
                         maxLength="60"
                         autoComplete="off"
-                        size="lg"/>
+                        size="lg"
+                        />
 
                     {loadingAudio === '' ? 
                         null 
-                        : loadingAudio === 'loading' && frontAudio === ''?
+                        : loadingAudio === 'loading' && frontAudio === '' ?
                             <p>Loading Audio</p>
                         :
                         <figure>
@@ -238,14 +257,30 @@ const AddCard = ({ handleMessage }) => {
                     handleLanguageSelect={handleToLanguageSelect}
                     selected={toLanguage} keyTo="target"/>
                     
-                    {manualEntry === true ? <Input
-                        name="back" 
-                        placeholder="Back" 
-                        value={back}
-                        onChange={e => setBack(e.target.value)}
-                        maxLength="60"
-                        autoComplete="off"
-                        size="lg"/> : <Heading as="h3">{back}</Heading>}
+                    {manualEntry === true ? 
+                        <div>
+                            <Input
+                            name="back" 
+                            placeholder="Back" 
+                            value={back}
+                            onChange={e => setBack(e.target.value)}
+                            maxLength="60"
+                            autoComplete="off"
+                            size="lg"/>
+                            
+                            <Button variantColor="cyan" leftIcon="chevron-right" 
+                            onClick={handleManualGenerateAudio}
+                            >
+                            Generate Audio
+                            </Button>
+                            <Button as="a"
+                            onClick={() => setManualEntry(false)} >
+                            Cancel
+                            </Button>
+                        </div>
+                        : loadingTranslation === true && front !== ''? 
+                        <p>Loading translation</p> : 
+                        <Heading as="h3">{back}</Heading>}
 
                     {loadingAudio === '' ? 
                         null 
@@ -265,8 +300,10 @@ const AddCard = ({ handleMessage }) => {
                     }
 
                     <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {
+                        setManualEntry(false)
                         setLoadingAudio('')
-                        translation(e)}}>
+                        translation(e)
+                        setLoadingTranslation(true)}}>
                         Translate
                     </Button>
 
@@ -279,18 +316,12 @@ const AddCard = ({ handleMessage }) => {
 
             <Flex justifyContent="center">
                 <Flex width="100%" justifyContent="space-around">
-                    <Button variantColor="blackAlpha" leftIcon="repeat" onClick={handleSwap}>
-                    Swap Sides
-                    </Button>
-                    <Button variantColor="cyan" leftIcon="chevron-right" onClick={() => {
-                    textToSpeech('front', front, frontSpeechLanguage)
-                    textToSpeech('back', back, speechLanguage)}
-                    }>
-                    Generate Audio
-                    </Button>
+                <Button variantColor="blackAlpha" leftIcon="repeat" onClick={handleSwap}>
+                            Swap Sides
+                            </Button>
                 </Flex>
                 <Flex width="100%" justifyContent="flex-end">
-                    <Checkbox isReadOnly mr={3} variantColor="teal" isChecked>
+                    <Checkbox mr={3} variantColor="teal" defaultIsChecked onChange={e =>  setReverseChecked(e.target.checked)}>
                     Study Reverse
                     </Checkbox>
                     <Button variantColor="whatsapp" leftIcon="add" onClick={create}>

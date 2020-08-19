@@ -33,7 +33,7 @@ const Nav = () => (
                 </Stack>
         </Flex>
         <Box>
-            <NavbarLink as={NavLink} px={2} to="/quiz">Review</NavbarLink>
+            <NavbarLink as={NavLink} px={2} to="/review">Review</NavbarLink>
             <NavbarLink as={NavLink} to="/add-cards">Add Cards</NavbarLink>
             <NavbarLink as={NavLink} to="/card-collection">Card Collection</NavbarLink>
             <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
