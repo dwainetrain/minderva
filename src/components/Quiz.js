@@ -4,7 +4,13 @@ import { useHistory } from 'react-router-dom'
 
 // Chakra UI
 import {
-    Button
+    Button,
+    Flex,
+    Box,
+    PseudoBox,
+    Heading,
+    Text,
+    Tooltip
 } from '@chakra-ui/core'
 
 
@@ -51,8 +57,8 @@ const Quiz = ({ cardCollection }) => {
             return <p>Review Loading...</p>
         } else if (cardSide === 'front'){
             return (
-            <div>
-            <p>{quizCards[cardNumber].front}</p>
+            <Box border="2px solid green" px="10rem" py="8rem">
+            <Text fontFamily="Playfair Display" fontSize="lg">{quizCards[cardNumber].front}</Text>
                 {quizCards[cardNumber].frontAudioURL ? <audio
                     controls
                     src={quizCards[cardNumber].frontAudioURL}>
@@ -60,10 +66,12 @@ const Quiz = ({ cardCollection }) => {
                         <code>audio</code> element.
                 </audio> :
                 null }
-            </div>)
+            </Box>)
         } else {
-            return (<figure>
-                <figcaption>{quizCards[cardNumber].back}</figcaption>
+            return (
+            <Box border="2px solid green" px="10rem" py="8rem">
+            <Text fontFamily="Playfair Display" fontSize="lg">{quizCards[cardNumber].back}</Text>
+            <figure>
                 {quizCards[cardNumber].backAudioURL ? <audio
                     controls
                     src={quizCards[cardNumber].backAudioURL}>
@@ -71,34 +79,50 @@ const Quiz = ({ cardCollection }) => {
                         <code>audio</code> element.
                 </audio> :
                 null }
-            </figure>)
+            </figure>
+            </Box>)
         }
     }
 
     return(
-    <div>        
+    <Flex>        
+        <Box border="1px solid black">
+            <Heading>Minderva</Heading>
+            <Button onClick={() => history.goBack()}>Exit Review</Button>
+        </Box>
+        
+        <Flex border="1px black solid" p="10rem" justifyContent="space-around">
+            <Box border="1px solid black" px="2rem" width="5rem">
+                <h2>{cardNumber+1}/{quizCards.length}</h2>
+            </Box>
                     {cardNumber+1 <= quizCards.length ?
-                        <div>
-                            <h2>{cardNumber+1}/{quizCards.length}</h2>
-                            <p>{cardSide}</p>
+                        <Box border="1px red solid">
+                            
+                            
                         
                         {/* CARD START */}
                         {/* When card is front, doesn't show next card */}
                             
                                             <header>{displayCard(cardSide)}</header>
-                                     
-                                            <button onClick={flipCard}>Flip Card</button>
-                                        
+
+                                     <Flex justifyContent="space-between">
+                                        <Box d="flex" justifyContent="space-between" width="56%">
+                                        <p>{cardSide}</p>
+                                            <Button onClick={flipCard}>Flip Card</Button>
+                                        </Box>
+                                        <Flex justifyContent="flex-end">
                                             {!firstFlip ? 
-                                                    <button color='red' onClick={nextCard}>
+                                                    <Button onClick={nextCard}>
                                                         Next Card
-                                                    </button> :
-                                                null}
-                                        
-                            
+                                                    </Button> :
+                                                        <span></span>
+                                                    }
+                                            
+                                        </Flex>
+                                    </Flex>
                             
                             {/* CARD END */}
-                        </div>
+                        </Box>
                         :
                         <div>
                             <p>Quiz Complete</p>
@@ -108,9 +132,10 @@ const Quiz = ({ cardCollection }) => {
                             Review Again</button>
                         </div>
                     }
-                    <Button onClick={() => history.goBack()}>Exit Review</Button>
+            </Flex>
+                    
 
-    </div>
+    </Flex>
      
     )
 }

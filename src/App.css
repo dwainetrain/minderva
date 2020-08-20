@@ -33,3 +33,8 @@ p.lead {
   line-height: 1.4;
   font-weight: 300;
 }
+
+.active {
+  border-bottom: 1px solid #f4fff4;
+  transition: border-bottom 0.5s ease-in-out;
+}

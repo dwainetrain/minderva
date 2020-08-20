@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
-import { speechLanguages } from './speechLanguagesMap';
+import { speechLanguageMap } from './speechLanguagesMap';
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
 
 
@@ -21,11 +21,12 @@ import {
 const AddCard = ({ handleMessage }) => {
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
-    const [audio, setAudio] = useState('');
     const [frontAudio, setFrontAudio] = useState('');
     const [backAudio, setBackAudio] = useState('');
     const [manualEntry, setManualEntry] = useState(false)
     const [reverseChecked, setReverseChecked] = useState(true)
+    const [originLanguageName, setOriginLanguageName] = useState('English')
+    const [targetLanguageName, setTargetLanguageName] = useState('Japanese')
 
     // State Messages
     const [loadingTranslation, setLoadingTranslation] = useState(false)
@@ -41,8 +42,6 @@ const AddCard = ({ handleMessage }) => {
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
 
-   
-
     const create = async (e) => {
         e.preventDefault();
         if (front === '') {
@@ -53,12 +52,16 @@ const AddCard = ({ handleMessage }) => {
             try {
                 const card = {
                     front:front, 
-                    back:back, 
+                    back:back,
                     backAudioURL: backAudio,
                     frontAudioURL: frontAudio,
                     userID:auth.currentUser.uid,
                     origin: fromLanguage,
                     target: toLanguage,
+                    backSpeechLanguage: speechLanguage,
+                    frontSpeechLanguage: frontSpeechLanguage,
+                    originLanguageName: originLanguageName,
+                    targetLanguageName: targetLanguageName,
                     reverse: reverseChecked,
                     enabled: true,
                     dateCreated: new Date(),
@@ -68,7 +71,6 @@ const AddCard = ({ handleMessage }) => {
                 await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
                 setFront('');
                 setBack('');
-                setAudio('');
                 setFrontAudio('');
                 setBackAudio('');
                 setLoadingAudio('')
@@ -83,13 +85,15 @@ const AddCard = ({ handleMessage }) => {
     const handleFromLanguageSelect = async (e) => {
         const languageCode = await e.target.value
         setFromLanguage(languageCode)
-        setFrontSpeechLanguage(speechLanguages[languageCode])
+        setOriginLanguageName(speechLanguageMap[languageCode].language)
+        setFrontSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
     const handleToLanguageSelect = async (e) => {
         const languageCode = await e.target.value
         setToLanguage(languageCode)
-        setSpeechLanguage(speechLanguages[languageCode])
+        setTargetLanguageName(speechLanguageMap[languageCode].language)
+        setSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
     const translationCall = functions.httpsCallable('translate');

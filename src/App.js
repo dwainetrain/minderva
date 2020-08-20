@@ -10,6 +10,7 @@ import Message from './components/Messages'
 
 /// Styling
 import './App.css';
+import { Box } from '@chakra-ui/core'
 
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
         {message && <Message type={message} />}
         
         <footer>
-            <p>MVP Build 0.10</p>
+            <Box ml="10rem">MVP Build 0.10</Box>
         </footer>
     </div>
   );
