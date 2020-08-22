@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { NavLink } from 'react-router-dom';
-import { Button, Box, Text, Divider, Flex } from '@chakra-ui/core'
+import { Button, Box, Flex } from '@chakra-ui/core'
 
 const Review = ({ cardCollection }) => {
     return(

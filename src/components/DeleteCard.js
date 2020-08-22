@@ -1,5 +1,6 @@
 import React from 'react';
 import { firestore } from '../firebase'
+import { Button } from '@chakra-ui/core'
 
 const DeleteCard = ({id, user, handleMessage}) => {
 
@@ -10,7 +11,7 @@ const DeleteCard = ({id, user, handleMessage}) => {
     }
 
     return(
-        <button value={id} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this card?')) remove(e) } }>Delete Card</button>
+        <Button variant="ghost" variantColor="red" value={id} onClick={(e) => { if (window.confirm('Are you sure you wish to delete this card?')) remove(e) } }>Delete Card</Button>
     )
 }
 

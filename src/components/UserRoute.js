@@ -11,7 +11,7 @@ import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
 
 
-const UserRoute = ({ user, cardCollection, handleMessage }) => {
+const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
     const location = useLocation();
     return(
         <>
@@ -22,7 +22,7 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
             <Switch>
                 <Route exact path="/" render=
                 {() =>
-                    <Dashboard user={user} />
+                    <Dashboard user={user} cardCollection={cardCollection}/>
                 }/>
                 
                 <Route exact path="/review" render=
@@ -48,12 +48,12 @@ const UserRoute = ({ user, cardCollection, handleMessage }) => {
                 
                 <Route exact path="/add-cards" render=
                 {() =>
-                <AddCard handleMessage={handleMessage}/>
+                <AddCard handleMessage={handleMessage} userLangPrefs={userLangPrefs}/>
                 }/>
                 
                 <Route exact path="/user-profile" render=
                 {() =>
-                <UserProfile user={user}/>
+                <UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage}/>
                 } />
 
                 <Route component={NotFound} />

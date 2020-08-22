@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SelectLanguage from './SelectLanguage'
 import { firestore, auth, functions } from '../firebase';
 import { speechLanguageMap } from './speechLanguagesMap';
+import PlayAudio from './PlayAudio'
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
 
 
@@ -18,29 +19,40 @@ import {
   } from '@chakra-ui/core'
 
 
-const AddCard = ({ handleMessage }) => {
+const AddCard = ({ handleMessage, userLangPrefs }) => {
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
     const [frontAudio, setFrontAudio] = useState('');
     const [backAudio, setBackAudio] = useState('');
     const [manualEntry, setManualEntry] = useState(false)
     const [reverseChecked, setReverseChecked] = useState(true)
-    const [originLanguageName, setOriginLanguageName] = useState('English')
-    const [targetLanguageName, setTargetLanguageName] = useState('Japanese')
+    const [originLanguageName, setOriginLanguageName] = useState('')
+    const [targetLanguageName, setTargetLanguageName] = useState('')
 
     // State Messages
     const [loadingTranslation, setLoadingTranslation] = useState(false)
     
     // This will eventually be a default set in user profile
-    const [fromLanguage, setFromLanguage] = useState('en');
-    const [toLanguage, setToLanguage] = useState('ja');
+    const [fromLanguage, setFromLanguage] = useState('');
+    const [toLanguage, setToLanguage] = useState('');
 
     // Specific code for Google text-to-speech
-    const [speechLanguage, setSpeechLanguage] = useState('ja-JP')
-    const [frontSpeechLanguage, setFrontSpeechLanguage] = useState('en-GB')
+    const [speechLanguage, setSpeechLanguage] = useState('')
+    const [frontSpeechLanguage, setFrontSpeechLanguage] = useState('')
 
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
+
+    // Set default preferences
+    useEffect(() => {
+
+        setToLanguage(!userLangPrefs.targetCode ? '' : userLangPrefs.targetCode)
+        setFromLanguage(!userLangPrefs.originCode ? '' : userLangPrefs.originCode)
+        setSpeechLanguage(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.targetCode].ttsCode)
+        setFrontSpeechLanguage(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.originCode].ttsCode)
+        setOriginLanguageName(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.originCode].language)
+        setTargetLanguageName(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.targetCode].language)
+    }, [userLangPrefs])
 
     const create = async (e) => {
         e.preventDefault();
@@ -147,6 +159,8 @@ const AddCard = ({ handleMessage }) => {
             oldToLanguage: toLanguage,
             oldSpeechLanguage: speechLanguage,
             oldFrontSpeechLanguage: frontSpeechLanguage,
+            oldOriginLanguageName: originLanguageName,
+            oldTargetLanguageName: targetLanguageName,
             oldFrontAudio: frontAudio,
             oldBackAudio: backAudio
         }
@@ -157,6 +171,8 @@ const AddCard = ({ handleMessage }) => {
         setToLanguage(swapSpace.oldFromLanguage);
         setSpeechLanguage(swapSpace.oldFrontSpeechLanguage);
         setFrontSpeechLanguage(swapSpace.oldSpeechLanguage);
+        setOriginLanguageName(swapSpace.oldTargetLanguageName);
+        setTargetLanguageName(swapSpace.oldOriginLanguageName);
         setFrontAudio(swapSpace.oldBackAudio)
         setBackAudio(swapSpace.oldFrontAudio)
     }
@@ -169,11 +185,6 @@ const AddCard = ({ handleMessage }) => {
             setGenerateAudio(false)
         }
      })
-
-     const playAudio = (side) => {
-        const audioURL = document.getElementsByClassName(side)[0]
-        audioURL.play()
-      }
 
     const handleManualGenerateAudio = () => {
         if (front === '') {
@@ -190,6 +201,7 @@ const AddCard = ({ handleMessage }) => {
     return (
         <Stack px={5} maxWidth="800px">
             <Heading as="h2">Add a Card</Heading>
+            <Text>{JSON.stringify(userLangPrefs.targetCode)}</Text>
             
             <Flex direction="row" flexWrap="wrap" justifyContent="space-around" >
                 <Stack
@@ -206,9 +218,9 @@ const AddCard = ({ handleMessage }) => {
                         </Text>
                     </Box>
                     
-                    <SelectLanguage 
+                    {!toLanguage ? <Text>Loading language</Text> : <SelectLanguage 
                     handleLanguageSelect={handleFromLanguageSelect}
-                    selected={fromLanguage} keyTo="text"/>
+                    selected={fromLanguage} keyTo="text"/>}
 
                     <Input
                         name="front" 
@@ -227,16 +239,7 @@ const AddCard = ({ handleMessage }) => {
                         : loadingAudio === 'loading' && frontAudio === '' ?
                             <p>Loading Audio</p>
                         :
-                        <figure>
-                            <audio className="front-audio"
-                                src={frontAudio}>
-                                    Your browser does not support the
-                                    <code>audio</code> element.
-                            </audio>
-                            <button onClick={() => playAudio('front-audio')}>
-                                <span>Play Audio</span>
-                            </button>
-                        </figure>
+                        <PlayAudio side='front-audio' source={frontAudio} />
                     }
                             
                 </Stack>
@@ -256,10 +259,10 @@ const AddCard = ({ handleMessage }) => {
                         TARGET LANGUAGE
                         </Text>
                     </Box>
-
+                     {!toLanguage ? <Text>Loading language</Text> :
                     <SelectLanguage 
                     handleLanguageSelect={handleToLanguageSelect}
-                    selected={toLanguage} keyTo="target"/>
+                    selected={toLanguage} keyTo="target"/>}
                     
                     {manualEntry === true ? 
                         <div>
@@ -291,16 +294,8 @@ const AddCard = ({ handleMessage }) => {
                         : loadingAudio === 'loading' && backAudio === ''?
                             <p>Loading Audio</p>
                         :
-                        <figure>
-                            <audio className="back-audio"
-                                src={backAudio}>
-                                    Your browser does not support the
-                                    <code>audio</code> element.
-                            </audio>
-                            <button onClick={() => playAudio('back-audio')}>
-                                <span>Play Audio</span>
-                            </button>
-                        </figure>
+                        <PlayAudio side='back-audio' source={backAudio} />
+                        
                     }
 
                     <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {

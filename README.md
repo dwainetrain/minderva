@@ -119,33 +119,54 @@ Version 0.09:
 - ~~It should only allow audio generation of supported voice languages~~
 - ~~The onUpdate function version should be removed from functions~~
 
-Version 0.11 - Huge Push to get Core UX Functions working (not a visual pass):
+#### Version 0.11 - Huge Push to get Core UX Functions working (not a visual pass):
 
 - Goal: Implement visual framework to create a basic, coherent experience, Using Chakra UI, and finalizie functional elements
+- Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
+- Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
-- Dashboard - It should show available cards for review
-- Dashboard - It should have a link to reviews under the number of cards to review
-- Dashboard - It should have a memory quote placeholder
-- Dashboard - It should have a link to add cards
-- Dashboard - It should have a link to card collection, showing number of cards
-- Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu
+Functional:
+
+- Quiz - Warning modal on exit?
+- Card Collection - have a little x to clear out search
+- Overall - What conditions should be in place if there are no cards in the collection?
+- Add Card - Validate front and back are entered before sending manual generate audio request
+- Add Card - disable adding card until audio is loaded
+- Add Card - What if translation or audio never loads, will it give back an error? Perhaps timeout...?
+- Add Card - It should have an option to not generate audio
+- Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App
+- Edit Card - Start bringing in line with add card screen, maybe you can reuse many of the components
+- Review - How might implement a review queue?
+
+Visual:
+
 - Overall - It should have a Login Screen Designed
-- Quiz - It should show what langugage you're expected to translate to...
+- Collection - Better style on cards
+- Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)
+- Overall - Change favicon
+- Display Cards - Have delete warning come up as modal instead of alert
+- Move
 
-* Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App
-* Overall - Change favicon
-* Add Card - Test for focus, be aware of what you expect to happen
-* Add Card - Validate front and back are entered before send generate audio request
-* Add Card - disable adding card until audio is loaded
-* Add Card - What if translation or audio never loads, will it give back an error?
-* Add Card - It should have an option to not generate audio
-* Quiz - Integrate reverse cards
-* Edit - Start bringing in line with add, maybe you can reuse many of the components
-* Display Cards - Have delete warning come up as modal instead of alert
-* User Profile - Add default languages, gender
-* Collection - It should look like cards
-* Collection - It should give the full name of the languages
-* Overall - Navebar needs some attention, looks nice static, but doesn't show active link and when links are clicked, they turn as ugly darkish.
+Maybe:
+
+- Dashboard - It should show a breakdown of cards by language, up to six pairings (this is an algo!) Time consuming. Is it worth it?
+- Quiz - Integrate reverse cards (maybe wait on this?)
+
+- ~~Dashboard - It should have a link to add cards~~
+- ~~Dashboard - It should have a link to card collection~~
+
+* ~~Overall - Navebar needs some attention, looks nice static, but doesn't show active link and when links are clicked, they turn as ugly darkish.~~
+* ~~Collection - It should give the full name of the languages~~
+* ~~Dashboard - It should show available cards for review~~
+* ~~User Profile - Add default languages~~
+* ~~Collection - It should look like cards~~
+* ~~Quiz - Build out better conditional logic so you don't get the flash when you reload~~
+
+- ~~Menu - User Profile and Sign Out should move to the right and go under an Account Drop Down Menu~~
+- ~~Quiz - It should show what langugage you're expected to translate to...~~
+- ~~Dashboard - It should have a link to reviews under the number of cards to review~~
+- ~~Dashboard - It should have a memory quote placeholder~~
+
 * ~~Add Card (Overall) - Capitalize language names~~
 * ~~Add Card - Refine UX for manual entry~~
 * ~~Add Card - Implement storing reverse study state in database~~
@@ -163,9 +184,11 @@ Version 0.11 - Huge Push to get Core UX Functions working (not a visual pass):
 Notes:
 Fonts: Playfair,
 
-Overall Notes:
+### Overall Notes:
 
 - Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> ~~Start UI framework tie-in with Chakra~~ -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
+- Go out and find about 25 great quotes about memory, beauty, patience, motivation. And then give them the treatment like what's on the homepage now.
+- Need basic card review tracking, mark cards as reviewed, then if it's past midnight on the users computer, then the reviews reset. On exit of quiz, that's when you set cards to reviewed? They can quiz themselve again if they feel like it.
 - Add Card - what other characters could cause problems, best to check the docs (https://cloud.google.com/storage/docs/naming-objects)
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
 - ~~Currently in Test Mode!~~
@@ -193,70 +216,75 @@ Data integrity, security and Error Handling, non critical but should be looked i
 - Sign Up: Cross site Error
 - What other failures could there be? Trying to add, edit or delete a card and they fail for some reason, you'll want the error on that
 
-Future Version Considerations:
+### Future Version Considerations:
 
-- KEY - It should have an options to regenerate audio in the edit screen
-- KEY - It should have a play button in the table
-- KEY - Reverse card study, I think this just be included as an option in the review section? -
-- KEY - User Profile: User should be able to select default to-from languages and gender
-- KEY - Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...
+- Add Card - Test for focus, be aware of what you expect to happen
+- User Profile - Add default gender
 
-* KEY - Edit Page: Add translation api to edit screen
-* KEY - Are the languages alphabatized?
-* KEY - - Allow users to sign-in/sign-up with other services, especially email (See FEM video starting at 31)
-* KEY - Have a dummy account, so that you can share the site
+* KEY - It should have an options to regenerate audio in the edit screen
+* KEY - It should have a play button in the table
+* KEY - Reverse card study, I think this just be included as an option in the review section? -
+* KEY - User Profile: User should be able to select default to-from languages and gender
+* KEY - Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...
 
-- ~~Also, what if someone brings a japanese phrase and wants to generate its audio to study, that's where flipping the translation comes in. See main google translate for usability considerations here...~~
-- It should provide options for the user to select voice choice (maybe later), this would require more mapping, ie time consuming
-- ~~KEY FEATURE: It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day)~~
-- ~~KEY FEATURE TO ADD: Add pronunciation with Google TTS~~
+- KEY - Edit Page: Add translation api to edit screen
+- KEY - Are the languages alphabatized?
+- KEY - - Allow users to sign-in/sign-up with other services, especially email (See FEM video starting at 31)
+- KEY - Have a dummy account, so that you can share the site
 
-* Let the user know when internet is lost and you can't contact database
-* After Quiz: See you tomorrow! Let’s schedule a review time now. (and link out to calendar)
-* ~~UX - Add Card: Add a loading animation to the translate function, because it takes a second or two to fire up from cold start, then it seems to be speedier.~~
+* Dark Mode
+* ~~Also, what if someone brings a japanese phrase and wants to generate its audio to study, that's where flipping the translation comes in. See main google translate for usability considerations here...~~
+* It should provide options for the user to select voice choice (maybe later), this would require more mapping, ie time consuming
+* It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day). This will be an experimental mode for retrieving audio. The benefit is that you get audio spoken by native speakers, but it's only for single words and not so much phrases, so your hit success is limited. You could put this alongside the google generated version?
+<p><a href="https://forvo.com/">Pronunciations by Forvo</a></p>
+* ~~KEY FEATURE TO ADD: Add pronunciation with Google TTS~~
 
-- The sign in and sign up pages should be seperate
-- Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
-- Add Card: It should have the option to study the reverse(? maybe)
-- Add Card: Better organization of languages
-- ~~Add Card: It should add the created date to the database (for SRS algorithm)~~
-- Delete Card: consider flash message with undo function (like gmail undo)
-- Quiz Page: It should have better seperation of flip card from next card
-- Should it have a translate button in the edit screen?
+- Let the user know when internet is lost and you can't contact database
+- After Quiz: See you tomorrow! Let’s schedule a review time now. (and link out to calendar)
+- ~~UX - Add Card: Add a loading animation to the translate function, because it takes a second or two to fire up from cold start, then it seems to be speedier.~~
 
-- It should be moved to its own github location (wait until final is graded)
-- It should have the five most popular languages up top of language selection
-- It should have the users most frequently used languages up top of language selection
-- It should give native language equivalent pronunciation guides. [Start Here](https://easypronunciation.com/en/english-phonetic-transcription-converter) or with International Phonetic Alphabet (IPA) (maybe an api exists?) Also, see [this](https://support.google.com/translate/thread/22827704?hl=en)
-- Can you just pass the front and back values to the edit component to prefill in the forms, instead of querying the database again for them?
-- How do I simplify all this prop passing??????!!??? (Refactoring)
-- Delete button should be in edit screen also, or only. Just thinking if the user wants to delete a slew of cards. (UX)
-- Forms validation (UX and Data Persistence)
-- Add Warning to Delete (UX)
-- Add confirmation Flashes to various actions (UX)
-- Edit should pop up as modal instead of at top of display card screen (UX)
-- Wouldn't you also add cards from the card collection screen? (UX)
-- Check out NavLink for React Router (Cole lecture) for nav styling...
-- Test speaking with speech commands...for instance, you'll see Hello World, then you speak the equivalent Spanish phrase and it tests to see how right you got it...
-- Languages listed are all out of order, etc, because of the map you're using, I would like this to be more user friendly...
-- Build your own implementation of the Google Translate API module, allowing for more robust use of its features
-- Implement SRS algorithm for quiz
-- It should pull supported languages only once per session, right now it's calling it every time the add card screen is loaded.
-- The quiz cards should be in random order...
-- It should track right and wrong answers with a fluency score
-- Take the user's google photo and apply filters to it, like outline, or flip around, or invert colors, you get it from the google user object...when they upload a photo, instead use some other photo of a goofy looking animal.
-- What kind of data do you need to have a working quiz?
-- UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
-- Edit card: There should be a disable button
-- How do I protect users privacy from me, at the moment I can see all users cards, that is not the scenario I want. Apprently this would take end-to-end encryption, and if the user would want to sort/filter data, it would need to be done on the client side, since the database wouldn't have access to the data. Just something to consider.
-- Display Cards: User should be able to sort cards by front, back, date created, last date reviewed
-- ~~Display Cards: User should be able to search for cards~~
-- ~~Add card page should have a flip to and from languages button~~
-- ~~Add card should have a study reverse option~~
-- Better slow-internet connection experience...some kind of pwa, or some way to indicate loading or working...
-- It should check for duplicate cards??
-- implement Context API for better state management
-- I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
+* The sign in and sign up pages should be seperate
+* Add Card: It should have a little better seperation of functions (ie, translate not right next to add card) (visual pass)
+* Add Card: It should have the option to study the reverse(? maybe)
+* Add Card: Better organization of languages
+* ~~Add Card: It should add the created date to the database (for SRS algorithm)~~
+* Delete Card: consider flash message with undo function (like gmail undo)
+* Quiz Page: It should have better seperation of flip card from next card
+* Should it have a translate button in the edit screen?
+
+* It should be moved to its own github location (wait until final is graded)
+* It should have the five most popular languages up top of language selection
+* It should have the users most frequently used languages up top of language selection
+* It should give native language equivalent pronunciation guides. [Start Here](https://easypronunciation.com/en/english-phonetic-transcription-converter) or with International Phonetic Alphabet (IPA) (maybe an api exists?) Also, see [this](https://support.google.com/translate/thread/22827704?hl=en)
+* Can you just pass the front and back values to the edit component to prefill in the forms, instead of querying the database again for them?
+* How do I simplify all this prop passing??????!!??? (Refactoring)
+* Delete button should be in edit screen also, or only. Just thinking if the user wants to delete a slew of cards. (UX)
+* Forms validation (UX and Data Persistence)
+* Add Warning to Delete (UX)
+* Add confirmation Flashes to various actions (UX)
+* Edit should pop up as modal instead of at top of display card screen (UX)
+* Wouldn't you also add cards from the card collection screen? (UX)
+* Check out NavLink for React Router (Cole lecture) for nav styling...
+* Test speaking with speech commands...for instance, you'll see Hello World, then you speak the equivalent Spanish phrase and it tests to see how right you got it...
+* Languages listed are all out of order, etc, because of the map you're using, I would like this to be more user friendly...
+* Build your own implementation of the Google Translate API module, allowing for more robust use of its features
+* Implement SRS algorithm for quiz
+* It should pull supported languages only once per session, right now it's calling it every time the add card screen is loaded.
+* The quiz cards should be in random order...
+* It should track right and wrong answers with a fluency score
+* Take the user's google photo and apply filters to it, like outline, or flip around, or invert colors, you get it from the google user object...when they upload a photo, instead use some other photo of a goofy looking animal.
+* What kind of data do you need to have a working quiz?
+* UX, work on making things smoother, because SPAs are just so abrupt, it can be jarring...
+* Edit card: There should be a disable button
+* How do I protect users privacy from me, at the moment I can see all users cards, that is not the scenario I want. Apprently this would take end-to-end encryption, and if the user would want to sort/filter data, it would need to be done on the client side, since the database wouldn't have access to the data. Just something to consider.
+* Display Cards: User should be able to sort cards by front, back, date created, last date reviewed
+* ~~Display Cards: User should be able to search for cards~~
+* ~~Add card page should have a flip to and from languages button~~
+* ~~Add card should have a study reverse option~~
+* Better slow-internet connection experience...some kind of pwa, or some way to indicate loading or working...
+* It should check for duplicate cards??
+* implement Context API for better state management
+* I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
 
 Obsolete:
 

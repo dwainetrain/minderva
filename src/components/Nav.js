@@ -71,7 +71,7 @@ const Nav = () => (
             </Box>
             <Divider orientation="vertical" />
             <Box>
-              <NavbarLink as="ChaLink" px={2} color="white" onClick={signOut}>Sign Out</NavbarLink>
+              <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
             </Box>
         </Box>
       </Flex>

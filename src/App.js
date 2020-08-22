@@ -16,6 +16,11 @@ import { Box } from '@chakra-ui/core'
 function App() {
 
   const [cardCollection, setCardCollection] = useState([]);
+
+  // For User Language Prefs
+  const [userLanguagePreferences, setUserLanguagePreferences] = useState('')
+  
+  
   // Auth state
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
@@ -23,11 +28,21 @@ function App() {
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
+
       const unsubscribeFromFirestore = firestore.collection(`${user ? `users/${user.uid}/cards` : null}`)
       .onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
         setCardCollection(entries);
       });
+      
+      const unsubscribeFromUserProfile = firestore.collection(`users`)
+                      .doc(`${user ? user.uid : null}`)
+                      .collection('profile')
+                      .onSnapshot(snapshot => {
+                        const entries = snapshot.docs.map(collectIdsAndDocs)
+                        setUserLanguagePreferences(entries[0])
+                        console.log(snapshot.docs)
+                      });
 
       const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
         setUser(user)
@@ -35,8 +50,10 @@ function App() {
       })
 
     return () => {
+  
       unsubscribeFromFirestore();
       unsubscribeFromAuth();
+      unsubscribeFromUserProfile();
     }
     
   }, [user]);
@@ -51,7 +68,7 @@ function App() {
   return (
     <div className="App">
       {loading ? <p>Loading...</p> : 
-      user ? <UserRoute user={user} cardCollection={cardCollection} handleMessage={handleMessage}/> :
+      user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage}/> :
         <>
           <h1>Minderva - A Language Learning Tool</h1>
           <SignInAndSignUp />

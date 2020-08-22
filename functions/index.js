@@ -3,42 +3,15 @@ const functions = require('firebase-functions');
 const util = require('util');
 const textToSpeech = require('@google-cloud/text-to-speech'); // Imports the Google Cloud client library
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 const admin = require('firebase-admin');
 const { initializeApp } = require('firebase-admin');
 
 admin.initializeApp();
 
+const db = admin.firestore();
+
 // Google Translation API
 const {Translate} = require('@google-cloud/translate').v2;
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.addMessage = functions.https.onRequest(async (request, response) => {
-//     const original = request.query.text;
-//     const writeResult = await admin.firestore().collection('messages').add({original: original});
-//     response.json({ result: `Message with ID: ${writeResult.id} added.`});
-// });
-
-// exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
-//     .onCreate((snap, context) => {
-//         const original = snap.data().original;
-
-//         functions.logger.log('Uppercasing', context.params.documentId, original);
-
-//         const uppercase = original.toUpperCase();
-
-//         return snap.ref.set({uppercase}, {merge:true});
-//     })
-
-// Imports the Google Cloud client library
 
 exports.translate = functions.https.onCall(async (data, context) => {
 
@@ -53,15 +26,10 @@ exports.translate = functions.https.onCall(async (data, context) => {
     // The target language
     const target = data.target;
     
-    // Translates some text into Japanese
+    // Translates some text
     const [translation] = await translate.translate(text, target);
-    //const writeTranslation = await admin.firestore().collection('messages')
-    //.add({text:text, translation: translation});
 
     return {translation:translation}
-    // response.json({ result: `Translation with ID: ${writeTranslation.id} added.`})
-    // console.log(`Text: ${text}`);
-    // console.log(`Translation: ${translation}`);
     
 })
 
@@ -136,3 +104,32 @@ exports.gt2s = functions.https.onCall(async (data, context) => {
     } // close catch
 
   })
+
+  /**
+ * Creates a document with ID -> uid in the `Users` collection.
+ *
+ * @param {Object} userRecord Contains the auth, uid and displayName info.
+ * @param {Object} context Details about the event.
+ */
+const createProfile = (userRecord, context) => {
+  const { uid } = userRecord;
+  console.log("User id from account creation: ", uid)
+
+  return db
+    .collection("users")
+    .doc(uid)
+    .collection("profile")
+    .doc(uid)
+    .set({ 
+      originCode:'en',
+      targetCode:'de', 
+      originName:'English',
+      targetName:'German',
+      originSpeech:'en-UK',
+      targetSpeech:'de-DE',
+      genderSpeech:'female'
+    })
+    .catch(console.error);
+};
+
+exports.authOnCreate = functions.auth.user().onCreate(createProfile)

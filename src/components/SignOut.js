@@ -1,10 +1,12 @@
 import React from 'react';
 import { signOut } from '../firebase'
 
+import { Button } from '@chakra-ui/core'
+
 const SignOut = () => {
 
     return(
-      <button onClick={signOut}>Sign Out</button>  
+      <Button onClick={signOut}>Sign Out</Button>  
     )
 }
 

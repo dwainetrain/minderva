@@ -3,9 +3,20 @@ import DeleteCard from '../components/DeleteCard';
 import { Link } from 'react-router-dom';
 import "./DisplayCards.css"
 import moment from 'moment'
+import PlayAudio from './PlayAudio'
 
 // UI
-import { Input, SimpleGrid, Box } from '@chakra-ui/core'
+import { 
+    Flex,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Icon,
+    Text,
+    SimpleGrid,
+    Box,
+    Stack,
+    Button } from '@chakra-ui/core'
 
 const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
   
@@ -33,22 +44,37 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
 
     return(
         <>
-        <Input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
-        <SimpleGrid columns={[2, null, 3]} spacing="40px">
-            
+        <Box px="10rem" py="3rem" width="50%">
+            <InputGroup>
+            <InputLeftElement children={<Icon name="search" color="gray.300" />} />
+             <Input type="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
+            </InputGroup>
+        </Box>
+        <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem">
                    
                     {searchResults.map(
                     card =>
-                        <Box key={card.id}>
-                            <h4>{card.front}</h4>
-                            <h3>{card.back}</h3>
-                            <p>{moment.unix(card.dateCreated.seconds).calendar()}</p>
-                            <p>{card.origin}/{card.target}</p>
-                            <p>
-                                <Link to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Link>
-                            </p>
+                        <Stack 
+                        key={card.id} 
+                        spacing="1rem"
+                        borderBottomWidth="1px"
+                        borderWidth="1px"
+                        rounded="lg"
+                        p="4rem">
+                            <Text>{card.front}</Text>
+                            <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL}/>
+                            <Text>{card.back}</Text>
+                            <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL}/>
+                            <Text>{card.originLanguageName}/{card.targetLanguageName}</Text>
+                            
+                            <Flex justifyContent="space-between" py="1rem">
+                                <Button as={Link} variant="ghost" to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Button>
+                            
                             <DeleteCard user={user} id={card.id} handleMessage={handleMessage} />
-                        </Box>
+
+                            </Flex>
+                            <Text fontSize="sm">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
+                        </Stack>
                     )}
 
             

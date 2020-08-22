@@ -7,13 +7,11 @@ import {
     Box,
     Flex,
     Divider,
-    Heading,
     Button,
     Text
 } from '@chakra-ui/core'
-import { Link } from 'react-router-dom';
 
-const UserDashboard = () => {
+const UserDashboard = ( { cardCollection } ) => {
 
     const [word, setWord] = useState('奇妙さ')
     const wordReveal = {
@@ -50,7 +48,7 @@ const UserDashboard = () => {
                      lineHeight="tight"
                      fontFamily="Playfair Display"
                     >
-                    50
+                    {cardCollection.length}
                     </Box>
                     <Box
                         mt="1"
@@ -62,24 +60,31 @@ const UserDashboard = () => {
                     <Button as={NavLink} px={2} to="/quiz">Review Now</Button>
                 </Flex>
                 <Divider orientation="vertical" ml="10rem" mr="10rem"/>
-                <Flex flexDirection="column" justifyContent="space-between" alignItems="center" minW="lg" maxW="sm" p={6}>
-                    <Box
-                        mt="1"
-                        fontWeight="semibold"
-                        as="h4"
-                        fontSize="3rem"
-                    >
-                        Your Card Collection
+                <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-start" minW="lg" maxW="sm" p={6}>
+                    <Text>Explore Your Minderva:</Text>
+                    <Box>
+                        <Button as={NavLink} to="/add-cards">Add Cards</Button>
+                        <Text>
+                            Tranaslate words or phrases and add them to your collection.
+                        </Text>
                     </Box>
                     <Box>
-                        <Text>250 Japanese/English Cards</Text>
-                        <Text>15 Japanese/Korean Cards</Text>
+                        <Box>
+                            <Button as={NavLink} to="/card-collection">Card Collection</Button>
+                        </Box>
+                        <Box>
+                            <Text>View, edit or delete your saved cards.</Text>
+                        </Box>
                     </Box>
-                    <Box width="100%" d="flex" justifyContent="space-around">
-                        <Button>Add Cards</Button>
-                        <Button>Card Collection</Button>
+                    <Box>
+                        <Box>
+                            <Button as={NavLink} to="/user-profile">User Profile</Button>
+                        </Box>
+                        <Box>
+                            <Text>View your profile and edit preferences.</Text>
+                        </Box>
                     </Box>
-
+                    
                 </Flex>
             </Flex>
             
@@ -97,13 +102,13 @@ const UserDashboard = () => {
     )
 }
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user, cardCollection }) => {
     ///// Imports the Google Cloud client library
         
         return(
         <div>
                 {user ? 
-                    <UserDashboard />
+                    <UserDashboard cardCollection={cardCollection}/>
                     : 
                     <SignInAndSignUp />}
         </div>
