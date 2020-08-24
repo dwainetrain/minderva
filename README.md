@@ -127,33 +127,42 @@ Version 0.09:
 
 Functional:
 
+- REMOVE REACT HELMET, find another method of titles on page (It's using an UNSAFE method!)
 - Quiz - Warning modal on exit?
 - Card Collection - have a little x to clear out search
-- Overall - What conditions should be in place if there are no cards in the collection?
-- Add Card - Validate front and back are entered before sending manual generate audio request
 - Add Card - disable adding card until audio is loaded
 - Add Card - What if translation or audio never loads, will it give back an error? Perhaps timeout...?
-- Add Card - It should have an option to not generate audio
-- Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App
 - Edit Card - Start bringing in line with add card screen, maybe you can reuse many of the components
 - Review - How might implement a review queue?
+- Collection - On search it should say showing 2 of 30 cards, for example
+- Do you need edit and create dates for cards? Not really, since we won't be filtering by them...
+
+UX:
+
+- Edit should go straight to manual entry
 
 Visual:
 
-- Overall - It should have a Login Screen Designed
 - Collection - Better style on cards
 - Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)
 - Overall - Change favicon
 - Display Cards - Have delete warning come up as modal instead of alert
-- Move
+- Font consistancy
+
+Code:
+
+- Add/Edit card refactor, since they both contain many of the same components, work on making it easier to update both at once.
 
 Maybe:
 
 - Dashboard - It should show a breakdown of cards by language, up to six pairings (this is an algo!) Time consuming. Is it worth it?
 - Quiz - Integrate reverse cards (maybe wait on this?)
-
+- ~~Add Card - Validate front and back are entered before sending manual generate audio request~~
 - ~~Dashboard - It should have a link to add cards~~
 - ~~Dashboard - It should have a link to card collection~~
+- ~~Overall - It should have a Login Screen that aligns with everything~~
+- ~~Overall - What conditions should be in place if there are no cards in the collection?~~
+- ~~Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App~~
 
 * ~~Overall - Navebar needs some attention, looks nice static, but doesn't show active link and when links are clicked, they turn as ugly darkish.~~
 * ~~Collection - It should give the full name of the languages~~
@@ -180,6 +189,7 @@ Maybe:
 * ~~Menu - It should have some indication of being on an active page~~
 * ~~Menu - It should remove the Dashboard link and just make that the Minderva title link~~
 * ~~Quiz - It should modal to the Quiz~~
+* ~~Add Card - It should have an option to not generate audio~~
 
 Notes:
 Fonts: Playfair,
@@ -188,6 +198,7 @@ Fonts: Playfair,
 
 - Roadmap to Version 1.0: ~~Firebase CRUD~~ → ~~Basic Quiz~~ → ~~Basic User Functions~~ → ~~First UX Pass~~ → ~~1st Data Integrity and Security Audit Pass~~ -> ~~Start UI framework tie-in with Chakra~~ -> Revisit UX -> Refine Visual -> Get feedback from users and hackers -> Review and implement notes on usability, accessibility and security
 - Go out and find about 25 great quotes about memory, beauty, patience, motivation. And then give them the treatment like what's on the homepage now.
+- Implement a utility that mocks api calls so you can setup loading elements correctly, see here for ideas on how to do this: https://blog.logrocket.com/how-to-create-forms-with-chakra-ui-in-react-apps/
 - Need basic card review tracking, mark cards as reviewed, then if it's past midnight on the users computer, then the reviews reset. On exit of quiz, that's when you set cards to reviewed? They can quiz themselve again if they feel like it.
 - Add Card - what other characters could cause problems, best to check the docs (https://cloud.google.com/storage/docs/naming-objects)
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.

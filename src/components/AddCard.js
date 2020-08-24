@@ -4,6 +4,7 @@ import { firestore, auth, functions } from '../firebase';
 import { speechLanguageMap } from './speechLanguagesMap';
 import PlayAudio from './PlayAudio'
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
+import Helmet from 'react-helmet'
 
 
 // Styling
@@ -25,7 +26,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
     const [frontAudio, setFrontAudio] = useState('');
     const [backAudio, setBackAudio] = useState('');
     const [manualEntry, setManualEntry] = useState(false)
-    const [reverseChecked, setReverseChecked] = useState(true)
+    const [generateChecked, setGenerateChecked] = useState(true)
     const [originLanguageName, setOriginLanguageName] = useState('')
     const [targetLanguageName, setTargetLanguageName] = useState('')
 
@@ -44,6 +45,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
     const [loadingAudio, setLoadingAudio] = useState('')
 
     // Set default preferences
+    // Prime candidate for refactoring!
     useEffect(() => {
 
         setToLanguage(!userLangPrefs.targetCode ? '' : userLangPrefs.targetCode)
@@ -74,7 +76,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
                     frontSpeechLanguage: frontSpeechLanguage,
                     originLanguageName: originLanguageName,
                     targetLanguageName: targetLanguageName,
-                    reverse: reverseChecked,
+                    reverse: false,
                     enabled: true,
                     dateCreated: new Date(),
                     lastReview: new Date(),
@@ -123,8 +125,10 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
                     setBackAudio('')
                     setBack(result.data.translation)
                     setLoadingTranslation(false)
-                    setGenerateAudio(true)
-                    setLoadingAudio('loading')
+                    if(generateChecked){
+                        setGenerateAudio(true)
+                        setLoadingAudio('loading')
+                    }
                     
                 })
             }
@@ -179,7 +183,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
 
      // Testing out callback in use state
      const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
-     if(generateAudio === true) {
+     if(generateAudio === true && generateChecked) {
             textToSpeech('front', front, frontSpeechLanguage)
             textToSpeech('back', back, speechLanguage)
             setGenerateAudio(false)
@@ -199,11 +203,13 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
     }
 
     return (
-        <Stack px={5} maxWidth="800px">
-            <Heading as="h2">Add a Card</Heading>
-            <Text>{JSON.stringify(userLangPrefs.targetCode)}</Text>
+        <Stack pl="10rem" pt="2rem" maxWidth="800px">
+            <Helmet>
+                <title>Minderva | Add Cards</title>
+            </Helmet>
+            <Heading as="h3" pb="2rem">Add a Card</Heading>
             
-            <Flex direction="row" flexWrap="wrap" justifyContent="space-around" >
+            <Flex direction="row" flexWrap="wrap" justifyContent="space-between" >
                 <Stack
                 flexBasis="100%"
                 flex="1"
@@ -298,17 +304,27 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
                         
                     }
 
-                    <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {
+                    {manualEntry === true ? null :
+                    
+                    <Stack>
+                        <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {
                         setManualEntry(false)
                         setLoadingAudio('')
                         translation(e)
                         setLoadingTranslation(true)}}>
                         Translate
-                    </Button>
-
-                    <Button size="sm" variant="link" leftIcon="edit" onClick={() => setManualEntry(true)}>
+                        </Button>
+                        <Checkbox mr={3} variantColor="teal" defaultIsChecked onChange={e =>  setGenerateChecked(e.target.checked)}>
+                        Generate Audio
+                    </Checkbox>
+                        <Button size="sm" variant="link" leftIcon="edit" onClick={() => setManualEntry(true)}>
                         Manual Entry
-                    </Button>
+                        </Button>
+                    </Stack>
+                    
+                    }
+
+                    
                     
                 </Stack>
             </Flex>
@@ -320,9 +336,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
                             </Button>
                 </Flex>
                 <Flex width="100%" justifyContent="flex-end">
-                    <Checkbox mr={3} variantColor="teal" defaultIsChecked onChange={e =>  setReverseChecked(e.target.checked)}>
-                    Study Reverse
-                    </Checkbox>
+                    
                     <Button variantColor="whatsapp" leftIcon="add" onClick={create}>
                     Add Card
                     </Button>

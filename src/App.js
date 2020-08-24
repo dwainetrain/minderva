@@ -13,6 +13,7 @@ import './App.css';
 import { Box } from '@chakra-ui/core'
 
 
+
 function App() {
 
   const [cardCollection, setCardCollection] = useState([]);
@@ -70,7 +71,6 @@ function App() {
       {loading ? <p>Loading...</p> : 
       user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage}/> :
         <>
-          <h1>Minderva - A Language Learning Tool</h1>
           <SignInAndSignUp />
         </>
       }

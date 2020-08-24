@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SignInAndSignUp from './SignInAndSignUp'
 import './Dashboard.css'
 import { NavLink } from 'react-router-dom'
+import Helmet from 'react-helmet'
 
 import {
     Box,
@@ -10,6 +11,7 @@ import {
     Button,
     Text
 } from '@chakra-ui/core'
+import NoCards from './NoCards';
 
 const UserDashboard = ( { cardCollection } ) => {
 
@@ -20,7 +22,11 @@ const UserDashboard = ( { cardCollection } ) => {
     }
 
     return(
+        
         <Flex ml="10rem">
+            <Helmet>
+            <title>Minderva | Dashboard</title>
+            </Helmet>
         <Box width="100%">
             <div className="quote--container">
             <span className="quote">
@@ -34,6 +40,9 @@ const UserDashboard = ( { cardCollection } ) => {
             <span className="quote--author">&ndash; Francis Bacon</span>
             </div>
             <Flex flexWrap="Wrap">
+                {cardCollection.length === 0 ? 
+                <NoCards />
+                :
                 <Flex flexDirection="column" gap="100px" justifyContent="space-between" alignItems="center" minH="sm" minW="lg" maxW="sm" p={6}>
                     <Box
                         mt="1"
@@ -58,8 +67,8 @@ const UserDashboard = ( { cardCollection } ) => {
                         Cards Ready for Review
                     </Box>
                     <Button as={NavLink} px={2} to="/quiz">Review Now</Button>
-                </Flex>
-                <Divider orientation="vertical" ml="10rem" mr="10rem"/>
+                </Flex>}
+            <Divider orientation="vertical" ml="10rem" mr="10rem"/>
                 <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-start" minW="lg" maxW="sm" p={6}>
                     <Text>Explore Your Minderva:</Text>
                     <Box>
@@ -94,7 +103,7 @@ const UserDashboard = ( { cardCollection } ) => {
                 <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
                 <Text>I hope it helps you get to where you’re going.</Text>
                 <Text>It was created by Dwaine Best as the final for the UCSD Extension Applied Javascript Course.</Text>
-                <Text>It was built using React, the Firebase Platform, Google Translate and Google Text-to-Speech</Text>
+                <Text>It was built using React, Chakra UI, the Firebase platform, Google Translate and Google Text-to-Speech</Text>
                 <Text>It is in perpetual development, view the roadmap and contribute if you'd like.</Text>
             </Box>
         </Box>

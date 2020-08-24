@@ -12,7 +12,7 @@ const SignUp = () => {
         e.preventDefault();
         // Not sure what this should do yet,
         // because we're sending the value to firebase auth
-        console.log('You signed up!')
+        //console.log('You signed up!')
     }
 
     return(

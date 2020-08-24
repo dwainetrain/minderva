@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SignOut from './SignOut';
 import SelectLanguage from './SelectLanguage'
 import { firestore } from '../firebase';
+import Helmet from 'react-helmet'
 
 // Styling
 import {
@@ -43,6 +44,9 @@ const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, u
      
     return(
         <Stack spacing={2} px="10rem">
+            <Helmet>
+                <title>Minderva | User Profile</title>
+            </Helmet>    
             <h2>User Profile Page</h2>
             <p>Hello {displayName}!</p>
             <p>Google email for this account: {email}</p>

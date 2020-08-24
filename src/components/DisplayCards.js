@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import "./DisplayCards.css"
 import moment from 'moment'
 import PlayAudio from './PlayAudio'
+import NoCards from './NoCards'
+import Helmet from 'react-helmet'
 
 // UI
 import { 
@@ -45,13 +47,16 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
     return(
         <>
         <Box px="10rem" py="3rem" width="50%">
+            <Helmet>
+                <title>Minderva | Card Collection</title>
+            </Helmet>  
             <InputGroup>
             <InputLeftElement children={<Icon name="search" color="gray.300" />} />
              <Input type="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
             </InputGroup>
         </Box>
         <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem">
-                   
+                   {cardCollection.length === 0 ? <NoCards /> : null }
                     {searchResults.map(
                     card =>
                         <Stack 

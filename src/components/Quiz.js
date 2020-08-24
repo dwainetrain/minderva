@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PlayAudio from './PlayAudio'
 import { useHistory } from 'react-router-dom'
+import Helmet from 'react-helmet'
 
 // Chakra UI
 import {
@@ -196,7 +197,10 @@ const Quiz = ({ cardCollection }) => {
     }
 
     return(
-    <Flex flexWrap="wrap">        
+    <Flex flexWrap="wrap">
+        <Helmet>
+                <title>Minderva | Quiz</title>
+        </Helmet>      
         <Box>
             <Heading fontFamily="Playfair Display" pl="10rem" py="4rem" color="tomato">Minderva</Heading>
         </Box>            

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 
 // Chakra Styling
-import { theme, ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { theme, ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
 
 // Theme Options
 // Let's say you want to add custom colors
@@ -43,10 +43,12 @@ const customTheme = {
 ReactDOM.render(
   <React.StrictMode>
       <ThemeProvider theme={customTheme}>
-      <CSSReset />
+      <ColorModeProvider >
+        <CSSReset />
         <BrowserRouter>
           <App />
         </BrowserRouter>
+      </ColorModeProvider>
       </ThemeProvider>
   </React.StrictMode>,
 document.getElementById('root') 
