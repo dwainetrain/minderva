@@ -4,7 +4,11 @@ import { firestore, auth, functions } from '../firebase';
 import { speechLanguageMap } from './speechLanguagesMap';
 import PlayAudio from './PlayAudio'
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
+
+// From Edit
+import { collectIdsAndDocs } from '../utilities';
+import { Link } from 'react-router-dom'
 
 
 // Styling
@@ -44,16 +48,19 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
 
+
     // Set default preferences
     // Prime candidate for refactoring!
     useEffect(() => {
-
-        setToLanguage(!userLangPrefs.targetCode ? '' : userLangPrefs.targetCode)
-        setFromLanguage(!userLangPrefs.originCode ? '' : userLangPrefs.originCode)
-        setSpeechLanguage(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.targetCode].ttsCode)
-        setFrontSpeechLanguage(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.originCode].ttsCode)
-        setOriginLanguageName(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.originCode].language)
-        setTargetLanguageName(!userLangPrefs.targetCode? '' : speechLanguageMap[userLangPrefs.targetCode].language)
+        if (userLangPrefs !== '') {
+            setToLanguage(userLangPrefs.targetCode)
+            setFromLanguage(userLangPrefs.originCode)
+            setSpeechLanguage(speechLanguageMap[userLangPrefs.targetCode].ttsCode)
+            setFrontSpeechLanguage(speechLanguageMap[userLangPrefs.originCode].ttsCode)
+            setOriginLanguageName(speechLanguageMap[userLangPrefs.originCode].language)
+            setTargetLanguageName(speechLanguageMap[userLangPrefs.targetCode].language)
+        }
+        
     }, [userLangPrefs])
 
     const create = async (e) => {
@@ -181,7 +188,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
         setBackAudio(swapSpace.oldFrontAudio)
     }
 
-     // Testing out callback in use state
+     // Call generate audio when set to true by translation
      const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
      if(generateAudio === true && generateChecked) {
             textToSpeech('front', front, frontSpeechLanguage)
@@ -207,7 +214,7 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
             <Helmet>
                 <title>Minderva | Add Cards</title>
             </Helmet>
-            <Heading as="h3" pb="2rem">Add a Card</Heading>
+            <Heading as="h2" size="lg" pb="2rem">Add a Card</Heading>
             
             <Flex direction="row" flexWrap="wrap" justifyContent="space-between" >
                 <Stack
@@ -307,11 +314,13 @@ const AddCard = ({ handleMessage, userLangPrefs }) => {
                     {manualEntry === true ? null :
                     
                     <Stack>
-                        <Button variantColor="twitter" leftIcon="arrow-right" onClick={(e) => {
-                        setManualEntry(false)
-                        setLoadingAudio('')
-                        translation(e)
-                        setLoadingTranslation(true)}}>
+                        <Button variantColor="twitter" variant="outline"
+                        leftIcon="arrow-right" 
+                        onClick={(e) => {
+                            setManualEntry(false)
+                            setLoadingAudio('')
+                            translation(e)
+                            setLoadingTranslation(true)}}>
                         Translate
                         </Button>
                         <Checkbox mr={3} variantColor="teal" defaultIsChecked onChange={e =>  setGenerateChecked(e.target.checked)}>

@@ -13,6 +13,7 @@ const NavbarLink = ({ children, ...props }) => (
     as="a"
     color="white"
     fontWeight="semibold"
+    letterSpacing="wide"
     px={3}
     {...props}
   >{children}</PseudoBox>
@@ -43,7 +44,6 @@ const Nav = () => (
               letterSpacing="0.1em"
               fontSize="lg"
               lineHeight="0"
-              
               >
                   Minderva
               </ChaLink>

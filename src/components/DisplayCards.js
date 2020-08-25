@@ -5,7 +5,7 @@ import "./DisplayCards.css"
 import moment from 'moment'
 import PlayAudio from './PlayAudio'
 import NoCards from './NoCards'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 // UI
 import { 
@@ -39,7 +39,9 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
 
                 setSearchResults([...new Set(totalResults)])}
 
-                searchFilter()
+                if( cardCollection[0] !== 'loading'){
+                    searchFilter()
+                }
 
     }, [cardCollection, searchTerm])
 
@@ -57,7 +59,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
         </Box>
         <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem">
                    {cardCollection.length === 0 ? <NoCards /> : null }
-                    {searchResults.map(
+                    {cardCollection[0] === 'loading' ? null : searchResults.map(
                     card =>
                         <Stack 
                         key={card.id} 

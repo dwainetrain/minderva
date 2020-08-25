@@ -125,9 +125,19 @@ Version 0.09:
 - Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
 - Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
+- Next Big Thing - Get add card looking just how you want it, then break it into managable parts that you can reuse in edit card.
+
+Visual:
+
+- Check your stylesheets and get everything working together, get consistancy, type hiearchy.
+- Collection - Better style on cards
+- Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)
+- Overall - Change favicon
+- Display Cards - Have delete warning come up as modal instead of alert
+- Font consistancy
+
 Functional:
 
-- REMOVE REACT HELMET, find another method of titles on page (It's using an UNSAFE method!)
 - Quiz - Warning modal on exit?
 - Card Collection - have a little x to clear out search
 - Add Card - disable adding card until audio is loaded
@@ -136,18 +146,11 @@ Functional:
 - Review - How might implement a review queue?
 - Collection - On search it should say showing 2 of 30 cards, for example
 - Do you need edit and create dates for cards? Not really, since we won't be filtering by them...
+- Delete audio when you delete a card!
 
 UX:
 
 - Edit should go straight to manual entry
-
-Visual:
-
-- Collection - Better style on cards
-- Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)
-- Overall - Change favicon
-- Display Cards - Have delete warning come up as modal instead of alert
-- Font consistancy
 
 Code:
 
@@ -190,6 +193,7 @@ Maybe:
 * ~~Menu - It should remove the Dashboard link and just make that the Minderva title link~~
 * ~~Quiz - It should modal to the Quiz~~
 * ~~Add Card - It should have an option to not generate audio~~
+* ~~REMOVE REACT HELMET, find another method of titles on page (It's using an UNSAFE method!) Replaced with react-helmet-async~~
 
 Notes:
 Fonts: Playfair,

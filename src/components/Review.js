@@ -1,55 +1,31 @@
 import React from 'react'
-
+import Quote from './Quote'
 import { NavLink } from 'react-router-dom';
-import { Button, Box, Flex } from '@chakra-ui/core'
+import { Button, Box, Flex, Divider } from '@chakra-ui/core'
 import NoCards from './NoCards'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
+import ReviewCount from './ReviewCount'
 
 const Review = ({ cardCollection }) => {
     return(
-    <div>
-        <Flex ml="10rem">
+        <Flex ml="10rem" justifyContent="space-between" width="80%" mt={10}>
             <Helmet>
                 <title>Minderva | Review</title>
             </Helmet>
-        <Box width="100%">
+            <Box>
+                <Flex flexWrap="Wrap">
+                    {cardCollection.length === 0 ? 
+                    <NoCards />
+                    :
+                    <ReviewCount cardCollection={ cardCollection }/>}
+                </Flex>
+            </Box>
+                <Divider orientation="vertical" mr={10}/>
+            <Box d="flex" alignItems="center">
+                <Quote />                
+            </Box>
             
-            <Flex flexWrap="Wrap">
-                {cardCollection.length === 0 ? 
-                <NoCards />
-                :
-                <Flex flexDirection="column" gap="100px" justifyContent="space-between" alignItems="center" minH="sm" minW="lg" maxW="sm" p={6}>
-                    <Box
-                        mt="1"
-                        fontWeight="semibold"
-                        lineHeight="0"
-                        as="h4"
-                    >
-                        You Have
-                    </Box>
-                    <Box
-                     fontSize="10rem"
-                     lineHeight="tight"
-                     fontFamily="Playfair Display"
-                    >
-                    {cardCollection.length}
-                    </Box>
-                    <Box
-                        mt="1"
-                        fontWeight="semibold"
-                        as="h4"
-                    >
-                        Cards Ready for Review
-                    </Box>
-                    <Button as={NavLink} px={2} to="/quiz">Review Now</Button>
-                </Flex>}
-            </Flex>
-            
-        </Box>
         </Flex>
-        
-    </div>
-    
     )}
 
 export default Review;

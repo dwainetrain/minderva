@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PlayAudio from './PlayAudio'
 import { useHistory } from 'react-router-dom'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 // Chakra UI
 import {

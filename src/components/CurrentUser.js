@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SignOut from './SignOut';
 import SelectLanguage from './SelectLanguage'
 import { firestore } from '../firebase';
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 // Styling
 import {

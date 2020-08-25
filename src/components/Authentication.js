@@ -1,12 +1,12 @@
 import React from 'react';
 import CurrentUser from './CurrentUser';
-import SignInAndSignUp from './SignInAndSignUp';
+import LogIn from './LogIn';
 
 const Authentication = ({ user, userLangPrefs, handleMessage })  => {
 
     return (
     <div>
-        {user ? <CurrentUser {...user} userLangPrefs={userLangPrefs} handleMessage={handleMessage}/> : <SignInAndSignUp />}
+        {user ? <CurrentUser {...user} userLangPrefs={userLangPrefs} handleMessage={handleMessage}/> : <LogIn />}
     </div>
     )
 }

@@ -4,7 +4,7 @@ import { firestore, auth, functions } from '../firebase';
 import { speechLanguageMap } from './speechLanguagesMap';
 import PlayAudio from './PlayAudio'
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import { collectIdsAndDocs } from '../utilities';
 import { Link } from 'react-router-dom'
 
@@ -22,7 +22,7 @@ import {
   } from '@chakra-ui/core'
 
 
-const AddCard = ({ handleMessage, userLangPrefs, match, user, history }) => {
+const AddCard = ({ handleMessage, match, user, history }) => {
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
     const [frontAudio, setFrontAudio] = useState('');

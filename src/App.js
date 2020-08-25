@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import UserRoute from './components/UserRoute';
-import SignInAndSignUp from './components/SignInAndSignUp';
-
+import LogIn from './components/LogIn'
+import { Link } from 'react-router-dom'
 import { firestore, auth } from './firebase';
 import { collectIdsAndDocs } from './utilities';
 
@@ -14,9 +14,10 @@ import { Box } from '@chakra-ui/core'
 
 
 
+
 function App() {
 
-  const [cardCollection, setCardCollection] = useState([]);
+  const [cardCollection, setCardCollection] = useState(['loading']);
 
   // For User Language Prefs
   const [userLanguagePreferences, setUserLanguagePreferences] = useState('')
@@ -69,16 +70,18 @@ function App() {
   return (
     <div className="App">
       {loading ? <p>Loading...</p> : 
-      user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage}/> :
+      user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage} loading={loading}/> :
         <>
-          <SignInAndSignUp />
+          <LogIn />
         </>
       }
         {message && <Message type={message} />}
         
-        <footer>
-            <Box ml="10rem">MVP Build 0.10</Box>
-        </footer>
+        <Box as="footer" backgroundColor="grayGreen.200">
+          <Box pl={40}>
+            <Link to="/about" >MVP Build 0.10</Link>
+          </Box>
+        </Box>
     </div>
   );
 }

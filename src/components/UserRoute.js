@@ -9,6 +9,7 @@ import EditCard from './EditCard';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
+import About from './About'
 
 
 const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
@@ -43,17 +44,22 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
                 <Route exact path="/edit-card/:id" render=
                 //
                 {(routeParams) =>
-                <EditCard {...routeParams} user={user} handleMessage={handleMessage}/>
+                <EditCard {...routeParams} user={user} handleMessage={handleMessage} />
                 }/>
                 
                 <Route exact path="/add-cards" render=
                 {() =>
-                <AddCard handleMessage={handleMessage} userLangPrefs={userLangPrefs}/>
+                <AddCard handleMessage={handleMessage} userLangPrefs={userLangPrefs} />
                 }/>
                 
                 <Route exact path="/user-profile" render=
                 {() =>
                 <UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage}/>
+                } />
+
+                <Route exact path="/about" render=
+                {() =>
+                <About />
                 } />
 
                 <Route component={NotFound} />

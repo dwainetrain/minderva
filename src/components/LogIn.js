@@ -6,9 +6,6 @@ import {
   Flex,
   Box,
   Heading,
-  FormControl,
-  FormLabel,
-  Input,
   Button
 } from '@chakra-ui/core';
 
@@ -21,15 +18,17 @@ const handleSubmit = (e) => {
 
 const LoginForm = () => {
     return(
-    <Flex width="full" align="center" justifyContent="center">
+    <Flex height="75vh" width="full" align="center" justifyContent="center">
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8}>
-      <h1>Minderva - A Language Learning Tool</h1>
+        <Box>
+            <Heading fontFamily="Playfair Display" color="tomato" textAlign="center">Minderva</Heading>
+        </Box>
         <Box textAlign="center">
-          <Heading>Login</Heading>
+          <Heading as="h6" size="md" color="grayGreen.800">A Language Learning Tool</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
-            <Button type="submit" variantColor="teal" variant="outline" width="full" mt={4} onClick={signInWithGoogle}>Sign In with Google</Button>
+            <Button type="submit" variantColor="teal" size="md" variant="outline" width="full" mt={4} onClick={signInWithGoogle}>Sign In with Google</Button>
           </form>
         </Box>
       </Box>

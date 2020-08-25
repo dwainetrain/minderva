@@ -1,0 +1,34 @@
+.quote {
+  font-size: 24px;
+  font-family: "Playfair Display";
+  position: relative;
+  letter-spacing: 0.03em;
+  line-height: 3rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+.quote:before {
+  content: "“";
+  position: absolute;
+  left: -0.4em;
+}
+.quote:after {
+  content: "”";
+  /* margin-right: -1rem; */
+}
+
+.quote--container {
+  width: 90%;
+}
+
+.quote--highlight {
+  color: tomato;
+}
+
+.quote--author {
+  font-family: "Source Sans Pro", system-ui, sans-serif;
+  font-size: 2rem;
+  text-align: right;
+  font-weight: 300;
+  color: #686d6d;
+}

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import SignInAndSignUp from './SignInAndSignUp'
-import './Dashboard.css'
-import { NavLink } from 'react-router-dom'
-import Helmet from 'react-helmet'
+import LogIn from './LogIn'
+import { NavLink, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
+import ReviewCount from './ReviewCount'
+import Quote from './Quote'
 
 import {
     Box,
@@ -13,73 +14,35 @@ import {
 } from '@chakra-ui/core'
 import NoCards from './NoCards';
 
-const UserDashboard = ( { cardCollection } ) => {
-
-    const [word, setWord] = useState('奇妙さ')
-    const wordReveal = {
-        originalWord: '奇妙さ',
-        revealWord:'strangeness'
-    }
-
+const UserDashboard = ( { cardCollection, loading } ) => {
     return(
         
         <Flex ml="10rem">
             <Helmet>
             <title>Minderva | Dashboard</title>
             </Helmet>
-        <Box width="100%">
-            <div className="quote--container">
-            <span className="quote">
-                There is no exquisite beauty without some
-                <span className="quote--highlight" 
-                onMouseEnter={() => setWord(wordReveal.revealWord)} 
-                onMouseLeave={() => setWord(wordReveal.originalWord)}>
-                     &nbsp;{word}
-            </span> in the proportion.
-            </span>
-            <span className="quote--author">&ndash; Francis Bacon</span>
-            </div>
+        <Box width="100%" mt={10}>
+            <Quote />
             <Flex flexWrap="Wrap">
-                {cardCollection.length === 0 ? 
+                {cardCollection[0] === 'loading'  ? <Text>Loading...</Text> 
+                : cardCollection.length === 0 ? 
                 <NoCards />
                 :
-                <Flex flexDirection="column" gap="100px" justifyContent="space-between" alignItems="center" minH="sm" minW="lg" maxW="sm" p={6}>
-                    <Box
-                        mt="1"
-                        fontWeight="semibold"
-                        lineHeight="0"
-                        as="h4"
-                    >
-                        You Have
-                    </Box>
-                    <Box
-                     fontSize="10rem"
-                     lineHeight="tight"
-                     fontFamily="Playfair Display"
-                    >
-                    {cardCollection.length}
-                    </Box>
-                    <Box
-                        mt="1"
-                        fontWeight="semibold"
-                        as="h4"
-                    >
-                        Cards Ready for Review
-                    </Box>
-                    <Button as={NavLink} px={2} to="/quiz">Review Now</Button>
-                </Flex>}
-            <Divider orientation="vertical" ml="10rem" mr="10rem"/>
-                <Flex flexDirection="column" justifyContent="space-between" alignItems="flex-start" minW="lg" maxW="sm" p={6}>
-                    <Text>Explore Your Minderva:</Text>
-                    <Box>
-                        <Button as={NavLink} to="/add-cards">Add Cards</Button>
+                <ReviewCount cardCollection={ cardCollection } />
+                }
+            <Divider orientation="vertical" mx={40} borderColor="grayGreen.200"/>
+                <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="lg" maxW="sm" py={8}>
+                    <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
+                    <Box mb={8}>
+                        <Button as={Link} style={{ textDecoration: 'none' }} to="/add-cards" mb={3} variant="outline">Add Cards</Button>
                         <Text>
                             Tranaslate words or phrases and add them to your collection.
                         </Text>
                     </Box>
-                    <Box>
+                    
+                    <Box mb={8}>
                         <Box>
-                            <Button as={NavLink} to="/card-collection">Card Collection</Button>
+                            <Button as={NavLink} to="/card-collection" mb={3} variant="outline" style={{ textDecoration: 'none' }}>Card Collection</Button>
                         </Box>
                         <Box>
                             <Text>View, edit or delete your saved cards.</Text>
@@ -87,7 +50,7 @@ const UserDashboard = ( { cardCollection } ) => {
                     </Box>
                     <Box>
                         <Box>
-                            <Button as={NavLink} to="/user-profile">User Profile</Button>
+                            <Button as={NavLink} to="/user-profile" mb={3} size="md" variant="outline" style={{ textDecoration: 'none' }}>User Profile</Button>
                         </Box>
                         <Box>
                             <Text>View your profile and edit preferences.</Text>
@@ -99,12 +62,9 @@ const UserDashboard = ( { cardCollection } ) => {
             
             <Box my="6rem">
             <Divider mb="2rem"/>
-                <Text>Minderva is a cobblestone in the cobbled pathway of language study.</Text>
-                <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
-                <Text>I hope it helps you get to where you’re going.</Text>
-                <Text>It was created by Dwaine Best as the final for the UCSD Extension Applied Javascript Course.</Text>
-                <Text>It was built using React, Chakra UI, the Firebase platform, Google Translate and Google Text-to-Speech</Text>
-                <Text>It is in perpetual development, view the roadmap and contribute if you'd like.</Text>
+                <Text lineHeight="taller">Minderva is a cobblestone in the cobbled pathway of language study.<br />
+                It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.<br />
+                I hope it helps you get to where you’re going.</Text>
             </Box>
         </Box>
         </Flex>
@@ -119,7 +79,7 @@ const Dashboard = ({ user, cardCollection }) => {
                 {user ? 
                     <UserDashboard cardCollection={cardCollection}/>
                     : 
-                    <SignInAndSignUp />}
+                    <LogIn />}
         </div>
 
     )}
