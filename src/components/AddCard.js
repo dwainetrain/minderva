@@ -5,6 +5,7 @@ import { useStateWithCallbackInstant } from 'use-state-with-callback';
 import { Helmet } from 'react-helmet-async'
 import CardFront from './CardFront'
 import CardBack from './CardBack'
+import { AiOutlineSwap } from "react-icons/ai";
 
 // From Edit
 import { collectIdsAndDocs } from '../utilities';
@@ -76,14 +77,12 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                 setSpeechLanguage(cardDetail.backSpeechLanguage)
                 setFrontAudio(cardDetail.frontAudioURL)
                 setBackAudio(cardDetail.backAudioURL)
-                console.log(cardDetail)
-                console.log(backAudio)
-                console.log(cardDetail.backAudioURL)
+                setLoadingAudio(false)
               }
               fetchData()
         }
         
-    }, [userLangPrefs, cardId, user.uid, currentMode])
+    }, [userLangPrefs, cardId, user.uid, currentMode, mode])
 
     // ADD CARD
     const create = async (e) => {
@@ -285,7 +284,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
 
             <Heading as="h2" size="lg" pb="2rem">{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
             
-            <Flex direction="row" flexWrap="wrap" justifyContent="space-between" >
+            <Flex flexWrap="wrap" justifyContent="space-between" >
                 
                 <CardFront 
                     toLanguage={toLanguage} 
@@ -295,7 +294,11 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                     fromLanguage={fromLanguage}
                     front={front} 
                     handleFront={handleFront}/>
-
+                    
+                    <Button as={AiOutlineSwap} variant="link" variantColor="blackAlpha" onClick={handleSwap}>
+                            Swap Sides
+                    </Button>
+                    
                 <CardBack 
                     fromLanguage={fromLanguage} 
                     loadingAudio={loadingAudio}
@@ -310,27 +313,37 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                     handleManualGenerateAudio={handleManualGenerateAudio}
                     loadingTranslation={loadingTranslation}
                     manual={mode === 'update' ? true : false}/>
+
+            
                 
             </Flex>
-
+            
             <Flex justifyContent="center">
-                <Flex width="100%" justifyContent="space-around">
-                <Button variantColor="blackAlpha" leftIcon="repeat" onClick={handleSwap}>
-                            Swap Sides
-                            </Button>
-                </Flex>
+                
                 <Flex width="100%" justifyContent="flex-end">
-                    {mode === 'add' ? <Button variantColor="whatsapp" leftIcon="add" onClick={create}>
-                    Add Card
-                    </Button> : 
-                    <Box>
-                        <Link to="/card-collection">Cancel</Link>
+                    {mode === 'add' ? 
+                        <Button 
+                            variantColor="whatsapp" 
+                            leftIcon="add"
+                            onClick={create}
+                            placement="left"
+                            // set it to false to force it to hide, or put it to undefined to 
+                            // resume normal behaviour
+                            label="This is disabled because..."
+                            aria-label="This is disabled because..."
+                        >
+                        Add Card
+                        </Button>
+                         : 
+                    <Box d="flex" justifyContent="space-between">
+                        <Button as={Link} variant="LInk" to="/card-collection" mr={10} color="grayGreen.800">Cancel</Button>
                         <Button variantColor="whatsapp" onClick={update}>
                         Update Card
                         </Button>
                     </Box>}
                     
                 </Flex>
+            
             </Flex>
         </Stack>
         

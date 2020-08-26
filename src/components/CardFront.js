@@ -7,7 +7,8 @@ import {
     Stack,
     Box,
     Text,
-    Input
+    Input,
+    Spinner
 } from '@chakra-ui/core'
 
 const CardFront = ({ toLanguage, 
@@ -44,14 +45,21 @@ const CardFront = ({ toLanguage,
                         maxLength="60"
                         autoComplete="off"
                         size="lg"
+                        isRequired
                         />
 
                     {loadingAudio === '' ? 
                         null 
                         : loadingAudio === 'loading' && frontAudio === '' ?
-                            <p>Loading Audio</p>
+                            <Box>
+                                <Spinner />
+                                <p>Generating Audio</p>
+                            </Box>
                         :
-                        <PlayAudio side='front-audio' source={frontAudio} />
+                        <Box ml={3}>
+                           <PlayAudio type="button" side='front-audio' source={frontAudio} />
+                        </Box>
+                            
                     }
                             
                 </Stack>

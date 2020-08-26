@@ -1,6 +1,6 @@
 .quote {
   font-size: 24px;
-  font-family: "Playfair Display";
+  font-family: "span";
   position: relative;
   letter-spacing: 0.03em;
   line-height: 3rem;
@@ -18,7 +18,7 @@
 }
 
 .quote--container {
-  width: 90%;
+  width: 100%;
 }
 
 .quote--highlight {

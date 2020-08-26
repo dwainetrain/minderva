@@ -125,14 +125,9 @@ Version 0.09:
 - Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
 - Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
-NEXT BIG THING: Responsive system
-Order of attack:
-
-- Nav
-
 Visual:
 
-- Collection - Better style on cards
+- Collection - Better style on cards, play around in figma first
 - Display Cards - Have delete warning come up as modal instead of alert
 - Font consistancy
 - How easy to add some minor animations to ease UX
@@ -146,6 +141,7 @@ Functional:
 - Add Card - What if translation or audio never loads, will it give back an error? Perhaps timeout...?
 - Review - How might we implement a review queue?
 - Delete audio when you delete a card!
+- Finish out responsive design
 
 Maybe:
 

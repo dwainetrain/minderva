@@ -1,5 +1,4 @@
 import React from 'react';
-import Nav from './Nav';
 import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
 import AddCard from './AddCard';
@@ -14,7 +13,7 @@ import About from './About'
 import Header from './Header'
 
 
-const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
+const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading, cardsLoaded }) => {
     const location = useLocation();
     return(
         <>
@@ -25,12 +24,12 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
             <Switch>
                 <Route exact path="/" render=
                 {() =>
-                    <Dashboard user={user} cardCollection={cardCollection}/>
+                    <Dashboard user={user} cardCollection={cardCollection} loading={loading} cardsLoaded={cardsLoaded}/>
                 }/>
                 
                 <Route exact path="/review" render=
                 {() =>
-                <Review path="/review" cardCollection={cardCollection} />
+                <Review path="/review" cardCollection={cardCollection} cardsLoaded={cardsLoaded}/>
                 }/>
 
                 <Route exact path="/quiz" render=
@@ -40,7 +39,7 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
                 
                 <Route exact path="/card-collection" render=
                 {() =>
-                <DisplayCards path="/card-collection" cardCollection={cardCollection} user={user} handleMessage={handleMessage}/>
+                <DisplayCards path="/card-collection" cardCollection={cardCollection} user={user} handleMessage={handleMessage} cardsLoaded={cardsLoaded}/>
                 }/>
 
                 <Route exact path="/edit-card/:id" render=

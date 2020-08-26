@@ -27,7 +27,7 @@ const LoginForm = () => {
           <Image size="75px" objectFit="cover" src={logo} mb={3} />
         </Box>
         <Box>
-            <Heading fontFamily="Playfair Display" color="tomato" textAlign="center">Minderva</Heading>
+            <Heading fontFamily="span" color="tomato" textAlign="center">Minderva</Heading>
         </Box>
         <Box textAlign="center">
           <Heading as="h6" size="md" color="grayGreen.800">A Language Learning Tool</Heading>

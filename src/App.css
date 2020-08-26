@@ -1,9 +1,11 @@
-@import url("https://fonts.googleapis.com/css?family=Playfair+Display|Source+Sans+Pro");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+@import url("https://use.typekit.net/opz7bhd.css");
 
 html {
   position: relative;
   min-height: 100%;
   height: unset;
+  box-sizing: border-box;
 }
 
 body {
@@ -36,6 +38,7 @@ footer p {
   color: #777777;
 }
 
+/* For active links across the site */
 .active {
   border-bottom: 1px solid #f4fff4;
   transition: border-bottom 0.5s ease-in-out;

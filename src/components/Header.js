@@ -1,13 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
-import { Link as ChaLink, Heading, Flex, Box, Stack, Divider, PseudoBox, Text, Button } from '@chakra-ui/core'
-
-const MenuItems = ({ children }) => (
-  <Text mt={{ base: 4, md: 0 }} mr={6} display="block">
-    {children}
-  </Text>
-);
+import { Link as ChaLink, Flex, Box, Divider, PseudoBox } from '@chakra-ui/core'
 
 const NavbarLink = ({ children, ...props }) => (
     <PseudoBox
@@ -24,28 +18,29 @@ const NavbarLink = ({ children, ...props }) => (
     >{children}</PseudoBox>
     );
 
-const Header = props => {
-  const [show, setShow] = React.useState(false);
+const Header = () => {
+  const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
 
   return (
     <Flex
-      as="nav"
-      align="center"
-      justify="space-between"
-      wrap="wrap"
-      padding="1.25rem"
-      bg="tomato"
-      color="white"
-      px="10rem"
-      {...props}
+        bg="tomato"
+        w="100%"
+        as="nav"
+        px={{ sm: 10, md: 40 }}
+        py={6}
+        justifyContent="space-between"
+        alignItems="center"
+        wrap="wrap"
+        color="white"
     >
+    
       <Box fontWeight="extrabold">
             <ChaLink as={Link} to="/" color="white"
             _hover={{textDecoration:"none", color:"white"}}
             _active={{color:"white"}}
             _focus={{color:"white", textDecoration:"none"}}
-            fontFamily="Playfair Display"
+            fontFamily="span"
             letterSpacing="0.1em"
             fontSize="lg"
             lineHeight="0"
@@ -67,34 +62,41 @@ const Header = props => {
       </Box>
 
       <Box
-        display={{ sm: show ? "block" : "none", md: "flex" }}
+        display={{ sm: show ? "flex" : "none", md: "flex" }}
+        flexDirection={{ sm: show ? "column" : "none", md: "row" }}
         width={{ sm: "full", md: "auto" }}
-        alignItems="center"
+        ml={{sm:"-0.5rem", md: 36}}
+        mt={{ base: 4, md: 0 }}
         flexGrow={1}
       >
-       
-              <Box>
-                <NavbarLink as={NavLink} px={2} to="/review" key="review">Review</NavbarLink>
-              </Box>
-              <Divider orientation={{ sm: show ? "horizontal" : "horizontal", md: "vericle" }} />
-              <Box>
-                <NavbarLink as={NavLink} px={2} to="/add-cards" key="add">Add Cards</NavbarLink>
-              </Box>
-              <Divider orientation={{ sm: show ? "horizontal" : "horizontal", md: "vericle" }} />
-              <Box>
-                <NavbarLink as={NavLink} px={2} to="/card-collection" key="collection">Card Collection</NavbarLink>
-              </Box>
-            
+        <Box my={{sm:3, md:0}}>
+            <NavbarLink as={NavLink} px={2}  to="/review" key="review">Review</NavbarLink>
+        </Box>
+        <Divider orientation="vertical" />
+        <Box my={{sm:3, md:0}}>
+            <NavbarLink as={NavLink} px={2} to="/add-cards" key="add">Add Cards</NavbarLink>
+        </Box>
+        <Divider orientation="vertical" />
+        <Box my={{sm:3, md:0}}>
+            <NavbarLink as={NavLink} px={2} to="/card-collection" key="collection">Card Collection</NavbarLink>
+        </Box>
       </Box>
 
+
       <Box
-        display={{ sm: show ? "block" : "none", md: "block" }}
+        display={{ sm: show ? "block" : "none", md: "flex" }}
         mt={{ base: 4, md: 0 }}
+        ml={{sm:"-0.5rem", md: 36}}
       >
-        <Button bg="transparent" border="1px">
-          Create account
-        </Button>
-      </Box>
+        <Box ml="-0.25rem">
+            <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
+        </Box>
+        {!show ? <Divider orientation='vertical' /> : null}
+        <Divider my={3} orientation={{sm:'default', md: 'vertical'}} />
+        <Box>
+            <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
+        </Box>
+    </Box>
     </Flex>
   );
 };

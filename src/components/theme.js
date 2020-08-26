@@ -25,7 +25,7 @@ const customTheme = {
       }
     },
     fonts: {
-      heading: '"Playfair Display", "EB Garamond", sans-serif',
+      heading: '"span", sans-serif',
       body: '"Source Sans Pro", system-ui, sans-serif',
       mono: "Menlo, monospace",
     },

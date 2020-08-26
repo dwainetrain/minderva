@@ -10,7 +10,9 @@ import {
     Input,
     Button,
     Heading,
-    Checkbox
+    Checkbox,
+    Divider,
+    Spinner
 } from '@chakra-ui/core'
 
 const CardBack = ({
@@ -34,6 +36,7 @@ const CardBack = ({
                 flexBasis="100%"
                 flex="1"
                 padding={4}
+                spacing={3}
                 maxW="sm" 
                 borderWidth="1px"
                 rounded="lg"
@@ -60,34 +63,44 @@ const CardBack = ({
                             maxLength="60"
                             autoComplete="off"
                             size="lg"/>
-                            <Button as="a"
+                        </div>
+                        : 
+                        <Heading as="h3" mt={3}>{back}</Heading>}
+
+                    {loadingAudio === '' ? 
+                        null 
+                        : loadingAudio === 'loading' && backAudio === ''?
+                            <Box>
+                                <Spinner />
+                                <p>Generating Audio</p>
+                            </Box>
+                        :
+                        <Box ml={3} mt={3}>
+                         <PlayAudio type="button" side='back-audio' source={backAudio} />
+                        </Box>
+                        
+                    }
+
+                    <Divider my={6} />
+
+                    {manualEntry === true ? 
+                        <Box d="flex" justifyContent="space-between">
+                            <Button as="a" variant="link"
                             onClick={() => setManualEntry(false)} leftIcon="chevron-left">
-                                Back to translation
+                                Translation
                             </Button>
                             <Button variantColor="cyan" leftIcon="chevron-right" 
                             onClick={handleManualGenerateAudio}
                             >
                             Generate Audio
                             </Button>
-                            
-                        </div>
-                        : loadingTranslation === true && front !== ''? 
-                        <p>Loading translation</p> : 
-                        <Heading as="h3">{back}</Heading>}
+                        </Box>
+                    :
 
-                    {loadingAudio === '' ? 
-                        null 
-                        : loadingAudio === 'loading' && backAudio === ''?
-                            <p>Loading Audio</p>
-                        :
-                        <PlayAudio side='back-audio' source={backAudio} />
-                        
-                    }
-
-                    {manualEntry === true ? null :
-                    
                     <Stack>
                         <Button variantColor="twitter" variant="outline"
+                        isLoading={loadingTranslation}
+                        isDisabled = {front === '' && true}
                         leftIcon="arrow-right" 
                         onClick={(e) => {
                             setManualEntry(false)

@@ -21,9 +21,9 @@ const NavbarLink = ({ children, ...props }) => (
 
 const Nav = () => {
 
-      const [show, setShow] = React.useState(false);
-      const handleToggle = () => setShow(!show);
-      
+      // const [show, setShow] = React.useState(false);
+      // const handleToggle = () => setShow(!show);
+
       return(
         <Flex
         bg="tomato"
@@ -32,14 +32,11 @@ const Nav = () => {
         py={4}
         justifyContent="space-between"
         alignItems="center"
-        
       >
+        
         <Flex flexDirection="row" justifyContent="center" alignItems="baseline" py={3}>
-          <Stack
-          isInline
-          align="center"
-          
-          >   
+          <Stack isInline align="center">   
+
             <Box fontWeight="extrabold">
               <ChaLink as={Link} to="/" color="white"
               _hover={{textDecoration:"none", color:"white"}}

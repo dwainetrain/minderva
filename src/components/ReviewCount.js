@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { NavLink } from 'react-router-dom';
-import { Button, Box, Flex, Text, Stack } from '@chakra-ui/core'
+import { Button, Box, Flex, Heading } from '@chakra-ui/core'
 
 const ReviewCount = ({ cardCollection }) => {
     return(
@@ -10,9 +10,10 @@ const ReviewCount = ({ cardCollection }) => {
             <Box fontWeight="semibold">
                 You Have
             </Box>
-            <Box>
-                <Text height="5rem" fontSize="10rem" fontFamily="Playfair Display"  my={8}>{cardCollection.length}</Text>
-            </Box>
+            <Flex justifyContent="center">
+                <Heading fontSize="10rem" fontFamily="span" fontWeight="100"
+                lineHeight="10rem">{cardCollection.length}</Heading>
+            </Flex>
             <Box
                 mt="1"
                 fontWeight="semibold"

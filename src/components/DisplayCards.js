@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DeleteCard from '../components/DeleteCard';
 import { Link } from 'react-router-dom';
-import "./DisplayCards.css"
 import moment from 'moment'
 import PlayAudio from './PlayAudio'
 import NoCards from './NoCards'
@@ -17,10 +16,11 @@ import {
     Text,
     SimpleGrid,
     Box,
-    Stack,
-    Button } from '@chakra-ui/core'
+    Button,
+    Spinner,
+    Divider } from '@chakra-ui/core'
 
-const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
+const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
   
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([])
@@ -61,38 +61,58 @@ const DisplayCards = ({ cardCollection, user, handleMessage })  =>{
                 <Text>Showing {searchResults.length} of {cardCollection.length} total cards</Text>
             </Flex>
         </Box>
-        <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem">
+        {cardsLoaded ? 
+        
+            <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem" minChildWidth="36rem">
                    {cardCollection.length === 0 ? <NoCards /> : null }
                     {cardCollection[0] === 'loading' ? null : searchResults
                     .sort((a, b) => b.dateCreated.seconds.valueOf() - a.dateCreated.seconds.valueOf())
                     .map(
                     card =>
-                        <Stack 
+                        <Flex
+                        flexDirection="column"
+                        justifyContent="space-between"
                         key={card.id} 
                         spacing="1rem"
-                        borderBottomWidth="1px"
                         borderWidth="1px"
                         rounded="lg"
-                        p="4rem">
-                            <Text>{card.front}</Text>
-                            <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL}/>
-                            <Text>{card.back}</Text>
-                            <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL}/>
+                        px="3rem"
+                        py="2rem"
+                        minHeight="sm"
+                        maxWidth="36rem"
+                        >
+                            <Flex>
+                                <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL}/>
+                                <Text fontSize="lg">{card.front}</Text>
+                            </Flex>
+                            <Divider />
+                            <Flex>
+                                <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL}/>
+                                <Text>{card.back}</Text>
+                            </Flex>
+                            <Divider />
                             <Text>{card.originLanguageName}/{card.targetLanguageName}</Text>
                             
                             <Flex justifyContent="space-between" py="1rem">
-                                <Button as={Link} variant="ghost" to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Button>
+                                <Button as={Link} variant="outline" to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Button>
                             
                             <DeleteCard user={user} id={card.id} handleMessage={handleMessage} />
 
                             </Flex>
                             <Text fontSize="sm">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
-                        </Stack>
+                        </Flex>
                     )}
 
             
            
-        </SimpleGrid>
+         </SimpleGrid> : 
+            <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
+                <Box>
+                    <Spinner color="tomato" />
+                </Box>
+            </Flex>
+            }
+        
         </>
   )}
 

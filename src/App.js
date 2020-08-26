@@ -12,12 +12,9 @@ import Message from './components/Messages'
 import './App.css';
 import { Box, useToast } from '@chakra-ui/core'
 
-
-
-
 function App() {
 
-  const [cardCollection, setCardCollection] = useState(['loading']);
+  const [cardCollection, setCardCollection] = useState([]);
 
   // For User Language Prefs
   const [userLanguagePreferences, setUserLanguagePreferences] = useState('')
@@ -27,6 +24,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cardsLoaded, setCardsLoaded] = useState(false);
 
   // streaming the database, being sure to unsubscribe to avoid memory leaks, I think...
   useEffect(() => {
@@ -35,6 +33,7 @@ function App() {
       .onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
         setCardCollection(entries);
+        setCardsLoaded(true)
       });
       
       const unsubscribeFromUserProfile = firestore.collection(`users`)
@@ -43,7 +42,6 @@ function App() {
                       .onSnapshot(snapshot => {
                         const entries = snapshot.docs.map(collectIdsAndDocs)
                         setUserLanguagePreferences(entries[0])
-                        console.log(snapshot.docs)
                       });
 
       const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
@@ -80,12 +78,13 @@ function App() {
       duration: 3000,
       isClosable: false,
     })
+    setMessage('')
   }
     
   return (
     <div className="App">
       {loading ? <p>Loading...</p> : 
-      user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage} loading={loading}/> :
+      user ? <UserRoute user={user} userLangPrefs={userLanguagePreferences} cardCollection={cardCollection} handleMessage={handleMessage} loading={loading} cardsLoaded={cardsLoaded}/> :
         <>
           <LogIn />
         </>
@@ -93,7 +92,7 @@ function App() {
         {message && <Message type={message} />}
         
         <Box as="footer" backgroundColor="grayGreen.200">
-          <Box pl={40}>
+          <Box pl={{sm:10, md:40}}>
             <Link to="/about" >MVP Build 0.10</Link>
           </Box>
         </Box>

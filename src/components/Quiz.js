@@ -9,7 +9,8 @@ import {
     Flex,
     Box,
     Heading,
-    Text
+    Text,
+    Spinner
 } from '@chakra-ui/core'
 
 
@@ -74,7 +75,7 @@ const Quiz = ({ cardCollection }) => {
         borderWidth="1px"
         rounded="lg"
         {...props}
-        width="56rem"
+        width={{sm:"100%", md:"56rem"}}
         d="flex"
         flexDirection="column"
         justifyContent="space-between"
@@ -87,7 +88,7 @@ const Quiz = ({ cardCollection }) => {
     // Parent style for card text
     const CardText = ({ children, ...props }) => (
         <Text
-        fontFamily="Playfair Display"
+        fontFamily="span"
         fontSize="4xl"
         lineHeight="shorter"
         {...props}
@@ -147,22 +148,21 @@ const Quiz = ({ cardCollection }) => {
         )
     }
 
+    console.log(quizCards[0])
+
     // This needs a serious amount of refactoring, but it does work
     const QuizState = () => {
+        
         if(quizCards[cardNumber] !== undefined) {
                 return(
-                    <Flex px="10rem" py="5rem" justifyContent="space-around">
-                    <Box px="2rem" width="12rem" textAlign="right">
+                    <Flex px={{sm:10, md:40}} py="5rem" justifyContent="space-around" flexDirection={{sm:'column-reverse', md:'row'}}>
+                    <Box px="2rem" width="12rem" textAlign={{sm:"left", md:"right"}}>
                         <CardCount cardNumber={cardNumber} totalCards={quizCards.length} />
                         <Text>{cardSide}</Text>
                     </Box>
-                    <Box>
-                        {/* CARD START */}
-                        {/* When card is front, doesn't show next card */}                            
+                    <Box>                          
                         <DisplayCard />
-    
                         <CardControl />
-                        {/* CARD END */}
                     </Box>
                     
                     </Flex>
@@ -171,13 +171,13 @@ const Quiz = ({ cardCollection }) => {
         } else {
             if(quizCards.length !== 0 && cardNumber+1 > quizCards.length){
                 return(
-                    <Flex px="10rem" py="5rem" justifyContent="space-around">
+                    <Flex px="10rem" py="5rem" justifyContent="space-around" flexDirection={{sm:'column-reverse', md:'row'}}>
                     <Box px="2rem" width="12rem" textAlign="right">
                         <CardCount cardNumber={cardNumber} totalCards={quizCards.length} />
                     </Box>
                     <Box>
                     <QuizCard>
-                        <p>Quiz Complete! <span role="img" aria-label="Celebration Emoji">🎉</span></p>
+                        <Text textAlign="center" fontSize="2xl">Review Complete <span role="img" aria-label="Celebration Emoji">🎉</span></Text>
                         <Button onClick={() => {
                         quizReset ? setQuizReset(false) : setQuizReset(true)
                         setCardNumber(0)}}>
@@ -189,8 +189,16 @@ const Quiz = ({ cardCollection }) => {
                     )
             } else {
                 return (
-                    <Flex px="10rem" py="5rem" justifyContent="space-around">
-                        <QuizCard>Loading Review</QuizCard>
+                    <Flex px="10rem" py="5rem" justifyContent="space-around" flexDirection="column" alignItems="flex-start">
+                        <QuizCard>
+                            <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
+                            <Box>
+                                <Spinner color="tomato" />
+                            </Box>
+                            </Flex>
+                            <Text>Loading Review</Text>
+                            </QuizCard>
+                        <Button mt={4} variant="link" onClick={() => history.goBack()}>Exit Review</Button>
                     </Flex>
                     )
                 }
@@ -198,14 +206,14 @@ const Quiz = ({ cardCollection }) => {
     }
 
     return(
-    <Flex flexWrap="wrap">
+    <Flex flexWrap="wrap" flexDirection={{sm:'column-reverse', md:'row'}} >
         <Helmet>
                 <title>Minderva | Quiz</title>
         </Helmet>      
         <Box>
-            <Heading fontFamily="Playfair Display" pl="10rem" py="4rem" color="tomato">Minderva</Heading>
+            <Heading fontFamily="span" pl={{sm:10, md:40}} py="4rem" color="tomato">Minderva</Heading>
         </Box>            
-            <QuizState /> 
+            <QuizState />
     </Flex>
      
     )

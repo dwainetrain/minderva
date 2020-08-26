@@ -1,6 +1,10 @@
 import React from 'react'
 
-const PlayAudio = ({ side, source }) => {
+import { Button, Box, Text } from '@chakra-ui/core'
+import { FiVolume2 } from "react-icons/fi";
+
+
+const PlayAudio = ({ side, source, type }) => {
         
     const playAudio = (side) => {
         const audioURL = document.getElementsByClassName(side)[0]
@@ -15,9 +19,20 @@ const PlayAudio = ({ side, source }) => {
                     Your browser does not support the
                     <code>audio</code> element.
             </audio>
-            <button onClick={() => playAudio(side)}>
-                <span>Play Audio</span>
-            </button>
+            {type === 'button' ? 
+            
+            <Button variant="link" size="md" onClick={() => playAudio(side)}>
+                <Box as={FiVolume2} size="16px" mr={3}/>
+                <Text>Play Audio</Text>    
+            </Button>
+            
+            : <Button variant="link" size="md" onClick={() => playAudio(side)}>
+                <Box as={FiVolume2} size="16px" mr={3}/>
+                
+            </Button>
+            
+            }
+            
         </figure>
       )
 }
