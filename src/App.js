@@ -10,7 +10,7 @@ import Message from './components/Messages'
 
 /// Styling
 import './App.css';
-import { Box } from '@chakra-ui/core'
+import { Box, useToast } from '@chakra-ui/core'
 
 
 
@@ -60,11 +60,26 @@ function App() {
     
   }, [user]);
 
-  const handleMessage = (message) => {
-    setMessage(message);
-    setTimeout(() => {
-      setMessage(null)
-    }, 2400)
+  // handle messages with Chakra Toasts
+  const messages = {
+    saved: "Your new card has been added",
+    languageUpdate: "Language Preferences Updated",
+    updated: "Card updated",
+    deleted: "Card deleted",
+    frontRequired: "Front of the card can't be blank",
+    backRequired: "Back of the card can't be blank",
+    characterLimit: "Sorry, there's a 50 character limit per card."
+  }
+
+  const toast = useToast();
+  const handleMessage = (message, status) => {
+    toast({
+      position: "bottom",
+      description: messages[message],
+      status: status,
+      duration: 3000,
+      isClosable: false,
+    })
   }
     
   return (

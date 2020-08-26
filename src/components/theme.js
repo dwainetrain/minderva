@@ -1,9 +1,17 @@
 import { theme } from '@chakra-ui/core'
 
+
+const breakpoints = ["360px", "768px", "1024px", "1440px"];
+breakpoints.sm = breakpoints[0];
+breakpoints.md = breakpoints[1];
+breakpoints.lg = breakpoints[2];
+breakpoints.xl = breakpoints[3];
+
 // Theme Options
 // Let's say you want to add custom colors
 const customTheme = {
     ...theme,
+    breakpoints,
     colors: {
       ...theme.colors,
       brand: {
@@ -16,7 +24,6 @@ const customTheme = {
         800: "#696d69"
       }
     },
-    breakpoints: ["30em", "48em", "62em", "80em"],
     fonts: {
       heading: '"Playfair Display", "EB Garamond", sans-serif',
       body: '"Source Sans Pro", system-ui, sans-serif',
@@ -47,6 +54,7 @@ const customTheme = {
         semibold: 500,
         extrabold: 900,
       },
+
   };
   
   export default customTheme;

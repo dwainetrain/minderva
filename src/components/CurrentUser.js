@@ -7,7 +7,9 @@ import { Helmet } from 'react-helmet-async'
 // Styling
 import {
     Stack,
-    Text
+    Text,
+    Heading,
+    Divider
 } from '@chakra-ui/core'
 
 const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, uid }) => {
@@ -39,30 +41,37 @@ const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, u
         const languages = pref === 'target' ? {targetCode:code} : {originCode:code}
         const cardRef = firestore.doc(`users/${uid}/profile/${uid}`);
         await cardRef.update(languages);
-        handleMessage('updated')
+        handleMessage('languageUpdate', 'success')
       }
      
     return(
-        <Stack spacing={2} px="10rem">
+        <Stack spacing={2} px="10rem" py="3rem" maxWidth={[
+            "100%", // base
+            "75%", // 480px upwards
+            "75%", // 768px upwards
+            "50%", // 992px upwards
+          ]}>
             <Helmet>
                 <title>Minderva | User Profile</title>
             </Helmet>    
-            <h2>User Profile Page</h2>
-            <p>Hello {displayName}!</p>
-            <p>Google email for this account: {email}</p>
-            <p>Default Origin Language: </p>
+            <Heading>User Profile Page</Heading>
+            <Divider />
+            
+            <Text>Google email for this account: </Text>
+            <Text fontStyle="italic">{email}</Text>
+
+            <Divider />
+            <Text>Default Origin Language: </Text>
             {!toLanguage ? <Text>Loading Languages</Text> :
             <SelectLanguage 
                     handleLanguageSelect={handleFromLanguageSelect}
                     selected={fromLanguage} keyTo="text"/>}
 
-            <p>Default Target Language:</p>
+            <Text>Default Target Language:</Text>
             {!toLanguage ? <Text>Loading Languages</Text> :
                     <SelectLanguage 
                     handleLanguageSelect={handleToLanguageSelect}
                     selected={toLanguage} keyTo="target"/>}
-            <p>Be sure to show messages on option saves</p>
-            <SignOut />
         </Stack>
     )
 }

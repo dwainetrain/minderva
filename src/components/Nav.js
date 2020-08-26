@@ -19,7 +19,12 @@ const NavbarLink = ({ children, ...props }) => (
   >{children}</PseudoBox>
   );
 
-const Nav = () => (
+const Nav = () => {
+
+      const [show, setShow] = React.useState(false);
+      const handleToggle = () => setShow(!show);
+      
+      return(
         <Flex
         bg="tomato"
         w="100%"
@@ -50,15 +55,15 @@ const Nav = () => (
             </Box>
             <Box d="flex" ml="3rem">
               <Box>
-                <NavbarLink as={NavLink} px={2} to="/review">Review</NavbarLink>
+                <NavbarLink as={NavLink} px={2} to="/review" key="review">Review</NavbarLink>
               </Box>
               <Divider orientation="vertical" />
               <Box>
-                <NavbarLink as={NavLink} px={2} to="/add-cards">Add Cards</NavbarLink>
+                <NavbarLink as={NavLink} px={2} to="/add-cards" key="add">Add Cards</NavbarLink>
               </Box>
               <Divider orientation="vertical" />
               <Box>
-                <NavbarLink as={NavLink} px={2} to="/card-collection">Card Collection</NavbarLink>
+                <NavbarLink as={NavLink} px={2} to="/card-collection" key="collection">Card Collection</NavbarLink>
               </Box>
             </Box>
           </Stack>
@@ -75,6 +80,7 @@ const Nav = () => (
             </Box>
         </Box>
       </Flex>
-)
+      )
+}
 
 export default Nav;

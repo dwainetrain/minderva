@@ -1,12 +1,14 @@
 // Just building out a basic login form to be integrated later into the actual app
 import { signInWithGoogle } from '../firebase';
+import logo from './assets/mstile-150x150.png'
 
 import React from 'react';
 import {
   Flex,
   Box,
   Heading,
-  Button
+  Button,
+  Image
 } from '@chakra-ui/core';
 
 const handleSubmit = (e) => {
@@ -19,7 +21,11 @@ const handleSubmit = (e) => {
 const LoginForm = () => {
     return(
     <Flex height="75vh" width="full" align="center" justifyContent="center">
+      
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8}>
+        <Box d="flex" alignItems="center" justifyContent="center">
+          <Image size="75px" objectFit="cover" src={logo} mb={3} />
+        </Box>
         <Box>
             <Heading fontFamily="Playfair Display" color="tomato" textAlign="center">Minderva</Heading>
         </Box>

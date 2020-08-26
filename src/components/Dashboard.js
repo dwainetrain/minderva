@@ -53,7 +53,7 @@ const UserDashboard = ( { cardCollection, loading } ) => {
                             <Button as={NavLink} to="/user-profile" mb={3} size="md" variant="outline" style={{ textDecoration: 'none' }}>User Profile</Button>
                         </Box>
                         <Box>
-                            <Text>View your profile and edit preferences.</Text>
+                            <Text>View your profile and edit default language preferences.</Text>
                         </Box>
                     </Box>
                     

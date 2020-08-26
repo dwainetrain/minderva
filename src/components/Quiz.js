@@ -88,7 +88,8 @@ const Quiz = ({ cardCollection }) => {
     const CardText = ({ children, ...props }) => (
         <Text
         fontFamily="Playfair Display"
-        fontSize="6xl"
+        fontSize="4xl"
+        lineHeight="shorter"
         {...props}
         >
             {children}

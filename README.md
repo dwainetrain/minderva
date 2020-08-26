@@ -125,47 +125,48 @@ Version 0.09:
 - Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
 - Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
-- Next Big Thing - Get add card looking just how you want it, then break it into managable parts that you can reuse in edit card.
+NEXT BIG THING: Responsive system
+Order of attack:
+
+- Nav
 
 Visual:
 
-- Check your stylesheets and get everything working together, get consistancy, type hiearchy.
 - Collection - Better style on cards
-- Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)
-- Overall - Change favicon
 - Display Cards - Have delete warning come up as modal instead of alert
 - Font consistancy
+- How easy to add some minor animations to ease UX
+- Spinners instead of Loading...
+- Play audio icon...
 
 Functional:
 
 - Quiz - Warning modal on exit?
-- Card Collection - have a little x to clear out search
 - Add Card - disable adding card until audio is loaded
 - Add Card - What if translation or audio never loads, will it give back an error? Perhaps timeout...?
-- Edit Card - Start bringing in line with add card screen, maybe you can reuse many of the components
-- Review - How might implement a review queue?
-- Collection - On search it should say showing 2 of 30 cards, for example
-- Do you need edit and create dates for cards? Not really, since we won't be filtering by them...
+- Review - How might we implement a review queue?
 - Delete audio when you delete a card!
-
-UX:
-
-- Edit should go straight to manual entry
-
-Code:
-
-- Add/Edit card refactor, since they both contain many of the same components, work on making it easier to update both at once.
 
 Maybe:
 
 - Dashboard - It should show a breakdown of cards by language, up to six pairings (this is an algo!) Time consuming. Is it worth it?
 - Quiz - Integrate reverse cards (maybe wait on this?)
+- Collection - Cards should be sorted by date added
 - ~~Add Card - Validate front and back are entered before sending manual generate audio request~~
 - ~~Dashboard - It should have a link to add cards~~
 - ~~Dashboard - It should have a link to card collection~~
 - ~~Overall - It should have a Login Screen that aligns with everything~~
 - ~~Overall - What conditions should be in place if there are no cards in the collection?~~
 - ~~Overall - Pages need titles, if you look in the history, holding the back button, you'll see it all says React App~~
+- ~~Add/Edit card refactor, since they both contain many of the same components, work on making it easier to update both at once.~~
+- ~~Collection - On search it should say showing 2 of 30 cards, for example~~
+- ~~Edit Card - Start bringing in line with add card screen, maybe you can reuse many of the components~~
+- ~~Card Collection - have a little x to clear out search~~
+- ~~Next Big Thing - Get add card looking just how you want it, then break it into managable parts that you can reuse in edit card.~~
+- ~~Overall - Clean up messages...see Chakra Toast (part UX too, do the messages make sense)~~
+- ~~Overall - Change favicon~~
+- ~~Do you need edit and create dates for cards? Not really, since we won't be filtering by them...~~
+- ~~Edit should go straight to manual entry~~
 
 * ~~Overall - Navebar needs some attention, looks nice static, but doesn't show active link and when links are clicked, they turn as ugly darkish.~~
 * ~~Collection - It should give the full name of the languages~~
@@ -204,50 +205,57 @@ Fonts: Playfair,
 - Go out and find about 25 great quotes about memory, beauty, patience, motivation. And then give them the treatment like what's on the homepage now.
 - Implement a utility that mocks api calls so you can setup loading elements correctly, see here for ideas on how to do this: https://blog.logrocket.com/how-to-create-forms-with-chakra-ui-in-react-apps/
 - Need basic card review tracking, mark cards as reviewed, then if it's past midnight on the users computer, then the reviews reset. On exit of quiz, that's when you set cards to reviewed? They can quiz themselve again if they feel like it.
+- Clean out console logs from your files
 - Add Card - what other characters could cause problems, best to check the docs (https://cloud.google.com/storage/docs/naming-objects)
 - Review useEffect in depth, the components are all calling things 4 or more times, this may have to do with how you're sending props. If you send props that are updated in state, that will trickle down and rerender them. I think...check out anti-patterns to see if one of those is causing this.
-- ~~Currently in Test Mode!~~
+
 - **NPM Security Vunerability surfaced** See here for solution: https://github.com/facebook/create-react-app/issues/9469
+
+- The Google Sign in with Pop up is giving a cross-site resource warning
+
+* The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
+
+* Dashboard, if there are no cards, give the user an option to prefill their database with Hello World in the 10 most popular languages...
+
+Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
+
+- Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
+- If No internet, dashboard: local server keeps trying to access firestore (UX issue, or some kind of timeout?)
+- Sign Up: Cross site Error
+- What other failures could there be? Trying to add, edit or delete a card and they fail for some reason, you'll want the error on that
+
+Finished Notes:
+
+- ~~Currently in Test Mode!~~
+- ~~The page is not refreshing on user sign in or sign out~~
+- ~~At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.~~
+- ~~Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...~~
 - ~~If you Build, your API Keys will be exposed! Don't forget to secure them somehow~~
 - ~~git ignore firebase.js for the time being, until I find a better way to sercure my api (this is actually acceptable, since it can only be used from select ip addressess)~~
 - ~~Router Bug - When in Edit Page, if you click card collection it goes to root/edit-card/card-collection, whereas it should just go back to root/card-collection~~
 - ~~Quiz Bug - It doesn't stop when you reach the end of the cards, it just keeps saying loading if you click next card...~~
 - ~~**DISABLED STRICT MODE** Semantic UI is giving an error in strict mode. You can learn more about it and the progress on the error here: https://github.com/Semantic-Org/Semantic-UI-React/issues/3819. Before deploying, I'll reenable strictmode and just accept the error for now. It should be near the top of my fix list though.~~
-- The Google Sign in with Pop up is giving a cross-site resource warning
-- ~~At some point, disconnect from the internet and see how the app behaves, it needs to gracefully fail.~~
-- ~~Set a character limit in the front card, mainly so someone doesn't go an past a whole novel and burn through your Translator api limit. So, short phrases and sentences okay, anything past that, nope...~~
-- ~~The page is not refreshing on user sign in or sign out~~
-- My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
-- The site shouldn't try to pull in data unless a user is logged in, see error on homepage. It's trying to pull from the database without verifying that the user is logged in first...
-
-- Dashboard, if there are no cards, give the user an option to prefill their database with Hello World in the 10 most popular languages...
-
-Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
-
-- Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
-- No internet dashboard: local server keeps trying to access firestore (UX issue, or some kind of timeout?)
-- No internet card collection: blank table (UX issue)
-- No internet review cards: blank quiz, reads quiz complete (UX issue)
-- Sign Up: Cross site Error
-- What other failures could there be? Trying to add, edit or delete a card and they fail for some reason, you'll want the error on that
+- ~~No internet card collection: blank table (UX issue)~~
+- ~~No internet review cards: blank quiz, reads quiz complete (UX issue)~~
 
 ### Future Version Considerations:
 
 - Add Card - Test for focus, be aware of what you expect to happen
 - User Profile - Add default gender
 
-* KEY - It should have an options to regenerate audio in the edit screen
-* KEY - It should have a play button in the table
+* ~~KEY - It should have an options to regenerate audio in the edit screen~~
+* ~~KEY - It should have a play button in the table~~
 * KEY - Reverse card study, I think this just be included as an option in the review section? -
-* KEY - User Profile: User should be able to select default to-from languages and gender
-* KEY - Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...
+* ~~KEY - User Profile: User should be able to select default to-from languages~~
+* User Profile - User should be able to select default voice gender
+* ~~KEY - Quiz and Collection: If the card database is empty, it should say 'add a card' or that it can't connect to the database...~~
 
-- KEY - Edit Page: Add translation api to edit screen
-- KEY - Are the languages alphabatized?
+- ~~KEY - Edit Page: Add translation api to edit screen~~
+- KEY - Alphabatize Languages (also capitalize Chinese in tradtional Chinese)?
 - KEY - - Allow users to sign-in/sign-up with other services, especially email (See FEM video starting at 31)
-- KEY - Have a dummy account, so that you can share the site
+- KEY - Have a dummy account, so that you can share the site (you can create this in firebase directly, but you'll need to create a login page)
 
-* Dark Mode
+* Dark Mode - if you have the time...
 * ~~Also, what if someone brings a japanese phrase and wants to generate its audio to study, that's where flipping the translation comes in. See main google translate for usability considerations here...~~
 * It should provide options for the user to select voice choice (maybe later), this would require more mapping, ie time consuming
 * It should use the [Forvo Api](https://api.forvo.com/documentation/word-pronunciations/) to add pronunciations (up to 500 a day). This will be an experimental mode for retrieving audio. The benefit is that you get audio spoken by native speakers, but it's only for single words and not so much phrases, so your hit success is limited. You could put this alongside the google generated version?
@@ -300,6 +308,7 @@ Data integrity, security and Error Handling, non critical but should be looked i
 * It should check for duplicate cards??
 * implement Context API for better state management
 * I would like to store the available languages in the database, and only refresh them once a month with cloud functions. Otherwise just select the ones that are available now and call it good.
+* My current map of language to code is static, and causes lots of issues with name sorting, and localized names for languages, this should be addressed in a later version
 
 Obsolete:
 

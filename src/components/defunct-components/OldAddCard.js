@@ -16,14 +16,11 @@ import {
     Button,
     Flex,
     Stack,
-    Heading,
-    Box
+    Heading
   } from '@chakra-ui/core'
 
 
-const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, cardId }) => {
-
-    const [currentMode, setCurrentMode] = useState('add')
+const AddCard = ({ handleMessage, userLangPrefs }) => {
     const [front, setFront] = useState(''); 
     const [back, setBack] = useState(''); 
     const [frontAudio, setFrontAudio] = useState(''); 
@@ -49,41 +46,21 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
 
     // From Edit
     // Bring in the id from router so we can preset the fields
-    // const cardId = match.params.id;
+    const cardId = match.params.id;
 
-    // If mode is 'add' then load user prefs, if mode is update then load card data
+
+    // Set default preferences (ADD CARD)
     useEffect(() => {
-        setCurrentMode(mode)
-        if (userLangPrefs !== '' && currentMode === 'add') {
+        if (userLangPrefs !== '') {
             setToLanguage(userLangPrefs.targetCode)
             setFromLanguage(userLangPrefs.originCode)
             setSpeechLanguage(speechLanguageMap[userLangPrefs.targetCode].ttsCode)
             setFrontSpeechLanguage(speechLanguageMap[userLangPrefs.originCode].ttsCode)
             setOriginLanguageName(speechLanguageMap[userLangPrefs.originCode].language)
             setTargetLanguageName(speechLanguageMap[userLangPrefs.targetCode].language)
-            
-        } else if (userLangPrefs !== '' && currentMode === 'update'){
-            const fetchData = async () => {
-                const response = await firestore.doc(`users/${user.uid}/cards/${cardId}`).get();
-                const cardDetail = collectIdsAndDocs(response);
-                setFront(cardDetail.front);
-                setBack(cardDetail.back);
-                setFromLanguage(cardDetail.origin)
-                setToLanguage(cardDetail.target)
-                setOriginLanguageName(cardDetail.originLanguageName)
-                setTargetLanguageName(cardDetail.targetLanguageName)
-                setFrontSpeechLanguage(cardDetail.frontSpeechLanguage)
-                setSpeechLanguage(cardDetail.backSpeechLanguage)
-                setFrontAudio(cardDetail.frontAudioURL)
-                setBackAudio(cardDetail.backAudioURL)
-                console.log(cardDetail)
-                console.log(backAudio)
-                console.log(cardDetail.backAudioURL)
-              }
-              fetchData()
         }
         
-    }, [userLangPrefs, cardId, user.uid, currentMode])
+    }, [userLangPrefs])
 
     // ADD CARD
     const create = async (e) => {
@@ -118,38 +95,13 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                 setFrontAudio('');
                 setBackAudio('');
                 setLoadingAudio('')
-                handleMessage('saved', 'success');
+                handleMessage('saved');
             } catch(error) {
                 console.error('Error Adding Card: ', error.message)
             }
             
         }
     }
-
-    // Update
-    const update = async (e) => {
-        e.preventDefault();
-        const card = {
-            front:front, 
-            back:back,
-            backAudioURL: backAudio,
-            frontAudioURL: frontAudio,
-            userID:auth.currentUser.uid,
-            origin: fromLanguage,
-            target: toLanguage,
-            backSpeechLanguage: speechLanguage,
-            frontSpeechLanguage: frontSpeechLanguage,
-            originLanguageName: originLanguageName,
-            targetLanguageName: targetLanguageName,
-            reverse: false,
-            enabled: true,
-        };
-        const cardRef = firestore.doc(`users/${user.uid}/cards/${cardId}`);
-        await cardRef.update(card);
-        handleMessage('updated', 'success');
-        // Redirects back to card collectioin using React Router history
-        history.push('/card-collection')
-      }
 
     const handleFromLanguageSelect = async (e) => {
         const languageCode = await e.target.value
@@ -187,9 +139,9 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     
     const translation = async (e) => {
         if (front === '') {
-            handleMessage('frontRequired', 'warning')
+            handleMessage('frontRequired')
         } else if (front.length > 60) {
-            handleMessage('characterLimit', 'warning')
+            handleMessage('characterLimit')
         } else {
         e.preventDefault();
             try{
@@ -266,9 +218,9 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
 
     const handleManualGenerateAudio = () => {
         if (front === '') {
-            handleMessage('frontRequired', 'warning')
+            handleMessage('frontRequired')
         } else if (back === '') {
-            handleMessage('backRequired', 'warning')
+            handleMessage('backRequired')
         } else {
             setFrontAudio('')
             setBackAudio('')
@@ -280,10 +232,10 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
         <Stack pl="10rem" pt="2rem" maxWidth="800px">
             
             <Helmet>
-                <title>Minderva | {mode === 'add' ? 'Add Cards' : 'Edit Card'}</title>
+                <title>Minderva | Add Cards</title>
             </Helmet>
 
-            <Heading as="h2" size="lg" pb="2rem">{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
+            <Heading as="h2" size="lg" pb="2rem">Add a Card</Heading>
             
             <Flex direction="row" flexWrap="wrap" justifyContent="space-between" >
                 
@@ -308,8 +260,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                     handleTranslate={handleTranslate}
                     handleGenerateChecked={handleGenerateChecked}
                     handleManualGenerateAudio={handleManualGenerateAudio}
-                    loadingTranslation={loadingTranslation}
-                    manual={mode === 'update' ? true : false}/>
+                    loadingTranslation={loadingTranslation}/>
                 
             </Flex>
 
@@ -320,16 +271,10 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                             </Button>
                 </Flex>
                 <Flex width="100%" justifyContent="flex-end">
-                    {mode === 'add' ? <Button variantColor="whatsapp" leftIcon="add" onClick={create}>
-                    Add Card
-                    </Button> : 
-                    <Box>
-                        <Link to="/card-collection">Cancel</Link>
-                        <Button variantColor="whatsapp" onClick={update}>
-                        Update Card
-                        </Button>
-                    </Box>}
                     
+                    <Button variantColor="whatsapp" leftIcon="add" onClick={create}>
+                    Add Card
+                    </Button>
                 </Flex>
             </Flex>
         </Stack>

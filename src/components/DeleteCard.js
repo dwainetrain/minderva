@@ -7,7 +7,7 @@ const DeleteCard = ({id, user, handleMessage}) => {
     const remove = async (e) => {
         e.preventDefault();
         await firestore.doc(`users/${user.uid}/cards/${id}`).delete();
-        handleMessage('deleted')
+        handleMessage('deleted', 'info')
     }
 
     return(

@@ -3,13 +3,15 @@ import Nav from './Nav';
 import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
 import AddCard from './AddCard';
+import EditCard from './EditCard'
+// import EditCard from './TestEditCard'
 import Quiz from './Quiz';
 import Review from './Review';
-import EditCard from './EditCard';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
 import About from './About'
+import Header from './Header'
 
 
 const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
@@ -17,7 +19,7 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
     return(
         <>
         <header className="App-header">
-            {location.pathname === "/quiz" ? null : <Nav />}
+            {location.pathname === "/quiz" ? null : <Header />}
         </header>
         <div>
             <Switch>
@@ -44,12 +46,22 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs }) => {
                 <Route exact path="/edit-card/:id" render=
                 //
                 {(routeParams) =>
-                <EditCard {...routeParams} user={user} handleMessage={handleMessage} />
-                }/>
+                    <EditCard 
+                    {...routeParams} 
+                    handleMessage={handleMessage}
+                    user={user}
+                    userLangPrefs={userLangPrefs} 
+                    />
+                } />
                 
                 <Route exact path="/add-cards" render=
-                {() =>
-                <AddCard handleMessage={handleMessage} userLangPrefs={userLangPrefs} />
+                {(routeParams) =>
+                <AddCard 
+                    {...routeParams} 
+                    handleMessage={handleMessage}
+                    user={user}
+                    userLangPrefs={userLangPrefs} 
+                    mode="add"/>
                 }/>
                 
                 <Route exact path="/user-profile" render=
