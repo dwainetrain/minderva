@@ -34,7 +34,7 @@ const LoginForm = () => {
         </Box>
         <Box my={4} textAlign="left">
           <form onSubmit={handleSubmit}>
-            <Button type="submit" variantColor="teal" size="md" variant="outline" width="full" mt={4} onClick={signInWithGoogle}>Sign In with Google</Button>
+            <Button type="submit" variantColor="teal" size="md" variant="outline" width="full" mt={4} onClick={signInWithGoogle}>Sign in with Google</Button>
           </form>
         </Box>
       </Box>

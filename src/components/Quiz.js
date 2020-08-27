@@ -69,13 +69,13 @@ const Quiz = ({ cardCollection }) => {
     // Parent style for card
     const QuizCard = ({ children, ...props }) => (
         <Box
-        px="10rem" 
-        py="8rem" 
-        height="36rem"
+        px={32} 
+        py={20}
+        height="24rem"
         borderWidth="1px"
         rounded="lg"
         {...props}
-        width={{sm:"100%", md:"56rem"}}
+        width={{sm:"100%", md:"35rem"}}
         d="flex"
         flexDirection="column"
         justifyContent="space-between"
@@ -109,7 +109,7 @@ const Quiz = ({ cardCollection }) => {
                 <PlayAudio side='front-audio' source={quizCards[cardNumber].frontAudioURL} />
                 :
                 null }
-                <Button onClick={flipCard}>Flip Card</Button>
+                <Button size="sm" onClick={flipCard}>Flip Card</Button>
             </QuizCard>)
         } else {
             return (
@@ -119,7 +119,7 @@ const Quiz = ({ cardCollection }) => {
                 <PlayAudio side='back-audio' source={quizCards[cardNumber].backAudioURL} />
                 :
                 null }
-                <Button onClick={flipCard}>Flip Card</Button>
+                <Button size="sm" onClick={flipCard}>Flip Card</Button>
             </QuizCard>)
         }
     }
@@ -129,17 +129,17 @@ const Quiz = ({ cardCollection }) => {
             <Flex justifyContent="space-between" height="5rem" alignItems="center">
                 <Box d="flex" width="56%" pl="2rem">
                 
-                        <Button variant="link" onClick={() => history.goBack()}>Exit Review</Button>
+                        <Button size="sm" variant="link" onClick={() => history.goBack()}>Exit Review</Button>
                     
                 </Box>
                 <Flex justifyContent="flex-end" pr="2rem">
                     {firstFlip ? 
                         <span></span>
                         : (cardNumber+1 === quizCards.length) ? 
-                        <Button onClick={nextCard}>
+                        <Button size="sm" onClick={nextCard}>
                             Complete
                         </Button> :
-                        <Button onClick={nextCard}>
+                        <Button size="sm" onClick={nextCard}>
                             Next Card
                         </Button>       
                     }
@@ -148,15 +148,13 @@ const Quiz = ({ cardCollection }) => {
         )
     }
 
-    console.log(quizCards[0])
-
     // This needs a serious amount of refactoring, but it does work
     const QuizState = () => {
         
         if(quizCards[cardNumber] !== undefined) {
                 return(
-                    <Flex px={{sm:10, md:40}} py="5rem" justifyContent="space-around" flexDirection={{sm:'column-reverse', md:'row'}}>
-                    <Box px="2rem" width="12rem" textAlign={{sm:"left", md:"right"}}>
+                    <Flex px={{sm:10, md:16}} py="3rem" justifyContent="flex-start" flexDirection={{sm:'column-reverse', md:'row'}}>
+                    <Box pr="2rem" width="8rem" textAlign={{sm:"left", md:"right"}}>
                         <CardCount cardNumber={cardNumber} totalCards={quizCards.length} />
                         <Text>{cardSide}</Text>
                     </Box>
@@ -171,14 +169,14 @@ const Quiz = ({ cardCollection }) => {
         } else {
             if(quizCards.length !== 0 && cardNumber+1 > quizCards.length){
                 return(
-                    <Flex px="10rem" py="5rem" justifyContent="space-around" flexDirection={{sm:'column-reverse', md:'row'}}>
-                    <Box px="2rem" width="12rem" textAlign="right">
+                    <Flex px={{sm:10, md:16}} py="3rem" justifyContent="flex-start" flexDirection={{sm:'column-reverse', md:'row'}}>
+                    <Box pr="2rem" width="8rem" textAlign={{sm:"left", md:"right"}}>
                         <CardCount cardNumber={cardNumber} totalCards={quizCards.length} />
                     </Box>
                     <Box>
                     <QuizCard>
                         <Text textAlign="center" fontSize="2xl">Review Complete <span role="img" aria-label="Celebration Emoji">🎉</span></Text>
-                        <Button onClick={() => {
+                        <Button size="sm" onClick={() => {
                         quizReset ? setQuizReset(false) : setQuizReset(true)
                         setCardNumber(0)}}>
                         Review Again</Button>
@@ -189,7 +187,7 @@ const Quiz = ({ cardCollection }) => {
                     )
             } else {
                 return (
-                    <Flex px="10rem" py="5rem" justifyContent="space-around" flexDirection="column" alignItems="flex-start">
+                    <Flex px={{sm:10, md:16}} py="3rem" justifyContent="flex-start" alignItems="flex-start" flexDirection={{sm:'column-reverse', md:'column'}}>
                         <QuizCard>
                             <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
                             <Box>
@@ -211,7 +209,7 @@ const Quiz = ({ cardCollection }) => {
                 <title>Minderva | Quiz</title>
         </Helmet>      
         <Box>
-            <Heading fontFamily="span" pl={{sm:10, md:40}} py="4rem" color="tomato">Minderva</Heading>
+            <Heading as="h1" fontSize="2xl" fontFamily="span" pl={{sm:10, md:16}} py="3rem" color="tomato">Minderva</Heading>
         </Box>            
             <QuizState />
     </Flex>

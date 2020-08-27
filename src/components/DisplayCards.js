@@ -48,7 +48,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
 
     return(
         <>
-        <Box px="10rem" py="3rem" width="100%">
+        <Box px={24} py={4} width="100%">
             <Helmet>
                 <title>Minderva | Card Collection</title>
             </Helmet>
@@ -56,14 +56,13 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
                 <InputGroup>
                     <InputLeftElement children={<Icon name="search" color="gray.300" />} />
                     <Input type="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search"/>
-                    {searchTerm !== '' ? <Button onClick={() => setSearchTerm("")}>Clear</Button> : null}
                 </InputGroup>
                 <Text>Showing {searchResults.length} of {cardCollection.length} total cards</Text>
             </Flex>
         </Box>
         {cardsLoaded ? 
         
-            <SimpleGrid columns={[2, null, 3]} spacing="40px" px="10rem" pb="5rem" minChildWidth="36rem">
+            <SimpleGrid columns={[2, null, 3]} spacing="32px" px={24} pb="5rem" minChildWidth="20rem">
                    {cardCollection.length === 0 ? <NoCards /> : null }
                     {cardCollection[0] === 'loading' ? null : searchResults
                     .sort((a, b) => b.dateCreated.seconds.valueOf() - a.dateCreated.seconds.valueOf())
@@ -73,40 +72,39 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
                         flexDirection="column"
                         justifyContent="space-between"
                         key={card.id} 
-                        spacing="1rem"
                         borderWidth="1px"
                         rounded="lg"
                         px="3rem"
                         py="2rem"
-                        minHeight="sm"
                         maxWidth="36rem"
+                        minHeight="16rem"
                         >
                             <Flex>
                                 <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL}/>
-                                <Text fontSize="lg">{card.front}</Text>
+                                <Text fontSize="md">{card.front}</Text>
                             </Flex>
                             <Divider />
                             <Flex>
                                 <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL}/>
-                                <Text>{card.back}</Text>
+                                <Text  fontSize="md">{card.back}</Text>
                             </Flex>
                             <Divider />
                             <Text>{card.originLanguageName}/{card.targetLanguageName}</Text>
                             
-                            <Flex justifyContent="space-between" py="1rem">
-                                <Button as={Link} variant="outline" to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Button>
+                            <Flex justifyContent="space-between" py={3}>
+                                <Button as={Link} size="sm"variant="outline" to={`/edit-card/${card.id}`} user={user} id={card.id}>Edit</Button>
                             
                             <DeleteCard user={user} id={card.id} handleMessage={handleMessage} />
 
                             </Flex>
-                            <Text fontSize="sm">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
+                            <Text fontSize="xs" color="grayGreen.800">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
                         </Flex>
                     )}
 
             
            
          </SimpleGrid> : 
-            <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
+            <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:24}}>
                 <Box>
                     <Spinner color="tomato" />
                 </Box>

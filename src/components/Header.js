@@ -27,8 +27,8 @@ const Header = () => {
         bg="tomato"
         w="100%"
         as="nav"
-        px={{ sm: 10, md: 40 }}
-        py={6}
+        px={{ sm: 10, md: 24 }}
+        py={3}
         justifyContent="space-between"
         alignItems="center"
         wrap="wrap"

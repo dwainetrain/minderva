@@ -92,7 +92,7 @@ function App() {
         {message && <Message type={message} />}
         
         <Box as="footer" backgroundColor="grayGreen.200">
-          <Box pl={{sm:10, md:40}}>
+          <Box pl={{sm:10, md:24}}>
             <Link to="/about" >MVP Build 0.10</Link>
           </Box>
         </Box>

@@ -7,21 +7,23 @@ import ReviewCount from './ReviewCount'
 
 const Review = ({ cardCollection, cardsLoaded }) => {
     return(
-        <Flex ml="10rem" justifyContent="space-between" width="80%" mt={10}>
+        <Flex ml={16} justifyContent="space-between" width="80%" mt={4}>
             <Helmet>
                 <title>Minderva | Review</title>
             </Helmet>
             <Box>
             {!cardsLoaded ? 
-                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
+                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:16}}>
                     <Box>
                         <Spinner color="tomato" />
                     </Box>
                 </Flex>
-                : cardCollection.length === 0 ? 
-                <NoCards />
+                : cardCollection.length === 0 ?
+                <Box ml={8}>
+                    <NoCards />
+                </Box>
                 :
-                <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:40}} />
+                <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:16}} />
                 }
             </Box>
                 <Divider orientation="vertical" mr={10}/>

@@ -24,8 +24,8 @@ const CardFront = ({ toLanguage,
                 flex="1"
                 padding={4}
                 spacing={3}
-                minWidth="lg"
-                maxW="sm" borderWidth="1px" rounded="lg" overflow="hidden">
+                minWidth="sm"
+                maxW="md" borderWidth="1px" rounded="lg" overflow="hidden">
 
                     <Box>
                         <Text textAlign="center" color="blackAlpha.500" >

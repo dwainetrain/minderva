@@ -11,7 +11,7 @@ import {
     Divider
 } from '@chakra-ui/core'
 
-const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, uid }) => {
+const CurrentUser = ({ email, userLangPrefs, handleMessage, user, uid }) => {
     
     // This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('');
@@ -44,7 +44,7 @@ const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, u
       }
      
     return(
-        <Stack spacing={2} px="10rem" py="3rem" maxWidth={[
+        <Stack spacing={2} px={24} py={4} maxWidth={[
             "100%", // base
             "75%", // 480px upwards
             "75%", // 768px upwards
@@ -53,7 +53,7 @@ const CurrentUser = ({ displayName, email, userLangPrefs, handleMessage, user, u
             <Helmet>
                 <title>Minderva | User Profile</title>
             </Helmet>    
-            <Heading>User Profile Page</Heading>
+            <Heading as="h2" size="md">User Profile Page</Heading>
             <Divider />
             
             <Text>Google email for this account: </Text>

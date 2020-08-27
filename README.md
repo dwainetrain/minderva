@@ -125,6 +125,25 @@ Version 0.09:
 - Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
 - Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
+- ~~Fix after discovering Bootstrap!~~
+- ~~404 page~~
+- ~~About Page~~
+- ~~Quotes~~
+- Email sign up
+- Reviews tracked (reset at midnight)
+- Finish responsive design
+- Check accessability
+- Delete audio when you delete a card!
+- Clean your code (no console.logs, no warnings, componentize as much as possible)
+- clean your files
+- Review notes
+
+If you still have time:
+
+- audio gender preference
+- manual start preference
+- Generate audio preference
+
 Visual:
 
 - Collection - Better style on cards, play around in figma first
@@ -140,14 +159,13 @@ Functional:
 - Add Card - disable adding card until audio is loaded
 - Add Card - What if translation or audio never loads, will it give back an error? Perhaps timeout...?
 - Review - How might we implement a review queue?
-- Delete audio when you delete a card!
 - Finish out responsive design
 
 Maybe:
 
 - Dashboard - It should show a breakdown of cards by language, up to six pairings (this is an algo!) Time consuming. Is it worth it?
 - Quiz - Integrate reverse cards (maybe wait on this?)
-- Collection - Cards should be sorted by date added
+- ~~Collection - Cards should be sorted by date added~~
 - ~~Add Card - Validate front and back are entered before sending manual generate audio request~~
 - ~~Dashboard - It should have a link to add cards~~
 - ~~Dashboard - It should have a link to card collection~~
@@ -239,6 +257,7 @@ Finished Notes:
 - Add Card - Test for focus, be aware of what you expect to happen
 - User Profile - Add default gender
 
+* - Full feature card filtering and sorting, think of larger collections!
 * ~~KEY - It should have an options to regenerate audio in the edit screen~~
 * ~~KEY - It should have a play button in the table~~
 * KEY - Reverse card study, I think this just be included as an option in the review section? -

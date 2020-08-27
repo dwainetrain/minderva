@@ -6,4 +6,10 @@ service cloud.firestore {
     	allow read, delete: if request.auth.uid != null && request.auth.uid == uid;
     }
   }
+  match /databases/{database}/documents {
+    match /users/{uid}/profile/{id} {
+    	allow write, update: if request.auth.uid != null && request.auth.uid == uid; 
+    	allow read, delete: if request.auth.uid != null && request.auth.uid == uid;
+    }
+  }
 }

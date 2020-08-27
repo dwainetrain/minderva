@@ -16,17 +16,16 @@ import {
 import NoCards from './NoCards';
 
 const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
-    console.log("Cards Loaded...", cardsLoaded)
     return(
-        <Flex ml={{sm:10, md:40 }}>
+        <Flex ml={{sm:10, md:24 }}>
             <Helmet>
             <title>Minderva | Dashboard</title>
             </Helmet>
-        <Box width="100%" mt={10}>
+        <Box width="100%" mt={4}>
             <Quote />
             <Flex flexWrap="Wrap">
                 {!cardsLoaded ? 
-                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:40}}>
+                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:16}}>
                     <Box>
                         <Spinner color="tomato" />
                     </Box>
@@ -34,23 +33,23 @@ const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
                 : cardCollection.length === 0 ? 
                 <NoCards />
                 :
-                <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:40}} />
+                <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:12, lg:16}} />
                 }
             
                 <Divider orientation='vertical' borderColor={{sm:"grayGreen.200"}} display={{sm:"none", md:'initial'}}/>
             
-                <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="lg" maxW="sm" py={8} mx={{sm:10, md:40}}>
+                <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{sm:10, md:12, lg:16}}>
                     <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
-                    <Box mb={8}>
-                        <Button as={Link} style={{ textDecoration: 'none' }} to="/add-cards" mb={3} variant="outline">Add Cards</Button>
+                    <Box mb={6}>
+                        <Button as={Link} size="sm" to="/add-cards" mb={3} variant="outline">Add Cards</Button>
                         <Text>
                             Tranaslate words or phrases and add them to your collection.
                         </Text>
                     </Box>
                     
-                    <Box mb={8}>
+                    <Box mb={6}>
                         <Box>
-                            <Button as={NavLink} to="/card-collection" mb={3} variant="outline" style={{ textDecoration: 'none' }}>Card Collection</Button>
+                            <Button as={NavLink} to="/card-collection" size="sm" mb={3} variant="outline" flexShrink="1">Card Collection</Button>
                         </Box>
                         <Box>
                             <Text>View, edit or delete your saved cards.</Text>
@@ -58,7 +57,7 @@ const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
                     </Box>
                     <Box>
                         <Box>
-                            <Button as={NavLink} to="/user-profile" mb={3} size="md" variant="outline" style={{ textDecoration: 'none' }}>User Profile</Button>
+                            <Button as={NavLink} to="/user-profile" mb={3} size="sm" variant="outline">User Profile</Button>
                         </Box>
                         <Box>
                             <Text>View your profile and edit default language preferences.</Text>
@@ -68,8 +67,8 @@ const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
                 </Flex>
             </Flex>
             
-            <Box my="6rem">
-            <Divider mb="2rem" mr={40}/>
+            <Box my={5}>
+            <Divider mb={4} mr={32}/>
                 <Text lineHeight="taller">Minderva is a cobblestone in the cobbled pathway of language study.<br />
                 It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.<br />
                 I hope it helps you get to where you’re going.</Text>

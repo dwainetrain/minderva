@@ -18,7 +18,9 @@ import {
     Flex,
     Stack,
     Heading,
-    Box
+    Box,
+    IconButton,
+    Tooltip
   } from '@chakra-ui/core'
 
 
@@ -276,14 +278,15 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     }
 
     return (
-        <Stack pl="10rem" pt="2rem" maxWidth="800px">
+        <Stack px={24} pt="1rem" maxWidth="1200px">
             
             <Helmet>
                 <title>Minderva | {mode === 'add' ? 'Add Cards' : 'Edit Card'}</title>
             </Helmet>
 
-            <Heading as="h2" size="lg" pb="2rem">{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
-            
+            <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
+
+
             <Flex flexWrap="wrap" justifyContent="space-between" >
                 
                 <CardFront 
@@ -294,10 +297,21 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                     fromLanguage={fromLanguage}
                     front={front} 
                     handleFront={handleFront}/>
-                    
-                    <Button as={AiOutlineSwap} variant="link" variantColor="blackAlpha" onClick={handleSwap}>
-                            Swap Sides
-                    </Button>
+
+                    <Tooltip label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
+                    <IconButton
+                        alignSelf="center"
+                        variant="link"
+                        variantColor="blackAlpha"
+                        aria-label="Swap Card Sides"
+                        fontSize="36px"
+                        size="md"
+                        
+                        icon={AiOutlineSwap}
+                        onClick={handleSwap}
+                        maxH={16}
+                        />
+                    </Tooltip>
                     
                 <CardBack 
                     fromLanguage={fromLanguage} 
@@ -319,7 +333,6 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             </Flex>
             
             <Flex justifyContent="center">
-                
                 <Flex width="100%" justifyContent="flex-end">
                     {mode === 'add' ? 
                         <Button 
@@ -341,7 +354,6 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                         Update Card
                         </Button>
                     </Box>}
-                    
                 </Flex>
             
             </Flex>

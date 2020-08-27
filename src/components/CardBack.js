@@ -40,7 +40,8 @@ const CardBack = ({
                 maxW="sm" 
                 borderWidth="1px"
                 rounded="lg"
-                minWidth="lg"
+                minWidth="sm"
+                maxWidth="md"
                 >
                     
                     <Box width="100%">
@@ -75,7 +76,7 @@ const CardBack = ({
                                 <p>Generating Audio</p>
                             </Box>
                         :
-                        <Box ml={3} mt={3}>
+                        <Box ml={3} mt={1}>
                          <PlayAudio type="button" side='back-audio' source={backAudio} />
                         </Box>
                         
