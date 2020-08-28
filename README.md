@@ -125,24 +125,24 @@ Version 0.09:
 - Collection cards, edit screen, login screen, user profile page, add card refine, dashboard(including quotes), messages, review queue(?)
 - Then another overall functional and visual refinement pass, then send it off to chris to test, responsive, refactor, submit
 
-- ~~Fix after discovering Bootstrap!~~
-- ~~404 page~~
-- ~~About Page~~
-- ~~Quotes~~
-- Email sign up
-- Reviews tracked (reset at midnight)
-- Finish responsive design
-- Check accessability
-- Delete audio when you delete a card!
 - Clean your code (no console.logs, no warnings, componentize as much as possible)
 - clean your files
 - Review notes
 
 If you still have time:
 
+- ~~Fix after discovering Bootstrap!~~
+- ~~404 page~~
+- ~~About Page~~
+- ~~Quotes~~
+- Reviews tracked (reset at midnight)
+- Finish responsive design
+- Check accessability
+
 - audio gender preference
 - manual start preference
 - Generate audio preference
+- Email sign up (extra load of ux considerations)
 
 Visual:
 
@@ -233,6 +233,7 @@ Fonts: Playfair,
 
 Data integrity, security and Error Handling, non critical but should be looked into when you have the time:
 
+- Delete audio when you delete a card!
 - Dashboard if you're not logged in, you get this error: Error in onSnapshot: FirebaseError: Missing or insufficient permissions. Meaning it's trying to pull from the database before verifying that a user is logged in. It should first check user, and only if user, then database functions.
 - If No internet, dashboard: local server keeps trying to access firestore (UX issue, or some kind of timeout?)
 - Sign Up: Cross site Error

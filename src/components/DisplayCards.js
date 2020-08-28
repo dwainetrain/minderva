@@ -26,6 +26,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
     const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
+            // Just a very basic search
             const searchFilter = () => {
                 const frontResults = cardCollection.filter(card => card.front
                     .toLowerCase()

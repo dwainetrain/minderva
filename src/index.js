@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
@@ -19,7 +19,7 @@ ReactDOM.render(
           <App />
         </BrowserRouter>
       </ThemeProvider>
-      </HelmetProvider>
+    </HelmetProvider>
   </React.StrictMode>,
 document.getElementById('root') 
 );

@@ -22,12 +22,12 @@ const PlayAudio = ({ side, source, type }) => {
             {type === 'button' ? 
             
             <Button variant="link" size="md" onClick={() => playAudio(side)}>
-                <Box as={FiVolume2} size="16px" mr={3}/>
+                <Box as={FiVolume2} size="24px" mr={3}/>
                 <Text>Play Audio</Text>    
             </Button>
             
             : <Button variant="link" size="md" onClick={() => playAudio(side)}>
-                <Box as={FiVolume2} size="16px" mr={3}/>
+                <Box as={FiVolume2} size="24px" mr={3}/>
                 
             </Button>
             

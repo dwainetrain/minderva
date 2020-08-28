@@ -50,10 +50,6 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
 
-    // From Edit
-    // Bring in the id from router so we can preset the fields
-    // const cardId = match.params.id;
-
     // If mode is 'add' then load user prefs, if mode is update then load card data
     useEffect(() => {
         setCurrentMode(mode)

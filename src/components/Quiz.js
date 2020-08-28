@@ -148,7 +148,7 @@ const Quiz = ({ cardCollection }) => {
         )
     }
 
-    // This needs a serious amount of refactoring, but it does work
+    // It does work, but this needs a serious amount of refactoring, 
     const QuizState = () => {
         
         if(quizCards[cardNumber] !== undefined) {

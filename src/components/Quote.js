@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./Quote.css"
 import {quotes} from './quotes'
-import parse from 'html-react-parser';
 
 const Quote = () => {
     
@@ -14,6 +13,8 @@ const Quote = () => {
     const [wordTransistion, setWordTransition] = useState('')
 
     useEffect(()=>{
+        // Pulls random quote, and replaces selected word with translated word
+        // Just works on a single word for now
         let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
         setNewQuote(randomQuote.quote)
         setOriginalWord(randomQuote.originalWord)
@@ -21,10 +22,9 @@ const Quote = () => {
         setRevealWord(randomQuote.revealWord)
         setAuthor(randomQuote.author)
         const splitQuote = newQuote.split(' ')
-        const wordLocation = splitQuote.findIndex(word => word === originalWord)
+        const wordLocation = splitQuote.findIndex(word => word === randomQuote.originalWord)
         setFirstHalf(splitQuote.slice(0, wordLocation).join(' '))
         setLastHalf(splitQuote.slice(wordLocation+1).join(' '))
-        console.log(newQuote)
 
     }, [newQuote])
 
@@ -37,8 +37,8 @@ const Quote = () => {
                 onMouseEnter={() => setWordTransition(originalWord)} 
                 onMouseLeave={() => setWordTransition(revealWord)}>
                     &nbsp;{wordTransistion}&nbsp;
-                 </span>
-                 {lastHalf}
+                </span>
+                {lastHalf}
             </span>
             <span className="quote--author">&ndash; {author}</span>
         </div>

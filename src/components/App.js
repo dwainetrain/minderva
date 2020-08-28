@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import UserRoute from './components/UserRoute';
-import LogIn from './components/LogIn'
+import UserRoute from './UserRoute';
+import LogIn from './LogIn'
 import { Link } from 'react-router-dom'
-import { firestore, auth } from './firebase';
-import { collectIdsAndDocs } from './utilities';
+import { firestore, auth } from '../firebase';
+import { collectIdsAndDocs } from '../utilities';
 
-import Message from './components/Messages'
+import Message from './Messages'
 
 /// Styling
 import './App.css';
@@ -93,7 +93,7 @@ function App() {
         
         <Box as="footer" backgroundColor="grayGreen.200">
           <Box pl={{sm:10, md:24}}>
-            <Link to="/about" >MVP Build 0.10</Link>
+            <Link to="/about" >MVP Build 0.11</Link>
           </Box>
         </Box>
     </div>

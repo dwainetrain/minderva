@@ -14,7 +14,6 @@
     "firebase-admin": "^9.0.0",
     "firebase-functions": "^3.9.0",
     "google-translate": "^3.0.0",
-    "html-react-parser": "^0.13.0",
     "moment": "^2.27.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

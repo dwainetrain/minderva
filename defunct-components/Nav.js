@@ -21,9 +21,6 @@ const NavbarLink = ({ children, ...props }) => (
 
 const Nav = () => {
 
-      // const [show, setShow] = React.useState(false);
-      // const handleToggle = () => setShow(!show);
-
       return(
         <Flex
         bg="tomato"

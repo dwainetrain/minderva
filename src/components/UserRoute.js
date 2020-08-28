@@ -3,7 +3,6 @@ import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
 import AddCard from './AddCard';
 import EditCard from './EditCard'
-// import EditCard from './TestEditCard'
 import Quiz from './Quiz';
 import Review from './Review';
 import { Route, Switch, useLocation } from 'react-router-dom';
