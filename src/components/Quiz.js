@@ -60,7 +60,7 @@ const Quiz = ({ cardCollection }) => {
         } else {
             return (
             <Text>
-            {(cardNumber+1).toString(16).padStart(2, '0')}/{totalCards.toString(16).padStart(2, '0')}
+            {(cardNumber+1).toString().padStart(2, '0')}/{totalCards.toString().padStart(2, '0')}
             </Text>
             )
         }
@@ -69,7 +69,7 @@ const Quiz = ({ cardCollection }) => {
     // Parent style for card
     const QuizCard = ({ children, ...props }) => (
         <Box
-        px={32} 
+        px={20} 
         py={20}
         height="24rem"
         borderWidth="1px"

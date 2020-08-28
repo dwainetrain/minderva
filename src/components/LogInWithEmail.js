@@ -9,7 +9,10 @@ import {
   Box,
   Heading,
   Button,
-  Image
+  Image,
+  Input,
+  Divider,
+  FormControl
 } from '@chakra-ui/core';
 
 
@@ -55,25 +58,28 @@ const LoginForm = () => {
           <form >
             <Button type="submit" variantColor="teal" size="md" variant="outline" width="full" mt={4} onClick={signInWithGoogle}>Sign in with Google</Button>
           </form>
+          <Divider />
 
+          <FormControl >
           <form onSubmit={handleSubmit}>
-          <input
+          <Heading as="h6" fontSize="lg" textAlign="center">Login with Email</Heading>
+          <Input
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
             placeholder="email"
             />
 
-            <input
+            <Input
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             placeholder="Password"
             />
 
-            <button>Log In</button>
-            
-          </form>
+            <Button>Log In</Button>
+            </form>
+          </FormControl>
         </Box>
       </Box>
     </Flex>
