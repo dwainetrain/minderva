@@ -15,7 +15,7 @@ import {
   FormControl
 } from '@chakra-ui/core';
 
-
+/* Ugly implementation of email login, this is if I need to add a user by hand. ie, someone who doesn't want to use Google ID */
 
 const LoginForm = () => {
 

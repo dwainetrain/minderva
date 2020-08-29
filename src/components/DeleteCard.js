@@ -2,6 +2,8 @@ import React from 'react';
 import { firestore } from '../firebase'
 import { Button } from '@chakra-ui/core'
 
+/* Delete button that contacts firebase to delete card from collection */
+
 const DeleteCard = ({id, user, handleMessage}) => {
 
     const remove = async (e) => {

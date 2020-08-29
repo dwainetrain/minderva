@@ -11,7 +11,6 @@ import { AiOutlineSwap } from "react-icons/ai";
 import { collectIdsAndDocs } from '../utilities';
 import { Link } from 'react-router-dom'
 
-
 // Styling
 import {
     Button,
@@ -22,6 +21,15 @@ import {
     IconButton,
     Tooltip
   } from '@chakra-ui/core'
+
+/* 
+Complex component that handles both adding and editing cards
+Along with translation and text-to-speech api calls
+Best candidate for more refactoring
+
+The incoming mode prop is used to decide if the component adds or updates
+
+*/
 
 
 const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, cardId }) => {

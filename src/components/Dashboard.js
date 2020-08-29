@@ -16,6 +16,8 @@ import {
 } from '@chakra-ui/core'
 import NoCards from './NoCards';
 
+/* Basic Dashboard Page, is the root route */
+
 const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
     return(
         <Flex ml={{sm:0, md:24 }}>

@@ -1,5 +1,7 @@
 import React from 'react';
 
+/* Messages map for messaging system */
+
 const Message = ({ type }) => {
     const messages = {
         saved: "Your new card has been added",

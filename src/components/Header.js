@@ -4,6 +4,8 @@ import { signOut } from '../firebase'
 import { Link as ChaLink, Flex, Box, Divider, PseudoBox } from '@chakra-ui/core'
 import { FiMenu, FiX } from 'react-icons/fi'
 
+/* Primary site navigation bar */
+
 const NavbarLink = ({ children, ...props }) => (
     <PseudoBox
       _hover={{textDecoration:"none", borderBottom: "1px solid #f4fff4",

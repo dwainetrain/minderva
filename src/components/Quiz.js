@@ -13,6 +13,7 @@ import {
     Spinner
 } from '@chakra-ui/core'
 
+/* Logic and layout for card Quiz, a little bloated at the moment */
 
 const Quiz = ({ cardCollection }) => {
 

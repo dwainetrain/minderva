@@ -15,6 +15,10 @@ import {
     Spinner
 } from '@chakra-ui/core'
 
+/* 
+Card Back used in Add/Edit Card screens
+*/
+
 const CardBack = ({
     toLanguage,
     handleToLanguageSelect,

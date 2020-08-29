@@ -2,6 +2,8 @@ import React from 'react';
 import { speechLanguageMap } from './speechLanguagesMap';
 import { Select } from '@chakra-ui/core'
 
+/* Language selection using imported handmade language map */
+
 const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
 
       return (

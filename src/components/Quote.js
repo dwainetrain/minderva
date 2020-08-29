@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import "./Quote.css"
 import {quotes} from './quotes'
 
+/* Logic and display of Quote.
+    Extracts a single word from a quote and replaces it with another word 
+    then toggles between the words on hover
+*/
+
 const Quote = () => {
     
     const [originalWord, setOriginalWord] = useState('')

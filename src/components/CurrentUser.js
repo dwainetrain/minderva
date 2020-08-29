@@ -11,6 +11,8 @@ import {
     Divider
 } from '@chakra-ui/core'
 
+/* User Profile page, allowing for setting user preferences */
+
 const CurrentUser = ({ email, userLangPrefs, handleMessage, user, uid }) => {
     
     const [fromLanguage, setFromLanguage] = useState('');

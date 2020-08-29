@@ -5,6 +5,8 @@ import NoCards from './NoCards'
 import { Helmet } from 'react-helmet-async'
 import ReviewCount from './ReviewCount'
 
+/* Review page, shows quote and cards up for review. More to be added in the future. */
+
 const Review = ({ cardCollection, cardsLoaded }) => {
     return(
         <Flex ml={{sm:8, md:20}} flexDirection={{sm:"column", md:"row"}} flex="wrap" alignItems={{sm:"center", md:"initial"}} mt={{sm:0, md: 4}}>

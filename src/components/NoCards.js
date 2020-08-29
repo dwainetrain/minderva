@@ -2,6 +2,8 @@ import React from 'react'
 import { Flex, Text, Button } from '@chakra-ui/core'
 import { NavLink } from 'react-router-dom'
 
+/* Component displayed if there's no cards in the database */
+
 const NoCards = () => {
     return(
         <Flex flexDirection="column" justifyContent="center" alignItems="flex-start" minH="sm" minW="sm" maxW="md">

@@ -11,6 +11,7 @@ import NotFound from './NotFound'
 import About from './About'
 import Header from './Header'
 
+/* Primary routing of app */
 
 const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading, cardsLoaded }) => {
     const location = useLocation();

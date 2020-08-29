@@ -1,5 +1,6 @@
 import { theme } from '@chakra-ui/core'
 
+/* Chakra Theme file */
 
 const breakpoints = ["360px", "900px", "1024px", "1366px"];
 breakpoints.sm = breakpoints[0];
@@ -8,7 +9,6 @@ breakpoints.lg = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
 // Theme Options
-// Let's say you want to add custom colors
 const customTheme = {
     ...theme,
     breakpoints,

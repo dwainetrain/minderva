@@ -10,7 +10,7 @@ import {
   Image
 } from '@chakra-ui/core';
 
-
+/* Login screen if user isn't logged-in, only handle google sign-in at the moment */
 
 const LoginForm = () => {
 

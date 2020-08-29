@@ -1,5 +1,7 @@
 import React from 'react';
 
+/* 404 page */
+
 import {
     Box
 } from '@chakra-ui/core'

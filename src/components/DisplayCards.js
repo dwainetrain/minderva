@@ -20,6 +20,8 @@ import {
     Spinner,
     Divider } from '@chakra-ui/core'
 
+    /* Grid of cards that are in user's collection */
+
 const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
   
     const [searchTerm, setSearchTerm] = useState('');

@@ -3,6 +3,8 @@ import React from 'react'
 import { Button, Box, Text } from '@chakra-ui/core'
 import { FiVolume2 } from "react-icons/fi";
 
+/* Audio playback component */
+
 
 const PlayAudio = ({ side, source, type }) => {
         

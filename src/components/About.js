@@ -1,6 +1,8 @@
 import React from 'react'
 import { Box, Text, Link } from '@chakra-ui/core'
 
+/* Shares basic information about the App */
+
 const About = () => {
     return(
         <Box mt={4} px={24}>
