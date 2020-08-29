@@ -42,6 +42,7 @@ const CardBack = ({
                 rounded="lg"
                 minWidth="sm"
                 maxWidth="md"
+                minH="18rem"
                 >
                     
                     <Box width="100%">
@@ -100,8 +101,7 @@ const CardBack = ({
 
                     <Stack>
                         <Button variantColor="twitter" variant="outline"
-                        isLoading={loadingTranslation}
-                        isDisabled = {front === '' && true}
+                        isLoading={front !== '' && loadingTranslation}
                         leftIcon="arrow-right" 
                         onClick={(e) => {
                             setManualEntry(false)

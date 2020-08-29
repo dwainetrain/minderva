@@ -274,7 +274,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     }
 
     return (
-        <Stack px={24} pt="1rem" maxWidth="1200px">
+        <Stack px={{sm:10, md:24}} pt="1rem" maxWidth="1200px">
             
             <Helmet>
                 <title>Minderva | {mode === 'add' ? 'Add Cards' : 'Edit Card'}</title>
@@ -283,7 +283,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
 
 
-            <Flex flexWrap="wrap" justifyContent="space-between" >
+            <Flex justifyContent="space-between" flexDirection={{sm:"column", md:"row"}} alignItems={{sm:"center", md:"flex-start"}}>
                 
                 <CardFront 
                     toLanguage={toLanguage} 
@@ -329,7 +329,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             </Flex>
             
             <Flex justifyContent="center">
-                <Flex width="100%" justifyContent="flex-end">
+                <Flex width="100%" justifyContent={{sm:"center", md:"flex-end"}} mb={5}>
                     {mode === 'add' ? 
                         <Button 
                             variantColor="whatsapp" 

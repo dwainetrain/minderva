@@ -49,7 +49,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
 
     return(
         <>
-        <Box px={24} py={4} width="100%">
+        <Box px={{sm:10, md:24}} py={4} width="100%">
             <Helmet>
                 <title>Minderva | Card Collection</title>
             </Helmet>
@@ -63,7 +63,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded })  =>{
         </Box>
         {cardsLoaded ? 
         
-            <SimpleGrid columns={[2, null, 3]} spacing="32px" px={24} pb="5rem" minChildWidth="20rem">
+            <SimpleGrid columns={[2, null, 3]} spacing="32px" px={{sm:10, md:24}} pb="5rem" minChildWidth="20rem">
                    {cardCollection.length === 0 ? <NoCards /> : null }
                     {cardCollection[0] === 'loading' ? null : searchResults
                     .sort((a, b) => b.dateCreated.seconds.valueOf() - a.dateCreated.seconds.valueOf())

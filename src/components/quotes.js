@@ -59,4 +59,10 @@ export const quotes=[
         originalWord: "complain.",
         revealWord: "lamentarsi" 
     },
+    {
+        quote:"I have had so many names, old names that only the wind and trees can pronounce.",
+        author:"el fauno",
+        originalWord: "wind",
+        revealWord: "viento" 
+    }
 ]

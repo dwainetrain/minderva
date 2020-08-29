@@ -7,13 +7,13 @@ import ReviewCount from './ReviewCount'
 
 const Review = ({ cardCollection, cardsLoaded }) => {
     return(
-        <Flex ml={16} justifyContent="space-between" width="80%" mt={4}>
+        <Flex ml={{sm:8, md:20}} flexDirection={{sm:"column", md:"row"}} flex="wrap" alignItems={{sm:"center", md:"initial"}} mt={{sm:0, md: 4}}>
             <Helmet>
                 <title>Minderva | Review</title>
             </Helmet>
             <Box>
             {!cardsLoaded ? 
-                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:16}}>
+                <Flex justifyContent="center" alignItems="center" mx={{sm:10, md:16}}>
                     <Box>
                         <Spinner color="tomato" />
                     </Box>
@@ -26,8 +26,9 @@ const Review = ({ cardCollection, cardsLoaded }) => {
                 <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:16}} />
                 }
             </Box>
-                <Divider orientation="vertical" mr={10}/>
-            <Box d="flex" alignItems="center">
+            <Divider orientation='vertical' borderColor={{sm:"grayGreen.200"}} display={{sm:"none", md:'initial'}} maxH="sm"/>
+            <Divider borderColor={{sm:"grayGreen.200"}} minW="sm" display={{sm:"initial", md:'none'}} mb={4}/>
+            <Box d="flex" alignItems="center" maxW="sm" ml={{sm:0, md:6}}>
                 <Quote />                
             </Box>
             

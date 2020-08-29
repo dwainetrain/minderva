@@ -13,7 +13,6 @@ import {
 
 const CurrentUser = ({ email, userLangPrefs, handleMessage, user, uid }) => {
     
-    // This will eventually be a default set in user profile
     const [fromLanguage, setFromLanguage] = useState('');
     const [toLanguage, setToLanguage] = useState('');
 
@@ -44,7 +43,7 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, user, uid }) => {
       }
      
     return(
-        <Stack spacing={2} px={24} py={4} maxWidth={[
+        <Stack spacing={2} px={{sm:10, md:24}} py={4} maxWidth={[
             "100%", // base
             "75%", // 480px upwards
             "75%", // 768px upwards

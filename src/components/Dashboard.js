@@ -11,21 +11,24 @@ import {
     Divider,
     Button,
     Text,
-    Spinner
+    Spinner,
+    Stack
 } from '@chakra-ui/core'
 import NoCards from './NoCards';
 
 const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
     return(
-        <Flex ml={{sm:10, md:24 }}>
+        <Flex ml={{sm:0, md:24 }}>
             <Helmet>
             <title>Minderva | Dashboard</title>
             </Helmet>
-        <Box width="100%" mt={4}>
-            <Quote />
-            <Flex flexWrap="Wrap">
+        <Box width="100%" mt={4} >
+            <Box ml={{sm:10, md:0 }}>
+                <Quote />
+            </Box>
+            <Flex flexDirection={{sm:"column", md:"row"}} flex="wrap" alignItems={{sm:"center", md:"initial"}}>
                 {!cardsLoaded ? 
-                <Flex justifyContent="Center" alignItems="Center" mx={{sm:10, md:16}}>
+                <Flex justifyContent="center" alignItems="center" mx={{sm:10, md:16}}>
                     <Box>
                         <Spinner color="tomato" />
                     </Box>
@@ -33,12 +36,12 @@ const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
                 : cardCollection.length === 0 ? 
                 <NoCards />
                 :
-                <ReviewCount cardCollection={ cardCollection } mx={{sm:10, md:12, lg:16}} />
+                <ReviewCount cardCollection={ cardCollection } mx={{sm:0, md:12, lg:16}}/>
                 }
             
                 <Divider orientation='vertical' borderColor={{sm:"grayGreen.200"}} display={{sm:"none", md:'initial'}}/>
             
-                <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{sm:10, md:12, lg:16}}>
+                <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{sm:10, md:12, lg:16}} px={{sm:6}} borderWidth={{sm:"1px", md:0}}>
                     <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
                     <Box mb={6}>
                         <Button as={Link} size="sm" to="/add-cards" mb={3} variant="outline">Add Cards</Button>
@@ -67,12 +70,12 @@ const UserDashboard = ( { cardCollection, cardsLoaded } ) => {
                 </Flex>
             </Flex>
             
-            <Box my={5}>
-            <Divider mb={4} mr={32}/>
-                <Text lineHeight="taller">Minderva is a cobblestone in the cobbled pathway of language study.<br />
-                It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.<br />
-                I hope it helps you get to where you’re going.</Text>
-            </Box>
+            <Stack mt={5} mb={10} ml={{sm:10, md:0 }} spacing={4}>
+            <Divider mb={4} mr={32} />
+                <Text>Minderva is a cobblestone in the cobbled pathway of language study.</Text>
+                <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
+                <Text>I hope it helps you get to where you’re going.</Text>
+            </Stack>
         </Box>
         </Flex>
     )

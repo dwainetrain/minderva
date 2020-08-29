@@ -136,7 +136,7 @@ If you still have time:
 - ~~About Page~~
 - ~~Quotes~~
 - Reviews tracked (reset at midnight)
-- Finish responsive design
+- ~~Finish responsive design~~
 - Check accessability
 
 - audio gender preference

@@ -25,7 +25,11 @@ const CardFront = ({ toLanguage,
                 padding={4}
                 spacing={3}
                 minWidth="sm"
-                maxW="md" borderWidth="1px" rounded="lg" overflow="hidden">
+                maxW="md" 
+                borderWidth="1px"
+                rounded="lg"
+                overflow="hidden"
+                minH={{sm:"initial", md:"18rem"}}>
 
                     <Box>
                         <Text textAlign="center" color="blackAlpha.500" >
@@ -39,7 +43,7 @@ const CardFront = ({ toLanguage,
 
                     <Input
                         name="front" 
-                        placeholder="Front" 
+                        placeholder="Card Front" 
                         value={front}
                         onChange={handleFront}
                         maxLength="60"

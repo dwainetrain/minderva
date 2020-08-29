@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
 import { Link as ChaLink, Flex, Box, Divider, PseudoBox } from '@chakra-ui/core'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 const NavbarLink = ({ children, ...props }) => (
     <PseudoBox
@@ -30,7 +31,7 @@ const Header = () => {
         px={{ sm: 10, md: 24 }}
         py={3}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems="baseline"
         wrap="wrap"
         color="white"
     >
@@ -50,22 +51,15 @@ const Header = () => {
     </Box>
 
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <svg
-          fill="white"
-          width="12px"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
           <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-        </svg>
+          {!show ? <Box as={FiMenu} size={4}/> : <Box as={FiX} size={4}/>}
       </Box>
 
       <Box
         display={{ sm: show ? "flex" : "none", md: "flex" }}
-        flexDirection={{ sm: show ? "column" : "none", md: "row" }}
-        width={{ sm: "full", md: "auto" }}
-        ml={{sm:"-0.5rem", md: 36}}
+        flexDirection={{ sm:"column", md: "row" }}
+        width={{ sm: "full", md:"auto"}}
+        ml={{sm:"-0.5rem", md:36}}
         mt={{ base: 4, md: 0 }}
         flexGrow={1}
       >
@@ -86,17 +80,17 @@ const Header = () => {
       <Box
         display={{ sm: show ? "block" : "none", md: "flex" }}
         mt={{ base: 4, md: 0 }}
-        ml={{sm:"-0.5rem", md: 36}}
+        ml={{sm:"-0.5rem", md: 0}}
       >
-        <Box ml="-0.25rem">
-            <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
-        </Box>
-        {!show ? <Divider orientation='vertical' /> : null}
-        <Divider my={3} orientation={{sm:'default', md: 'vertical'}} />
-        <Box>
-            <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
-        </Box>
-    </Box>
+          <Box ml="-0.25rem">
+              <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
+          </Box>
+          {!show ? <Divider orientation='vertical' /> : null}
+          <Divider my={3} orientation={{sm:'default', md: 'vertical'}} />
+          <Box>
+              <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
+          </Box>
+      </Box>
     </Flex>
   );
 };
