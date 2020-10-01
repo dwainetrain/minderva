@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+@import url("https://use.typekit.net/opz7bhd.css");
+
+html {
+  position: relative;
+  min-height: 100%;
+  height: unset;
+  box-sizing: border-box;
+}
+
+body {
+  padding-bottom: 3rem;
+  margin-bottom: 5rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: grayscale;
+  background: #f4fff3;
+  color: #1a222f;
+  line-height: 1.4rem;
+  /* height: 100%; */
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: auto;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  font-kerning: normal;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 0;
+  background-color: #f5f5f5;
+}
+
+footer p {
+  color: #777777;
+}
+
+/* For active links across the site */
+.active {
+  border-bottom: 1px solid #f4fff4;
+  transition: border-bottom 0.5s ease-in-out;
+}

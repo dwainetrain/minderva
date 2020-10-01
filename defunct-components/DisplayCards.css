@@ -1,0 +1,25 @@
+/* Just quick styling until I have more time */
+table {
+  color: #333; /* Lighten up font color */
+  font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+  width: 640px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #ccc;
+  height: 30px;
+} /* Make cells a bit taller */
+
+th {
+  background: #f3f3f3; /* Light grey background */
+  font-weight: bold; /* Make sure they're bold */
+}
+
+td {
+  background: #fafafa; /* Lighter grey background */
+  text-align: center; /* Center our text */
+}
