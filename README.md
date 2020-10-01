@@ -1,6 +1,13 @@
 ## Minderva
 
-Minderva is a opinionated language learning tool. It's merely a baby right now.
+Minderva is a cobblestone in the cobbled pathway of language study.
+It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.
+I hope it helps you get to where you’re going.
+
+Minderva was created by Dwaine Best as the final project for the Summer 2020 UCSD Extension Applied Javascript Course.
+It was built using React, Chakra UI, the Firebase platform, Google Translate and Google Text-to-Speech.
+
+[Link to Live App](https://minderva-17770.web.app/)
 
 ### Version History
 
