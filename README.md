@@ -7,7 +7,7 @@ I hope it helps you get to where you’re going.
 Minderva was created by Dwaine Best as the final project for the Summer 2020 UCSD Extension Applied Javascript Course.
 It was built using React, Chakra UI, the Firebase platform, Google Translate and Google Text-to-Speech.
 
-[Link to Live App](https://minderva-17770.web.app/)
+[Link to Live App](https://minderva.io/)
 
 ### Version History
 
@@ -15,8 +15,8 @@ It was built using React, Chakra UI, the Firebase platform, Google Translate and
 
 Version 0.12 - 7.01.2022
 
-- -- Security Updates
-- -- Domain updated to minderva.io
+- Security Updates
+- Domain updated to minderva.io
 
 Version 0.01, 7.20.2020, 7.21.2020:
 
