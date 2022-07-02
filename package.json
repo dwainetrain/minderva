@@ -17,6 +17,7 @@
     "google-translate": "^3.0.0",
     "immer": "^9.0.6",
     "json-bigint": "^1.0.0",
+    "json-schema": "^0.4.0",
     "moment": "^2.29.2",
     "node-forge": "^0.10.0",
     "react": "^16.13.1",
