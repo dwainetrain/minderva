@@ -13,6 +13,11 @@ It was built using React, Chakra UI, the Firebase platform, Google Translate and
 
 **Focus over Features**
 
+Version 0.12 - 7.01.2022
+
+- -- Security Updates
+- -- Domain updated to minderva.io
+
 Version 0.01, 7.20.2020, 7.21.2020:
 
 - ~~It should display cards~~
