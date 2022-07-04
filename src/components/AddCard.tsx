@@ -20,7 +20,7 @@ import {
     Box,
     IconButton,
     Tooltip
-  } from '@chakra-ui/core'
+} from '@chakra-ui/core'
 
 /* 
 Complex component that handles both adding and editing cards
@@ -32,21 +32,21 @@ The incoming mode prop is used to decide if the component adds or updates
 */
 
 
-const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, cardId }) => {
+const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) => {
 
     const [currentMode, setCurrentMode] = useState('add')
-    const [front, setFront] = useState(''); 
-    const [back, setBack] = useState(''); 
-    const [frontAudio, setFrontAudio] = useState(''); 
-    const [backAudio, setBackAudio] = useState(''); 
-    
-    const [generateChecked, setGenerateChecked] = useState(true) 
-    const [originLanguageName, setOriginLanguageName] = useState('') 
-    const [targetLanguageName, setTargetLanguageName] = useState('') 
+    const [front, setFront] = useState('');
+    const [back, setBack] = useState('');
+    const [frontAudio, setFrontAudio] = useState('');
+    const [backAudio, setBackAudio] = useState('');
+
+    const [generateChecked, setGenerateChecked] = useState(true)
+    const [originLanguageName, setOriginLanguageName] = useState('')
+    const [targetLanguageName, setTargetLanguageName] = useState('')
 
     // State Messages
     const [loadingTranslation, setLoadingTranslation] = useState(false)
-    
+
     // Add card sets to user prefs
     const [fromLanguage, setFromLanguage] = useState('');
     const [toLanguage, setToLanguage] = useState('');
@@ -68,8 +68,8 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             setFrontSpeechLanguage(speechLanguageMap[userLangPrefs.originCode].ttsCode)
             setOriginLanguageName(speechLanguageMap[userLangPrefs.originCode].language)
             setTargetLanguageName(speechLanguageMap[userLangPrefs.targetCode].language)
-            
-        } else if (userLangPrefs !== '' && currentMode === 'update'){
+
+        } else if (userLangPrefs !== '' && currentMode === 'update') {
             const fetchData = async () => {
                 const response = await firestore.doc(`users/${user.uid}/cards/${cardId}`).get();
                 const cardDetail = collectIdsAndDocs(response);
@@ -83,11 +83,11 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                 setSpeechLanguage(cardDetail.backSpeechLanguage)
                 setFrontAudio(cardDetail.frontAudioURL)
                 setBackAudio(cardDetail.backAudioURL)
-                setLoadingAudio(false)
-              }
-              fetchData()
+                setLoadingAudio('')
+            }
+            fetchData()
         }
-        
+
     }, [userLangPrefs, cardId, user.uid, currentMode, mode])
 
     // ADD CARD
@@ -95,16 +95,16 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
         e.preventDefault();
         if (front === '') {
             handleMessage('frontRequired')
-        } else if (back === ''){
+        } else if (back === '') {
             handleMessage('backRequired')
         } else {
             try {
                 const card = {
-                    front:front, 
-                    back:back,
+                    front: front,
+                    back: back,
                     backAudioURL: backAudio,
                     frontAudioURL: frontAudio,
-                    userID:auth.currentUser.uid,
+                    userID: auth.currentUser.uid,
                     origin: fromLanguage,
                     target: toLanguage,
                     backSpeechLanguage: speechLanguage,
@@ -124,10 +124,10 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                 setBackAudio('');
                 setLoadingAudio('')
                 handleMessage('saved', 'success');
-            } catch(error) {
+            } catch (error) {
                 console.error('Error Adding Card: ', error.message)
             }
-            
+
         }
     }
 
@@ -135,11 +135,11 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     const update = async (e) => {
         e.preventDefault();
         const card = {
-            front:front, 
-            back:back,
+            front: front,
+            back: back,
             backAudioURL: backAudio,
             frontAudioURL: frontAudio,
-            userID:auth.currentUser.uid,
+            userID: auth.currentUser.uid,
             origin: fromLanguage,
             target: toLanguage,
             backSpeechLanguage: speechLanguage,
@@ -154,7 +154,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
         handleMessage('updated', 'success');
         // Redirects back to card collectioin using React Router history
         history.push('/card-collection')
-      }
+    }
 
     const handleFromLanguageSelect = async (e) => {
         const languageCode = await e.target.value
@@ -189,29 +189,29 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     }
 
     const translationCall = functions.httpsCallable('translate');
-    
+
     const translation = async (e) => {
         if (front === '') {
             handleMessage('frontRequired', 'warning')
         } else if (front.length > 60) {
             handleMessage('characterLimit', 'warning')
         } else {
-        e.preventDefault();
-            try{
-                 translationCall({text:front,target:toLanguage}).then((result) => {
+            e.preventDefault();
+            try {
+                translationCall({ text: front, target: toLanguage }).then((result) => {
                     setFrontAudio('')
                     setBackAudio('')
                     setBack(result.data.translation)
                     setLoadingTranslation(false)
-                    if(generateChecked){
+                    if (generateChecked) {
                         setGenerateAudio(true)
                         setLoadingAudio('loading')
                     }
-                    
+
                 })
             }
-            catch(error) {
-                    console.log(error)
+            catch (error) {
+                console.log(error)
             }
         }
     }
@@ -219,26 +219,27 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
     const text2SpeechCall = functions.httpsCallable('gt2s');
 
     const textToSpeech = (side, text, speechLanguage) => {
-            try{
-                text2SpeechCall({text:text,target:speechLanguage}).then((result) => {
-                    if(side === 'back') { 
-                        setBackAudio(result.data) } else if (side === 'front') { 
-                        setFrontAudio(result.data)
-                    }
-                })
-            }
-            catch(error) {
-                    console.log(error)
-            }
+        try {
+            text2SpeechCall({ text: text, target: speechLanguage }).then((result) => {
+                if (side === 'back') {
+                    setBackAudio(result.data)
+                } else if (side === 'front') {
+                    setFrontAudio(result.data)
+                }
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     // Ain't pretty, but it works
     // Should I move this to utilities?
     const handleSwap = () => {
         const swapSpace = {
-            oldFront:front,
-            oldBack:back,
-            oldFromLanguage:fromLanguage,
+            oldFront: front,
+            oldBack: back,
+            oldFromLanguage: fromLanguage,
             oldToLanguage: toLanguage,
             oldSpeechLanguage: speechLanguage,
             oldFrontSpeechLanguage: frontSpeechLanguage,
@@ -260,14 +261,14 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
         setBackAudio(swapSpace.oldFrontAudio)
     }
 
-     // Call generate audio when set to true by translation
-     const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
-     if(generateAudio === true && generateChecked) {
+    // Call generate audio when set to true by translation
+    const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
+        if (generateAudio === true && generateChecked) {
             textToSpeech('front', front, frontSpeechLanguage)
             textToSpeech('back', back, speechLanguage)
             setGenerateAudio(false)
         }
-     })
+    })
 
     const handleManualGenerateAudio = () => {
         if (front === '') {
@@ -278,12 +279,13 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             setFrontAudio('')
             setBackAudio('')
             setLoadingAudio('loading')
-            setGenerateAudio(true)}
+            setGenerateAudio(true)
+        }
     }
 
     return (
-        <Stack px={{sm:10, md:24}} pt="1rem" maxWidth="1200px">
-            
+        <Stack px={{ sm: 10, md: 24 }} pt="1rem" maxWidth="1200px">
+
             <Helmet>
                 <title>Minderva | {mode === 'add' ? 'Add Cards' : 'Edit Card'}</title>
             </Helmet>
@@ -291,18 +293,18 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
             <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
 
 
-            <Flex justifyContent="space-between" flexDirection={{sm:"column", md:"row"}} alignItems={{sm:"center", md:"flex-start"}}>
-                
-                <CardFront 
-                    toLanguage={toLanguage} 
+            <Flex justifyContent="space-between" flexDirection={{ sm: "column", md: "row" }} alignItems={{ sm: "center", md: "flex-start" }}>
+
+                <CardFront
+                    toLanguage={toLanguage}
                     loadingAudio={loadingAudio}
                     frontAudio={frontAudio}
                     handleFromLanguageSelect={handleFromLanguageSelect}
                     fromLanguage={fromLanguage}
-                    front={front} 
-                    handleFront={handleFront}/>
+                    front={front}
+                    handleFront={handleFront} />
 
-                    <Tooltip label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
+                <Tooltip aria-label="Swap Sides" label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
                     <IconButton
                         alignSelf="center"
                         variant="link"
@@ -310,59 +312,63 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, match, user, history, car
                         aria-label="Swap Card Sides"
                         fontSize="36px"
                         size="md"
-                        
+
                         icon={AiOutlineSwap}
                         onClick={handleSwap}
                         maxH={16}
-                        />
-                    </Tooltip>
-                    
-                <CardBack 
-                    fromLanguage={fromLanguage} 
+                    />
+                </Tooltip>
+
+                <CardBack
+                    fromLanguage={fromLanguage}
                     loadingAudio={loadingAudio}
                     backAudio={backAudio}
                     handleToLanguageSelect={handleToLanguageSelect}
                     toLanguage={toLanguage}
-                    back={back} 
+                    back={back}
                     handleBack={handleBack}
                     front={front}
                     handleTranslate={handleTranslate}
                     handleGenerateChecked={handleGenerateChecked}
                     handleManualGenerateAudio={handleManualGenerateAudio}
                     loadingTranslation={loadingTranslation}
-                    manual={mode === 'update' ? true : false}/>
-
-            
-                
+                    manual={mode === 'update' ? true : false}
+                />
             </Flex>
-            
+
             <Flex justifyContent="center">
-                <Flex width="100%" justifyContent={{sm:"center", md:"flex-end"}} mb={5}>
-                    {mode === 'add' ? 
-                        <Button 
-                            variantColor="whatsapp" 
+                <Flex width="100%" justifyContent={{ sm: "center", md: "flex-end" }} mb={5}>
+                    {mode === 'add' ?
+                        <Button
+                            variantColor="whatsapp"
                             leftIcon="add"
                             onClick={create}
-                            placement="left"
+                            // placement="left" // Removed because of TS error, not sure it's 
+                            // needed...
                             // set it to false to force it to hide, or put it to undefined to 
                             // resume normal behaviour
-                            label="This is disabled because..."
-                            aria-label="This is disabled because..."
+                            // label="This is disabled because..." // Causing TS error
+                            // TODO: Button should be inactive if the user hasn't filled out 
+                            // the front and back of card...
+                            aria-label="Add Card"
                         >
-                        Add Card
+                            Add Card
                         </Button>
-                         : 
-                    <Box d="flex" justifyContent="space-between">
-                        <Button as={Link} variant="LInk" to="/card-collection" mr={10} color="grayGreen.800">Cancel</Button>
-                        <Button variantColor="whatsapp" onClick={update}>
-                        Update Card
-                        </Button>
-                    </Box>}
+                        :
+                        <Box d="flex" justifyContent="space-between" alignItems="center">
+                            <Link to="/card-collection" >
+                                <Button as="a" variant="link" mr={10} color="grayGreen.800">Cancel</Button>
+                            </Link>
+                            <Button variantColor="whatsapp" onClick={update}>
+                                Update Card
+                            </Button>
+                        </Box>}
                 </Flex>
-            
+
             </Flex>
         </Stack>
-        
-    )}
+
+    )
+}
 
 export default AddCard;

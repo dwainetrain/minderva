@@ -21,7 +21,7 @@ ReactDOM.render(
       </ThemeProvider>
     </HelmetProvider>
   </React.StrictMode>,
-document.getElementById('root') 
+  document.getElementById('root')
 );
 
 

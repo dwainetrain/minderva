@@ -19,37 +19,37 @@ import {
 
 const LoginForm = () => {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-    const history = useHistory();
+  const history = useHistory();
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try{
-        await auth.signInWithEmailAndPassword(email, password);
-        history.push("/")
-      }
-      catch(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
-        // ...
-      };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      history.push("/")
     }
+    catch (error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
+      // ...
+    }
+  }
 
 
-    return(
+  return (
     <Flex height="75vh" width="full" align="center" justifyContent="center">
-      
+
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8}>
         <Box d="flex" alignItems="center" justifyContent="center">
           <Image size="75px" objectFit="cover" src={logo} mb={3} />
         </Box>
         <Box>
-            <Heading fontFamily="span" color="tomato" textAlign="center">Minderva</Heading>
+          <Heading fontFamily="span" color="tomato" textAlign="center">Minderva</Heading>
         </Box>
         <Box textAlign="center">
           <Heading as="h6" size="md" color="grayGreen.800">A Language Learning Tool</Heading>
@@ -61,23 +61,23 @@ const LoginForm = () => {
           <Divider />
 
           <FormControl >
-          <form onSubmit={handleSubmit}>
-          <Heading as="h6" fontSize="lg" textAlign="center">Login with Email</Heading>
-          <Input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder="email"
-            />
+            <form onSubmit={handleSubmit}>
+              <Heading as="h6" fontSize="lg" textAlign="center">Login with Email</Heading>
+              <Input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="email"
+              />
 
-            <Input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            placeholder="Password"
-            />
+              <Input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+              />
 
-            <Button>Log In</Button>
+              <Button>Log In</Button>
             </form>
           </FormControl>
         </Box>
