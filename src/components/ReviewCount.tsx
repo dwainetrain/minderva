@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { NavLink } from 'react-router-dom';
-import { Button, Box, Flex, Heading } from '@chakra-ui/core'
+import { Button, Box, Flex, Heading } from '@chakra-ui/react'
 
 /* If cards are in the database, shows number of cards up for review */
 
 const ReviewCount = ({ cardCollection }) => {
-    return(
-        <Flex flexDirection="column" justifyContent="space-around" alignItems="center" minH="16rem" minW={{sm:48, md:'sm'}} maxW="md" >
+    return (
+        <Flex mx={{ sm: 0, md: 12, lg: 16 }} flexDirection="column" justifyContent="space-around" alignItems="center" minH="16rem" minW={{ sm: 48, md: 'sm' }} maxW="md" >
             <Box textAlign="center" >
                 <Box fontWeight="semibold">
                     You Have
@@ -19,13 +19,13 @@ const ReviewCount = ({ cardCollection }) => {
                 <Box
                     fontWeight="semibold"
                     as="h4"
-                    
+
                 >
                     Cards Ready for Review
                 </Box>
                 <Button as={NavLink} mt={6} px={2} to="/quiz" size="md" variantColor="teal" variant="outline">Review Now</Button>
             </Box>
-            
+
         </Flex>
     )
 }

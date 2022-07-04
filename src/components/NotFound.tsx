@@ -4,10 +4,10 @@ import React from 'react';
 
 import {
     Box
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 const NotFound = () => {
-    return(
+    return (
         <Box mt={4} px={24}>
             <h3>Nope, not here. 404.</h3>
         </Box>

@@ -9,7 +9,7 @@ import {
     Text,
     Input,
     Spinner
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 /* 
 Card Front used in Add/Edit Card screens

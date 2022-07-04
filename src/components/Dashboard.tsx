@@ -1,6 +1,6 @@
 import React from 'react';
 import LogIn from './LogIn'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import ReviewCount from './ReviewCount'
 import Quote from './Quote'
@@ -13,7 +13,7 @@ import {
     Text,
     Spinner,
     Stack
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import NoCards from './NoCards';
 
 /* Basic Dashboard Page, is the root route */
@@ -38,7 +38,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }) => {
                         : cardCollection.length === 0 ?
                             <NoCards />
                             :
-                            <ReviewCount cardCollection={cardCollection} mx={{ sm: 0, md: 12, lg: 16 }} />
+                            <ReviewCount cardCollection={cardCollection} />
                     }
 
                     <Divider orientation='vertical' borderColor={{ sm: "grayGreen.200" }} display={{ sm: "none", md: 'initial' }} />
@@ -46,7 +46,10 @@ const UserDashboard = ({ cardCollection, cardsLoaded }) => {
                     <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{ sm: 10, md: 12, lg: 16 }} px={{ sm: 6 }} borderWidth={{ sm: "1px", md: 0 }}>
                         <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
                         <Box mb={6}>
-                            <Button as={Link} size="sm" to="/add-cards" mb={3} variant="outline">Add Cards</Button>
+
+                            <Link to="/add-cards">
+                                <Button as="a" size="sm" mb={3} variant="outline">Add Cards</Button>
+                            </Link>
                             <Text>
                                 Tranaslate words or phrases and add them to your collection.
                             </Text>
@@ -54,7 +57,9 @@ const UserDashboard = ({ cardCollection, cardsLoaded }) => {
 
                         <Box mb={6}>
                             <Box>
-                                <Button as={NavLink} to="/card-collection" size="sm" mb={3} variant="outline" flexShrink="1">Card Collection</Button>
+                                <Link to="/card-collection">
+                                    <Button as="a" size="sm" mb={3} variant="outline" flexShrink={1}>Card Collection</Button>
+                                </Link>
                             </Box>
                             <Box>
                                 <Text>View, edit or delete your saved cards.</Text>
@@ -62,7 +67,9 @@ const UserDashboard = ({ cardCollection, cardsLoaded }) => {
                         </Box>
                         <Box>
                             <Box>
-                                <Button as={NavLink} to="/user-profile" mb={3} size="sm" variant="outline">User Profile</Button>
+                                <Link to="/user-profile">
+                                    <Button as="a" mb={3} size="sm" variant="outline">User Profile</Button>
+                                </Link>
                             </Box>
                             <Box>
                                 <Text>View your profile and edit default language preferences.</Text>

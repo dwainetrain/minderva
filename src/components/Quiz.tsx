@@ -11,7 +11,7 @@ import {
     Heading,
     Text,
     Spinner
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 /* Logic and layout for card Quiz, a little bloated at the moment */
 

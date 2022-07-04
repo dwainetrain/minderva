@@ -13,7 +13,7 @@ import {
     Checkbox,
     Divider,
     Spinner
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 /* 
 Card Back used in Add/Edit Card screens

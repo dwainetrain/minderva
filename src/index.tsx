@@ -7,7 +7,7 @@ import { HelmetProvider } from 'react-helmet-async';
 
 
 // Chakra Styling
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset } from "@chakra-ui/react";
 import customTheme from './components/theme'
 
 ReactDOM.render(

@@ -20,7 +20,7 @@ import {
     Box,
     IconButton,
     Tooltip
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 /* 
 Complex component that handles both adding and editing cards

@@ -9,7 +9,7 @@ import {
     Text,
     Heading,
     Divider
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 /* User Profile page, allowing for setting user preferences */
 

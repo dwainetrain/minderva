@@ -8,26 +8,26 @@ import {
   Heading,
   Button,
   Image
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 /* Login screen if user isn't logged-in, only handle google sign-in at the moment */
 
 const LoginForm = () => {
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
 
-    return(
+  return (
     <Flex height="75vh" width="full" align="center" justifyContent="center">
-      
+
       <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8}>
         <Box d="flex" alignItems="center" justifyContent="center">
           <Image size="50px" objectFit="cover" src={logo} mb={3} />
         </Box>
         <Box>
-            <Heading as="h1" fontSize="3xl" fontFamily="span" color="tomato" textAlign="center">Minderva</Heading>
+          <Heading as="h1" fontSize="3xl" fontFamily="span" color="tomato" textAlign="center">Minderva</Heading>
         </Box>
         <Box textAlign="center">
           <Heading as="h6" size="sm" color="grayGreen.800">A Language Learning Tool</Heading>
