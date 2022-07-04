@@ -5,7 +5,7 @@ import { useStateWithCallbackInstant } from 'use-state-with-callback';
 import { Helmet } from 'react-helmet-async'
 import CardFront from './CardFront'
 import CardBack from './CardBack'
-import { AiOutlineSwap } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSwap } from "react-icons/ai";
 
 // From Edit
 import { collectIdsAndDocs } from '../utilities';
@@ -308,12 +308,12 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) 
                     <IconButton
                         alignSelf="center"
                         variant="link"
-                        variantColor="blackAlpha"
+                        colorScheme="blackAlpha"
                         aria-label="Swap Card Sides"
                         fontSize="36px"
                         size="md"
 
-                        icon={AiOutlineSwap}
+                        icon={<AiOutlineSwap />}
                         onClick={handleSwap}
                         maxH={16}
                     />
@@ -340,8 +340,8 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) 
                 <Flex width="100%" justifyContent={{ sm: "center", md: "flex-end" }} mb={5}>
                     {mode === 'add' ?
                         <Button
-                            variantColor="whatsapp"
-                            leftIcon="add"
+                            colorScheme="whatsapp"
+                            leftIcon={<AiOutlinePlus />}
                             onClick={create}
                             // placement="left" // Removed because of TS error, not sure it's 
                             // needed...
@@ -355,11 +355,11 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) 
                             Add Card
                         </Button>
                         :
-                        <Box d="flex" justifyContent="space-between" alignItems="center">
+                        <Box display="flex" justifyContent="space-between" alignItems="center">
                             <Link to="/card-collection" >
                                 <Button as="a" variant="link" mr={10} color="grayGreen.800">Cancel</Button>
                             </Link>
-                            <Button variantColor="whatsapp" onClick={update}>
+                            <Button colorScheme="whatsapp" onClick={update}>
                                 Update Card
                             </Button>
                         </Box>}

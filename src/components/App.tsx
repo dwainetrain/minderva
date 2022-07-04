@@ -94,7 +94,7 @@ function App() {
 
       <Box as="footer" backgroundColor="grayGreen.200">
         <Box pl={{ sm: 10, md: 24 }}>
-          <Link to="/about" >MVP Build 0.12</Link>
+          <Link to="/about" >MVP Build 0.14</Link>
         </Box>
       </Box>
     </div>

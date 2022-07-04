@@ -14,6 +14,7 @@ import {
     Divider,
     Spinner
 } from '@chakra-ui/react'
+import { AiOutlineEdit, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 
 /* 
 Card Back used in Add/Edit Card screens
@@ -91,12 +92,12 @@ const CardBack = ({
             <Divider my={6} />
 
             {manualEntry === true ?
-                <Box d="flex" justifyContent="space-between">
+                <Box display="flex" justifyContent="space-between">
                     <Button as="a" variant="link"
-                        onClick={() => setManualEntry(false)} leftIcon="chevron-left">
+                        onClick={() => setManualEntry(false)} leftIcon={<AiOutlineLeft />}>
                         Translation
                     </Button>
-                    <Button variantColor="cyan" leftIcon="chevron-right"
+                    <Button colorScheme="cyan" leftIcon={<AiOutlineRight />}
                         onClick={handleManualGenerateAudio}
                     >
                         Generate Audio
@@ -105,19 +106,19 @@ const CardBack = ({
                 :
 
                 <Stack>
-                    <Button variantColor="twitter" variant="outline"
+                    <Button colorScheme="twitter" variant="outline"
                         isLoading={front !== '' && loadingTranslation}
-                        leftIcon="arrow-right"
+                        leftIcon={<AiOutlineRight />}
                         onClick={(e) => {
                             setManualEntry(false)
                             handleTranslate(e)
                         }}>
                         Translate
                     </Button>
-                    <Checkbox mr={3} variantColor="teal" defaultIsChecked onChange={handleGenerateChecked}>
+                    <Checkbox mr={3} colorScheme="teal" defaultChecked onChange={handleGenerateChecked}>
                         Generate Audio
                     </Checkbox>
-                    <Button size="sm" variant="link" leftIcon="edit" onClick={() => setManualEntry(true)}>
+                    <Button size="sm" variant="link" leftIcon={<AiOutlineEdit />} onClick={() => setManualEntry(true)}>
                         Manual Entry
                     </Button>
                 </Stack>
