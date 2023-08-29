@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 firebase.js
+firebest.ts
 apis.js
 /apis
 
@@ -29,3 +30,4 @@ yarn-error.log*
 firestore-debug.log*
 pubsub-debug.log*
 ui-debug.log*
+firebase.ts
