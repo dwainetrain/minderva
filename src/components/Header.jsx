@@ -42,8 +42,7 @@ const Header = () => {
     >
 
       <Box fontWeight="extrabold">
-        <Link to="/">
-          <ChaLink as="a" color="white"
+          <ChaLink as={Link} to='/' color="white"
             _hover={{ textDecoration: "none", color: "white" }}
             _active={{ color: "white" }}
             _focus={{ color: "white", textDecoration: "none" }}
@@ -54,7 +53,6 @@ const Header = () => {
           >
             Minderva
           </ChaLink>
-        </Link>
       </Box>
 
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>

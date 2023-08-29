@@ -4,6 +4,7 @@ import { Box, Text, Link } from '@chakra-ui/react'
 /* Shares basic information about the App */
 
 const About = () => {
+    console.log('Your on the About page!')
     return (
         <Box mt={4} px={24}>
             <Text>Minderva was created by Dwaine Best as the final project for the Summer 2020 UCSD Extension Applied Javascript Course.</Text>

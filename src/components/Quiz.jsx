@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PlayAudio from './PlayAudio'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 
 // Chakra UI
@@ -24,7 +24,7 @@ const Quiz = ({ cardCollection }) => {
     const [quizReset, setQuizReset] = useState(true);
 
     // Using router history to handle exiting the quiz
-    const history = useHistory();
+    const history = useNavigate();
 
     // Function to shuffle the cards
     const shuffleCards = (cards) => cards
@@ -130,7 +130,7 @@ const Quiz = ({ cardCollection }) => {
             <Flex justifyContent="space-between" height="5rem" alignItems="center">
                 <Box d="flex" width="56%" pl="2rem">
 
-                    <Button size="sm" variant="link" onClick={() => history.goBack()}>Exit Review</Button>
+                    <Button size="sm" variant="link" onClick={() => history(-1)}>Exit Review</Button>
 
                 </Box>
                 <Flex justifyContent="flex-end" pr="2rem">

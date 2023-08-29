@@ -3,14 +3,14 @@ import AddCard from './AddCard';
 
 /* Sends update mode to Add Card component */
 
-const EditCard = ({ handleMessage, match, user, history, userLangPrefs }) => {
+const EditCard = ({ handleMessage, cardId, user, history, userLangPrefs, mode }) => {
     return (
         <AddCard
             handleMessage={handleMessage}
-            cardId={match.params.id}
+            cardId={cardId}
             user={user}
             history={history}
-            mode="update"
+            mode={mode}
             userLangPrefs={userLangPrefs} />
     )
 }

@@ -5,6 +5,7 @@ import LogIn from './LogIn'
 // import LogInWithEmail from './LogInWithEmail'
 import { Link } from 'react-router-dom'
 import { firestore, auth } from '../firebase';
+// import { collection, doc, setDoc } from "firebase/firestore";
 import { collectIdsAndDocs } from '../utilities';
 
 import Message from './Messages'

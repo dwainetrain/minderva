@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DeleteCard from '../components/DeleteCard';
+import DeleteCard from './DeleteCard';
 import { Link } from 'react-router-dom';
 import moment from 'moment'
 import PlayAudio from './PlayAudio'

@@ -9,7 +9,7 @@ import { AiOutlinePlus, AiOutlineSwap } from "react-icons/ai";
 
 // From Edit
 import { collectIdsAndDocs } from '../utilities';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // Styling
 import {
@@ -32,8 +32,10 @@ The incoming mode prop is used to decide if the component adds or updates
 */
 
 
-const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) => {
 
+const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
+    const navigate = useNavigate();
+    
     const [currentMode, setCurrentMode] = useState('add')
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
@@ -152,8 +154,8 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) 
         const cardRef = firestore.doc(`users/${user.uid}/cards/${cardId}`);
         await cardRef.update(card);
         handleMessage('updated', 'success');
-        // Redirects back to card collectioin using React Router history
-        history.push('/card-collection')
+        // Redirects back to card collection using React Router history
+        navigate('/card-collection');
     }
 
     const handleFromLanguageSelect = async (e) => {
@@ -346,7 +348,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, history, cardId }) 
                             // placement="left" // Removed because of TS error, not sure it's 
                             // needed...
                             // set it to false to force it to hide, or put it to undefined to 
-                            // resume normal behaviour
+                            // resume normal behavior
                             // label="This is disabled because..." // Causing TS error
                             // TODO: Button should be inactive if the user hasn't filled out 
                             // the front and back of card...

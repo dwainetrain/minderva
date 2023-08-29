@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,9 +8,12 @@ import { HelmetProvider } from 'react-helmet-async';
 
 // Chakra Styling
 import { ThemeProvider, CSSReset } from "@chakra-ui/react";
-import customTheme from './components/theme'
+import customTheme from './components/theme';
 
-ReactDOM.render(
+const domNode = document.getElementById('root');
+const root = createRoot(domNode);
+
+root.render(
   <React.StrictMode>
     <HelmetProvider>
       <ThemeProvider theme={customTheme}>
@@ -20,8 +23,7 @@ ReactDOM.render(
         </BrowserRouter>
       </ThemeProvider>
     </HelmetProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 

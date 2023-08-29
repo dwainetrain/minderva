@@ -1,5 +1,5 @@
 import React from 'react';
-import Authentication from '../components/Authentication';
+import Authentication from './Authentication';
 
 /* Calls for authentication of user, maybe redundent */
 
