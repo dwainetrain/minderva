@@ -10,7 +10,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider, CSSReset } from "@chakra-ui/react";
 import customTheme from './components/theme';
 
-const domNode = document.getElementById('root');
+const domNode = document.getElementById('root')!;
 const root = createRoot(domNode);
 
 root.render(

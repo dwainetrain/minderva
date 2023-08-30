@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
 import UserRoute from './UserRoute';
-import LogIn from './LogIn'
+import LogIn from './LogIn';
+import Message from './Messages'
 // import LogInWithEmail from './LogInWithEmail'
 import { Link } from 'react-router-dom'
 import { firestore, auth } from '../firebase';
 // import { collection, doc, setDoc } from "firebase/firestore";
 import { collectIdsAndDocs } from '../utilities';
 
-import Message from './Messages'
-
 /// Styling
 import './App.css';
 import { Box, useToast } from '@chakra-ui/react'
 
+interface user {
+  uid: string,
+}
 function App() {
 
   const [cardCollection, setCardCollection] = useState([]);
@@ -23,8 +25,8 @@ function App() {
 
 
   // Auth state
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [user, setUser] = useState<user | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [cardsLoaded, setCardsLoaded] = useState(false);
 
