@@ -16,9 +16,14 @@ import { Box, useToast } from '@chakra-ui/react'
 interface user {
   uid: string,
 }
+
+interface entry {
+  id: string
+}
+
 function App() {
 
-  const [cardCollection, setCardCollection] = useState([]);
+  const [cardCollection, setCardCollection] = useState<entry[]>([]);
 
   // For User Language Prefs
   const [userLanguagePreferences, setUserLanguagePreferences] = useState('')
@@ -74,7 +79,7 @@ function App() {
   }
 
   const toast = useToast();
-  const handleMessage = (message, status) => {
+  const handleMessage = (message: string, status) => {
     toast({
       position: "bottom",
       description: messages[message],
