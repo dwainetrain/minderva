@@ -31,9 +31,25 @@ The incoming mode prop is used to decide if the component adds or updates
 
 */
 
+// TODO: Move these type definitions to types folder...
+interface Card {
+    handleMessage: string, // TODO: Is a function...see app.tsx
+    userLangPrefs: UserLangPrefs,
+    mode: string,
+    user: User,
+    cardId: string
+}
 
+interface UserLangPrefs {
+    targetCode: string,
+    originCode: string
+}
 
-const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
+interface User {
+    uid: string
+}
+
+const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => {
     const navigate = useNavigate();
 
     const [currentMode, setCurrentMode] = useState('add')
@@ -63,7 +79,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
     // If mode is 'add' then load user prefs, if mode is update then load card data
     useEffect(() => {
         setCurrentMode(mode)
-        if (userLangPrefs !== '' && currentMode === 'add') {
+        if (userLangPrefs && currentMode === 'add') {
             setToLanguage(userLangPrefs.targetCode)
             setFromLanguage(userLangPrefs.originCode)
             setSpeechLanguage(speechLanguageMap[userLangPrefs.targetCode].ttsCode)
@@ -71,7 +87,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
             setOriginLanguageName(speechLanguageMap[userLangPrefs.originCode].language)
             setTargetLanguageName(speechLanguageMap[userLangPrefs.targetCode].language)
 
-        } else if (userLangPrefs !== '' && currentMode === 'update') {
+        } else if (userLangPrefs && currentMode === 'update') {
             const fetchData = async () => {
                 const response = await firestore.doc(`users/${user.uid}/cards/${cardId}`).get();
                 const cardDetail = collectIdsAndDocs(response);
@@ -93,7 +109,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
     }, [userLangPrefs, cardId, user.uid, currentMode, mode])
 
     // ADD CARD
-    const create = async (e) => {
+    const create = async (e: Event) => {
         e.preventDefault();
         if (front === '') {
             handleMessage('frontRequired')
@@ -134,7 +150,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
     }
 
     // Update
-    const update = async (e) => {
+    const update = async (e: Event) => {
         e.preventDefault();
         const card = {
             front: front,
@@ -158,41 +174,41 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
         navigate('/card-collection');
     }
 
-    const handleFromLanguageSelect = async (e) => {
+    const handleFromLanguageSelect = async (e: Event) => {
         const languageCode = await e.target.value
         setFromLanguage(languageCode)
         setOriginLanguageName(speechLanguageMap[languageCode].language)
         setFrontSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
-    const handleToLanguageSelect = async (e) => {
+    const handleToLanguageSelect = async (e: Event) => {
         const languageCode = await e.target.value
         setToLanguage(languageCode)
         setTargetLanguageName(speechLanguageMap[languageCode].language)
         setSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
-    const handleFront = (e) => {
+    const handleFront = (e: Event) => {
         setFront(e.target.value)
     }
 
-    const handleBack = (e) => {
+    const handleBack = (e: Event) => {
         setBack(e.target.value)
     }
 
-    const handleTranslate = (e) => {
+    const handleTranslate = (e: Event) => {
         setLoadingAudio('')
         translation(e)
         setLoadingTranslation(true)
     }
 
-    const handleGenerateChecked = (e) => {
+    const handleGenerateChecked = (e: Event) => {
         setGenerateChecked(e.target.checked)
     }
 
     const translationCall = functions.httpsCallable('translate');
 
-    const translation = async (e) => {
+    const translation = async (e: Event) => {
         if (front === '') {
             handleMessage('frontRequired', 'warning')
         } else if (front.length > 60) {
@@ -220,7 +236,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
 
     const text2SpeechCall = functions.httpsCallable('gt2s');
 
-    const textToSpeech = (side, text, speechLanguage) => {
+    const textToSpeech = (side: string, text: string, speechLanguage: string) => {
         try {
             text2SpeechCall({ text: text, target: speechLanguage }).then((result) => {
                 if (side === 'back') {

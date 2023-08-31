@@ -3,7 +3,7 @@ import LogIn from './LogIn'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import ReviewCount from './ReviewCount'
-import Quote from './Quote'
+import Quote from './Quote';
 
 import {
     Box,

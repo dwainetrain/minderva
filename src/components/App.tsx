@@ -11,7 +11,8 @@ import { collectIdsAndDocs } from '../utilities';
 
 /// Styling
 import './App.css';
-import { Box, useToast } from '@chakra-ui/react'
+import { Box, useToast, AlertStatus } from '@chakra-ui/react';
+// import { ToastStatus, ToastMessages } from './@types/toast';
 
 interface user {
   uid: string,
@@ -68,7 +69,7 @@ function App() {
   }, [user]);
 
   // handle messages with Chakra Toasts
-  const messages = {
+  const messages: { [key: string]: string } = {
     saved: "Your new card has been added",
     languageUpdate: "Language Preferences Updated",
     updated: "Card updated",
@@ -79,7 +80,7 @@ function App() {
   }
 
   const toast = useToast();
-  const handleMessage = (message: string, status) => {
+  const handleMessage = (message: string, status: AlertStatus) => {
     toast({
       position: "bottom",
       description: messages[message],

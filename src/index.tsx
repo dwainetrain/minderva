@@ -4,10 +4,8 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-
-
 // Chakra Styling
-import { ThemeProvider, CSSReset } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import customTheme from './components/theme';
 
 const domNode = document.getElementById('root')!;
@@ -16,12 +14,12 @@ const root = createRoot(domNode);
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <ThemeProvider theme={customTheme}>
+      <ChakraProvider theme={customTheme}>
         <CSSReset />
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </ThemeProvider>
+      </ChakraProvider>
     </HelmetProvider>
   </React.StrictMode>
 );
