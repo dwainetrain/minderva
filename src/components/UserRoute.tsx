@@ -1,11 +1,11 @@
 import React from 'react';
+import { Route, Routes, useLocation, useParams } from 'react-router-dom';
+
 import Dashboard from './Dashboard'
 import UserProfile from './UserProfile'
 import AddCard from './AddCard';
-import EditCard from './EditCard'
 import Quiz from './Quiz';
 import Review from './Review';
-import { Route, Routes, useLocation, useParams, useNavigate } from 'react-router-dom';
 import DisplayCards from './DisplayCards';
 import NotFound from './NotFound'
 import About from './About'
@@ -15,7 +15,6 @@ import Header from './Header'
 
 const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading, cardsLoaded }) => {
     const location = useLocation();
-    const history = useNavigate();
 
     const CardActionsWrapper = ({ mode }) => {
         const { id } = useParams();
@@ -25,7 +24,7 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
             user={user}
             userLangPrefs={userLangPrefs}
             mode={mode}
-            history={history} />;
+        />;
     };
 
 
@@ -36,21 +35,21 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
             </header>
             <div>
                 <Routes>
-                    <Route exact path="/" element={<Dashboard user={user} cardCollection={cardCollection} loading={loading} cardsLoaded={cardsLoaded} />} />
+                    <Route path="/" element={<Dashboard user={user} cardCollection={cardCollection} {...loading} cardsLoaded={cardsLoaded} />} />
 
-                    <Route exact path="/review" element={<Review path="/review" cardCollection={cardCollection} cardsLoaded={cardsLoaded} />} />
+                    <Route path="/review" element={<Review cardCollection={cardCollection} cardsLoaded={cardsLoaded} />} />
 
-                    <Route exact path="/quiz" element={<Quiz path="/quiz" cardCollection={cardCollection} />} />
+                    <Route path="/quiz" element={<Quiz cardCollection={cardCollection} />} />
 
-                    <Route exact path="/card-collection" element={<DisplayCards path="/card-collection" cardCollection={cardCollection} user={user} handleMessage={handleMessage} cardsLoaded={cardsLoaded} />} />
+                    <Route path="/card-collection" element={<DisplayCards cardCollection={cardCollection} user={user} handleMessage={handleMessage} cardsLoaded={cardsLoaded} />} />
 
-                    <Route exact path="/edit-card/:id" element={<CardActionsWrapper mode="update" />} />
+                    <Route path="/edit-card/:id" element={<CardActionsWrapper mode="update" />} />
 
-                    <Route exact path="/add-cards" element={<CardActionsWrapper mode="add" />} />
+                    <Route path="/add-cards" element={<CardActionsWrapper mode="add" />} />
 
-                    <Route exact path="/user-profile" element={<UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage} />} />
+                    <Route path="/user-profile" element={<UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage} />} />
 
-                    <Route exact path="/about" element={<About />} />
+                    <Route path="/about" element={<About />} />
 
                     <Route element={<NotFound />} />
                 </Routes>

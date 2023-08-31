@@ -35,7 +35,7 @@ The incoming mode prop is used to decide if the component adds or updates
 
 const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
     const navigate = useNavigate();
-    
+
     const [currentMode, setCurrentMode] = useState('add')
     const [front, setFront] = useState('');
     const [back, setBack] = useState('');
@@ -106,7 +106,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
                     back: back,
                     backAudioURL: backAudio,
                     frontAudioURL: frontAudio,
-                    userID: auth.currentUser.uid,
+                    userID: auth.currentUser!.uid,
                     origin: fromLanguage,
                     target: toLanguage,
                     backSpeechLanguage: speechLanguage,
@@ -119,7 +119,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
                     lastReview: new Date(),
                     nextReview: ''
                 }
-                await firestore.collection(`users/${auth.currentUser.uid}/cards`).add(card);
+                await firestore.collection(`users/${auth.currentUser!.uid}/cards`).add(card);
                 setFront('');
                 setBack('');
                 setFrontAudio('');
@@ -141,7 +141,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }) => {
             back: back,
             backAudioURL: backAudio,
             frontAudioURL: frontAudio,
-            userID: auth.currentUser.uid,
+            userID: auth.currentUser!.uid,
             origin: fromLanguage,
             target: toLanguage,
             backSpeechLanguage: speechLanguage,
