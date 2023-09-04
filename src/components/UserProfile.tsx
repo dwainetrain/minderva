@@ -1,11 +1,15 @@
 import React from 'react';
 import Authentication from './Authentication';
 
-/* Calls for authentication of user, maybe redundent */
+// Types
+import { UserRouteModel } from './@types/card';
 
-const UserProfile = ({ user, userLangPrefs, handleMessage }) => (
+
+/* Calls for authentication of user, maybe redundant */
+
+const UserProfile = ({ user, userLangPrefs, handleMessage }: UserRouteModel) => (
     <div>
-        <Authentication user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage}/>
+        <Authentication user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage} />
     </div>
 )
 

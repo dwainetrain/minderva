@@ -14,9 +14,14 @@ import './App.css';
 import { Box, useToast, AlertStatus } from '@chakra-ui/react';
 // import { ToastStatus, ToastMessages } from './@types/toast';
 
-interface user {
-  uid: string,
-}
+// Constants
+import { messages } from "./constants/messages"
+
+// Types
+// import { CardAction, User, UserLangPrefs } from './@types/card';
+// make alias for greater readability
+import { User } from "firebase/auth";
+import { UserLangPrefs } from './@types/card';
 
 interface entry {
   id: string
@@ -27,11 +32,14 @@ function App() {
   const [cardCollection, setCardCollection] = useState<entry[]>([]);
 
   // For User Language Prefs
-  const [userLanguagePreferences, setUserLanguagePreferences] = useState('')
+  const [userLanguagePreferences, setUserLanguagePreferences] = useState<UserLangPrefs>({
+    targetCode: '',
+    originCode: ''
+  });
 
 
   // Auth state
-  const [user, setUser] = useState<user | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [cardsLoaded, setCardsLoaded] = useState(false);
@@ -54,9 +62,14 @@ function App() {
         setUserLanguagePreferences(entries[0])
       });
 
-    const unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      setUser(user)
-      setLoading(false)
+    const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user as User);
+      }
+      setLoading(false);
+      return () => {
+        unsubscribeFromAuth();
+      }
     })
 
     return () => {
@@ -68,19 +81,8 @@ function App() {
 
   }, [user]);
 
-  // handle messages with Chakra Toasts
-  const messages: { [key: string]: string } = {
-    saved: "Your new card has been added",
-    languageUpdate: "Language Preferences Updated",
-    updated: "Card updated",
-    deleted: "Card deleted",
-    frontRequired: "Front of the card can't be blank",
-    backRequired: "Back of the card can't be blank",
-    characterLimit: "Sorry, there's a 50 character limit per card."
-  }
-
   const toast = useToast();
-  const handleMessage = (message: string, status: AlertStatus) => {
+  const handleMessage = (message: string, status: AlertStatus): void => {
     toast({
       position: "bottom",
       description: messages[message],

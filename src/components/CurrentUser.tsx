@@ -10,10 +10,11 @@ import {
     Heading,
     Divider
 } from '@chakra-ui/react'
+import { User } from './@types/card';
 
 /* User Profile page, allowing for setting user preferences */
 
-const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }) => {
+const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
 
     const [fromLanguage, setFromLanguage] = useState('');
     const [toLanguage, setToLanguage] = useState('');
@@ -25,19 +26,19 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }) => {
         setToLanguage(userLangPrefs.targetCode)
     }, [userLangPrefs])
 
-    const handleFromLanguageSelect = async (e) => {
+    const handleFromLanguageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const languageCode = await e.target.value
         setFromLanguage(languageCode)
         update('origin', languageCode)
     }
 
-    const handleToLanguageSelect = async (e) => {
+    const handleToLanguageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const languageCode = await e.target.value
         setToLanguage(await languageCode)
         update('target', languageCode)
     }
 
-    const update = async (pref, code) => {
+    const update = async (pref: string, code: string) => {
         const languages = pref === 'target' ? { targetCode: code } : { originCode: code }
         const cardRef = firestore.doc(`users/${uid}/profile/${uid}`);
         await cardRef.update(languages);

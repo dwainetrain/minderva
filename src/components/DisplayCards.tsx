@@ -20,6 +20,7 @@ import {
     Spinner,
     Divider
 } from '@chakra-ui/react'
+import { HandleMessage, UserRouteModel } from './@types/card';
 
 /* Grid of cards that are in user's collection */
 
@@ -34,30 +35,32 @@ interface card {
     targetLanguageName: string
 }
 
-const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }) => {
+const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: UserRouteModel) => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<card[]>([])
 
     useEffect(() => {
         // Just a very basic search
-        const searchFilter = () => {
-            const frontResults = cardCollection.filter(card => card.front
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()))
+        if (cardCollection) {
+            const searchFilter = () => {
+                const frontResults = cardCollection.filter(card => card.front
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()))
 
-            const backResults = cardCollection.filter(card => card.back
-                .toLowerCase()
-                .includes(searchTerm.toLowerCase()))
+                const backResults = cardCollection.filter(card => card.back
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()))
 
-            const totalResults = [...frontResults, ...backResults]
+                const totalResults = [...frontResults, ...backResults]
 
-            console.log(`TOTAL RESULTS: ${JSON.stringify(totalResults[0])}`);
-            setSearchResults([...new Set(totalResults)])
-        }
+                console.log(`TOTAL RESULTS: ${JSON.stringify(totalResults[0])}`);
+                setSearchResults([...new Set(totalResults)])
+            }
 
-        if (cardCollection[0] !== 'loading') {
-            searchFilter()
+            if (cardCollection[0] !== 'loading') {
+                searchFilter()
+            }
         }
 
     }, [cardCollection, searchTerm])
@@ -74,14 +77,14 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }) => {
                         <InputLeftElement children={<Icon name="search" color="gray.300" />} />
                         <Input type="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
                     </InputGroup>
-                    <Text>Showing {searchResults.length} of {cardCollection.length} total cards</Text>
+                    <Text>Showing {searchResults.length} of {cardCollection?.length} total cards</Text>
                 </Flex>
             </Box>
             {cardsLoaded ?
 
                 <SimpleGrid columns={[2, null, 3]} spacing="32px" px={{ sm: 10, md: 24 }} pb="5rem" minChildWidth="20rem">
-                    {cardCollection.length === 0 ? <NoCards /> : null}
-                    {cardCollection[0] === 'loading' ? null : searchResults
+                    {cardCollection?.length === 0 ? <NoCards /> : null}
+                    {cardCollection ? cardCollection[0] === 'loading' ? null : searchResults
                         .sort((a, b) => b.dateCreated.seconds.valueOf() - a.dateCreated.seconds.valueOf())
                         .map(
                             card =>
@@ -114,12 +117,12 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }) => {
                                             <Button as="a" size="sm" variant="outline" id={card.id}>Edit</Button>
                                         </Link>
 
-                                        <DeleteCard user={user} id={card.id} handleMessage={handleMessage} />
+                                        <DeleteCard mode="delete" user={user} cardId={card.id} handleMessage={handleMessage as HandleMessage} />
 
                                     </Flex>
                                     <Text fontSize="xs" color="grayGreen.800">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
                                 </Flex>
-                        )}
+                        ) : null}
 
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { firestore, auth, functions } from '../firebase';
-import { speechLanguageMap } from './speechLanguagesMap';
+import { speechLanguageMap, SpeechLanguageMap } from './constants/speechLanguagesMap';
 import { useStateWithCallbackInstant } from 'use-state-with-callback';
 import { Helmet } from 'react-helmet-async'
 import CardFront from './CardFront'
@@ -22,34 +22,21 @@ import {
     Tooltip
 } from '@chakra-ui/react'
 
+// Types
+import { CardAction, Card } from './@types/card'
+
 /* 
 Complex component that handles both adding and editing cards
 Along with translation and text-to-speech api calls
-Best candidate for more refactoring
+TODO: Best candidate for more refactoring. Could I use some kind of state management to reduce complexity?
 
 The incoming mode prop is used to decide if the component adds or updates
 
 */
 
 // TODO: Move these type definitions to types folder...
-interface Card {
-    handleMessage: string, // TODO: Is a function...see app.tsx
-    userLangPrefs: UserLangPrefs,
-    mode: string,
-    user: User,
-    cardId: string
-}
 
-interface UserLangPrefs {
-    targetCode: string,
-    originCode: string
-}
-
-interface User {
-    uid: string
-}
-
-const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => {
+const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: CardAction) => {
     const navigate = useNavigate();
 
     const [currentMode, setCurrentMode] = useState('add')
@@ -70,8 +57,8 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
     const [toLanguage, setToLanguage] = useState('');
 
     // Specific code for Google text-to-speech
-    const [speechLanguage, setSpeechLanguage] = useState('')
-    const [frontSpeechLanguage, setFrontSpeechLanguage] = useState('')
+    const [speechLanguage, setSpeechLanguage] = useState<SpeechLanguageMap | string>('')
+    const [frontSpeechLanguage, setFrontSpeechLanguage] = useState<SpeechLanguageMap | string>('')
 
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
@@ -109,7 +96,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
     }, [userLangPrefs, cardId, user.uid, currentMode, mode])
 
     // ADD CARD
-    const create = async (e: Event) => {
+    const create = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         if (front === '') {
             handleMessage('frontRequired')
@@ -150,7 +137,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
     }
 
     // Update
-    const update = async (e: Event) => {
+    const update = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         const card = {
             front: front,
@@ -174,41 +161,41 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
         navigate('/card-collection');
     }
 
-    const handleFromLanguageSelect = async (e: Event) => {
-        const languageCode = await e.target.value
+    const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const languageCode = e.target.value
         setFromLanguage(languageCode)
         setOriginLanguageName(speechLanguageMap[languageCode].language)
         setFrontSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
-    const handleToLanguageSelect = async (e: Event) => {
-        const languageCode = await e.target.value
+    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const languageCode = e.target.value
         setToLanguage(languageCode)
         setTargetLanguageName(speechLanguageMap[languageCode].language)
         setSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
     }
 
-    const handleFront = (e: Event) => {
+    const handleFront = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFront(e.target.value)
     }
 
-    const handleBack = (e: Event) => {
+    const handleBack = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBack(e.target.value)
     }
 
-    const handleTranslate = (e: Event) => {
+    const handleTranslate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setLoadingAudio('')
         translation(e)
         setLoadingTranslation(true)
     }
 
-    const handleGenerateChecked = (e: Event) => {
+    const handleGenerateChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
         setGenerateChecked(e.target.checked)
     }
 
     const translationCall = functions.httpsCallable('translate');
 
-    const translation = async (e: Event) => {
+    const translation = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (front === '') {
             handleMessage('frontRequired', 'warning')
         } else if (front.length > 60) {
@@ -236,7 +223,7 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
 
     const text2SpeechCall = functions.httpsCallable('gt2s');
 
-    const textToSpeech = (side: string, text: string, speechLanguage: string) => {
+    const textToSpeech = (side: string, text: string, speechLanguage: SpeechLanguageMap) => {
         try {
             text2SpeechCall({ text: text, target: speechLanguage }).then((result) => {
                 if (side === 'back') {
@@ -282,8 +269,8 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: Card) => 
     // Call generate audio when set to true by translation
     const [generateAudio, setGenerateAudio] = useStateWithCallbackInstant(false, () => {
         if (generateAudio === true && generateChecked) {
-            textToSpeech('front', front, frontSpeechLanguage)
-            textToSpeech('back', back, speechLanguage)
+            textToSpeech('front', front, frontSpeechLanguage as SpeechLanguageMap)
+            textToSpeech('back', back, speechLanguage as SpeechLanguageMap)
             setGenerateAudio(false)
         }
     })

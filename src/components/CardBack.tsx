@@ -16,6 +16,9 @@ import {
 } from '@chakra-ui/react'
 import { AiOutlineEdit, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 
+// Types
+import { Card } from './@types/card';
+
 /* 
 Card Back used in Add/Edit Card screens
 */
@@ -34,7 +37,7 @@ const CardBack = ({
     handleGenerateChecked,
     manual,
     fromLanguage
-}) => {
+}: Card) => {
     const [manualEntry, setManualEntry] = useState(manual)
 
     return (
@@ -111,7 +114,7 @@ const CardBack = ({
                         leftIcon={<AiOutlineRight />}
                         onClick={(e) => {
                             setManualEntry(false)
-                            handleTranslate(e)
+                            if (handleTranslate) handleTranslate(e)
                         }}>
                         Translate
                     </Button>

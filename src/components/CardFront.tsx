@@ -11,6 +11,9 @@ import {
     Spinner
 } from '@chakra-ui/react'
 
+// Types
+import { Card } from './@types/card';
+
 /* 
 Card Front used in Add/Edit Card screens
 */
@@ -21,7 +24,7 @@ const CardFront = ({ toLanguage,
     front,
     handleFront,
     loadingAudio,
-    frontAudio }) => {
+    frontAudio }: Card) => {
     return (
         <Stack
             flexBasis="100%"

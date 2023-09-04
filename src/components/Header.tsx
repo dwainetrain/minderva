@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
 import { Link as ChaLink, Flex, Box } from '@chakra-ui/react'
 import { Divider, useBreakpointValue } from '@chakra-ui/react'
 import { FiMenu, FiX } from 'react-icons/fi'
 
+
+interface Props {
+  children?: ReactNode
+  // any props that come into the component
+}
+
 /* Primary site navigation bar */
 
-const NavbarLink = ({ children, ...props }) => (
+const NavbarLink = ({ children, ...props }: Props) => (
   <Box
     _hover={{
       textDecoration: "none", borderBottom: "1px solid #f4fff4",
@@ -42,17 +48,17 @@ const Header = () => {
     >
 
       <Box fontWeight="extrabold">
-          <ChaLink as={Link} to='/' color="white"
-            _hover={{ textDecoration: "none", color: "white" }}
-            _active={{ color: "white" }}
-            _focus={{ color: "white", textDecoration: "none" }}
-            fontFamily="span"
-            letterSpacing="0.1em"
-            fontSize="lg"
-            lineHeight="0"
-          >
-            Minderva
-          </ChaLink>
+        <ChaLink as={Link} to='/' color="white"
+          _hover={{ textDecoration: "none", color: "white" }}
+          _active={{ color: "white" }}
+          _focus={{ color: "white", textDecoration: "none" }}
+          fontFamily="span"
+          letterSpacing="0.1em"
+          fontSize="lg"
+          lineHeight="0"
+        >
+          Minderva
+        </ChaLink>
       </Box>
 
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>

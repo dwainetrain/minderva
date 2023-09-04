@@ -16,9 +16,12 @@ import {
 } from '@chakra-ui/react'
 import NoCards from './NoCards';
 
+// Types
+import { UserRouteModel } from './@types/card';
+
 /* Basic Dashboard Page, is the root route */
 
-const UserDashboard = ({ cardCollection, cardsLoaded }) => {
+const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
     return (
         <Flex ml={{ sm: 0, md: 24 }}>
             <Helmet>
@@ -90,7 +93,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }) => {
     )
 }
 
-const Dashboard = ({ user, cardCollection, cardsLoaded }) => {
+const Dashboard = ({ user, cardCollection, cardsLoaded }: UserRouteModel) => {
     return (
         <div>
             {user ?

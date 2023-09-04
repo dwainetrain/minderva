@@ -11,20 +11,27 @@ import NotFound from './NotFound'
 import About from './About'
 import Header from './Header'
 
+// Types
+import { UserRouteModel, CardAction, HandleMessage } from './@types/card';
+
 /* Primary routing of app */
 
-const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading, cardsLoaded }) => {
+const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading, cardsLoaded }: UserRouteModel) => {
     const location = useLocation();
 
-    const CardActionsWrapper = ({ mode }) => {
+    const CardActionsWrapper = ({ mode }: CardAction) => {
         const { id } = useParams();
-        return <AddCard
-            cardId={id}
-            handleMessage={handleMessage}
-            user={user}
-            userLangPrefs={userLangPrefs}
-            mode={mode}
-        />;
+        if (id) {
+            return <AddCard
+                cardId={id}
+                handleMessage={handleMessage as HandleMessage}
+                user={user}
+                userLangPrefs={userLangPrefs}
+                mode={mode}
+            />;
+        } else {
+            console.log("No card id found.")
+        }
     };
 
 
@@ -43,9 +50,9 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
 
                     <Route path="/card-collection" element={<DisplayCards cardCollection={cardCollection} user={user} handleMessage={handleMessage} cardsLoaded={cardsLoaded} />} />
 
-                    <Route path="/edit-card/:id" element={<CardActionsWrapper mode="update" />} />
+                    <Route path="/edit-card/:id" element={<CardActionsWrapper mode="update" user={user} handleMessage={handleMessage as HandleMessage} />} />
 
-                    <Route path="/add-cards" element={<CardActionsWrapper mode="add" />} />
+                    <Route path="/add-cards" element={<CardActionsWrapper mode="add" user={user} handleMessage={handleMessage as HandleMessage} />} />
 
                     <Route path="/user-profile" element={<UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage} />} />
 
