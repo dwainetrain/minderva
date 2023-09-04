@@ -6,9 +6,9 @@ import { FiVolume2 } from "react-icons/fi";
 /* Audio playback component */
 
 
-const PlayAudio = ({ side, source, type = 'link' }) => {
+const PlayAudio = ({ side, source, type = 'link' }: { side: string; source: string; type?: string }) => {
 
-    const playAudio = (side) => {
+    const playAudio = (side: string) => {
         const audioURL = document.getElementsByClassName(side)[0] as HTMLMediaElement;
         // audioURL.playbackRate = 0.5;
         audioURL.play()

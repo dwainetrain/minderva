@@ -10,31 +10,32 @@ import {
     Heading,
     Divider
 } from '@chakra-ui/react'
-import { User } from './@types/card';
+import { UserWithActions as User } from './@types/card';
 
 /* User Profile page, allowing for setting user preferences */
 
 const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
 
-    const [fromLanguage, setFromLanguage] = useState('');
-    const [toLanguage, setToLanguage] = useState('');
+    const [fromLanguage, setFromLanguage] = useState<string | undefined>('');
+    const [toLanguage, setToLanguage] = useState<string | undefined>('');
 
     // Load Lang Prefs
     // Set default preferences
     useEffect(() => {
-        setFromLanguage(userLangPrefs.originCode)
-        setToLanguage(userLangPrefs.targetCode)
+        setFromLanguage(userLangPrefs?.originCode)
+        setToLanguage(userLangPrefs?.targetCode)
     }, [userLangPrefs])
 
-    const handleFromLanguageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const languageCode = await e.target.value
+    // TODO: FROM and TO are taking the event of the change from select language
+    const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const languageCode = e.target.value
         setFromLanguage(languageCode)
         update('origin', languageCode)
     }
 
-    const handleToLanguageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const languageCode = await e.target.value
-        setToLanguage(await languageCode)
+    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const languageCode = e.target.value
+        setToLanguage(languageCode)
         update('target', languageCode)
     }
 
@@ -42,7 +43,7 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
         const languages = pref === 'target' ? { targetCode: code } : { originCode: code }
         const cardRef = firestore.doc(`users/${uid}/profile/${uid}`);
         await cardRef.update(languages);
-        handleMessage('languageUpdate', 'success')
+        if (handleMessage) handleMessage('languageUpdate', 'success');
     }
 
     return (
@@ -66,7 +67,7 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
             {!toLanguage ? <Text>Loading Languages</Text> :
                 <SelectLanguage
                     handleLanguageSelect={handleFromLanguageSelect}
-                    selected={fromLanguage} keyTo="text" />}
+                    selected={fromLanguage!} keyTo="text" />}
 
             <Text>Default Target Language:</Text>
             {!toLanguage ? <Text>Loading Languages</Text> :

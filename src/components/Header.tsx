@@ -1,19 +1,13 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
-import { Link as ChaLink, Flex, Box } from '@chakra-ui/react'
+import { Link as ChaLink, Flex, Box, BoxProps, forwardRef } from '@chakra-ui/react'
 import { Divider, useBreakpointValue } from '@chakra-ui/react'
 import { FiMenu, FiX } from 'react-icons/fi'
 
-
-interface Props {
-  children?: ReactNode
-  // any props that come into the component
-}
-
 /* Primary site navigation bar */
 
-const NavbarLink = ({ children, ...props }: Props) => (
+const NavbarLink = forwardRef<BoxProps, 'div'>(({ children, ...props }) => (
   <Box
     _hover={{
       textDecoration: "none", borderBottom: "1px solid #f4fff4",
@@ -28,7 +22,7 @@ const NavbarLink = ({ children, ...props }: Props) => (
     px={3}
     {...props}
   >{children}</Box>
-);
+));
 
 const Header = () => {
   const [show, setShow] = useState(false);

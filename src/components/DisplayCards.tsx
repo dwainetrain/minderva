@@ -20,7 +20,7 @@ import {
     Spinner,
     Divider
 } from '@chakra-ui/react'
-import { HandleMessage, UserRouteModel } from './@types/card';
+import { HandleMessage, UserRouteModel, UserWithActions } from './@types/card';
 
 /* Grid of cards that are in user's collection */
 
@@ -117,7 +117,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                                             <Button as="a" size="sm" variant="outline" id={card.id}>Edit</Button>
                                         </Link>
 
-                                        <DeleteCard mode="delete" user={user} cardId={card.id} handleMessage={handleMessage as HandleMessage} />
+                                        <DeleteCard mode="delete" user={user as UserWithActions} cardId={card.id} handleMessage={handleMessage as HandleMessage} />
 
                                     </Flex>
                                     <Text fontSize="xs" color="grayGreen.800">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>

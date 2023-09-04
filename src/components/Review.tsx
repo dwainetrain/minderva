@@ -4,10 +4,11 @@ import { Box, Flex, Divider, Spinner } from '@chakra-ui/react'
 import NoCards from './NoCards'
 import { Helmet } from 'react-helmet-async'
 import ReviewCount from './ReviewCount'
+import { UserRouteModel } from './@types/card'
 
 /* Review page, shows quote and cards up for review. More to be added in the future. */
 
-const Review = ({ cardCollection, cardsLoaded }) => {
+const Review = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
     return (
         <Flex ml={{ sm: 8, md: 20 }} flexDirection={{ sm: "column", md: "row" }} flex="wrap" alignItems={{ sm: "center", md: "initial" }} mt={{ sm: 0, md: 4 }}>
             <Helmet>
@@ -20,7 +21,7 @@ const Review = ({ cardCollection, cardsLoaded }) => {
                             <Spinner color="tomato" />
                         </Box>
                     </Flex>
-                    : cardCollection.length === 0 ?
+                    : cardCollection?.length === 0 ?
                         <Box ml={8}>
                             <NoCards />
                         </Box>

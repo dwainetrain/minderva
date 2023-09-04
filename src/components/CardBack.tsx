@@ -61,7 +61,7 @@ const CardBack = ({
             </Box>
             {!toLanguage ? <Text>Loading language</Text> :
                 <SelectLanguage
-                    handleLanguageSelect={handleToLanguageSelect}
+                    handleLanguageSelect={handleToLanguageSelect!}
                     selected={toLanguage} keyTo="target" />}
 
             {manualEntry === true ?
@@ -87,9 +87,8 @@ const CardBack = ({
                     </Box>
                     :
                     <Box ml={3} mt={1}>
-                        <PlayAudio type="button" side='back-audio' source={backAudio} />
+                        <PlayAudio type="button" side='back-audio' source={backAudio!} />
                     </Box>
-
             }
 
             <Divider my={6} />

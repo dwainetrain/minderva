@@ -12,7 +12,7 @@ import About from './About'
 import Header from './Header'
 
 // Types
-import { UserRouteModel, CardAction, HandleMessage } from './@types/card';
+import { UserRouteModel, CardAction, HandleMessage, UserWithActions as User } from './@types/card';
 
 /* Primary routing of app */
 
@@ -25,7 +25,7 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
             return <AddCard
                 cardId={id}
                 handleMessage={handleMessage as HandleMessage}
-                user={user}
+                user={user as User}
                 userLangPrefs={userLangPrefs}
                 mode={mode}
             />;
@@ -50,9 +50,9 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
 
                     <Route path="/card-collection" element={<DisplayCards cardCollection={cardCollection} user={user} handleMessage={handleMessage} cardsLoaded={cardsLoaded} />} />
 
-                    <Route path="/edit-card/:id" element={<CardActionsWrapper mode="update" user={user} handleMessage={handleMessage as HandleMessage} />} />
+                    <Route path="/edit-card/:id" element={<CardActionsWrapper mode="update" user={user as User} handleMessage={handleMessage as HandleMessage} />} />
 
-                    <Route path="/add-cards" element={<CardActionsWrapper mode="add" user={user} handleMessage={handleMessage as HandleMessage} />} />
+                    <Route path="/add-cards" element={<CardActionsWrapper mode="add" user={user as User} handleMessage={handleMessage as HandleMessage} />} />
 
                     <Route path="/user-profile" element={<UserProfile user={user} userLangPrefs={userLangPrefs} handleMessage={handleMessage} />} />
 

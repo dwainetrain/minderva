@@ -12,10 +12,13 @@ import {
     Text,
     Spinner
 } from '@chakra-ui/react'
+import { UserRouteModel } from './@types/card';
 
 /* Logic and layout for card Quiz, a little bloated at the moment */
 
-const Quiz = ({ cardCollection }) => {
+interface Props { children: React.ReactNode };
+
+const Quiz = ({ cardCollection }: UserRouteModel) => {
 
     const [quizCards, setQuizCards] = useState<any[] | string>(''); // TODO: Is this the best way to type this?
     const [cardNumber, setCardNumber] = useState(0);
@@ -27,7 +30,7 @@ const Quiz = ({ cardCollection }) => {
     const history = useNavigate();
 
     // Function to shuffle the cards
-    const shuffleCards = (cards) => cards
+    const shuffleCards = (cards: any[]) => cards
         .map((a) => ({ sort: Math.random(), value: a }))
         .sort((a, b) => a.sort - b.sort)
         .map((a) => a.value)
@@ -35,8 +38,8 @@ const Quiz = ({ cardCollection }) => {
     // On loading the quiz, create a quiz object that shuffles the cards by an order number
     useEffect(() => {
         const quizData = () => {
-            const cards = cardCollection.map((card, index) => { return { 'order': index, ...card } })
-            return shuffleCards(cards)
+            const cards = cardCollection?.map((card, index) => { return { 'order': index, ...card } })
+            return shuffleCards(cards!)
         }
 
         setQuizCards(quizData())
@@ -55,7 +58,7 @@ const Quiz = ({ cardCollection }) => {
     }
 
     // Card count display
-    const CardCount = ({ cardNumber, totalCards }) => {
+    const CardCount = ({ cardNumber, totalCards }: { cardNumber: number; totalCards: number }) => {
         if (cardNumber + 1 > totalCards) {
             return <Text>End of Deck</Text>
         } else {
@@ -68,7 +71,7 @@ const Quiz = ({ cardCollection }) => {
     }
 
     // Parent style for card
-    const QuizCard = ({ children, ...props }) => (
+    const QuizCard = ({ children, ...props }: Props) => (
         <Box
             px={20}
             py={20}
@@ -87,7 +90,7 @@ const Quiz = ({ cardCollection }) => {
     )
 
     // Parent style for card text
-    const CardText = ({ children, ...props }) => (
+    const CardText = ({ children, ...props }: Props) => (
         <Text
             fontFamily="span"
             fontSize="4xl"

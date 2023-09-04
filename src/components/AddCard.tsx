@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react'
 
 // Types
-import { CardAction, Card } from './@types/card'
+import { CardAction } from './@types/card'
 
 /* 
 Complex component that handles both adding and editing cards

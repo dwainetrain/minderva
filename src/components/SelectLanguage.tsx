@@ -4,11 +4,11 @@ import { Select } from '@chakra-ui/react'
 
 /* Language selection using imported handmade language map */
 
-const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }) => {
+const SelectLanguage = ({ handleLanguageSelect, selected, keyTo }: { handleLanguageSelect: (e: React.ChangeEvent<HTMLInputElement>) => void; selected: string; keyTo: string }) => {
 
     return (
         <div>
-            <Select marginBottom={3} size="lg" variant="outline" onChange={handleLanguageSelect} value={selected}>
+            <Select marginBottom={3} size="lg" variant="outline" onChange={() => handleLanguageSelect} value={selected}>
                 {Object.keys(speechLanguageMap).map(lang => <option value={lang} key={lang + keyTo}>{speechLanguageMap[lang].language}</option>)}
             </Select>
         </div>

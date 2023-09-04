@@ -2,10 +2,11 @@ import React from 'react'
 
 import { NavLink } from 'react-router-dom';
 import { Button, Box, Flex, Heading } from '@chakra-ui/react'
+import { UserRouteModel } from './@types/card';
 
 /* If cards are in the database, shows number of cards up for review */
 
-const ReviewCount = ({ cardCollection }) => {
+const ReviewCount = ({ cardCollection }: UserRouteModel) => {
     return (
         <Flex mx={{ sm: 0, md: 12, lg: 16 }} flexDirection="column" justifyContent="space-around" alignItems="center" minH="16rem" minW={{ sm: 48, md: 'sm' }} maxW="md" >
             <Box textAlign="center" >
@@ -14,7 +15,7 @@ const ReviewCount = ({ cardCollection }) => {
                 </Box>
                 <Flex justifyContent="center">
                     <Heading fontSize="8rem" fontFamily="span" fontWeight="100" lineHeight="8rem"
-                    >{cardCollection.length}</Heading>
+                    >{cardCollection?.length}</Heading>
                 </Flex>
                 <Box
                     fontWeight="semibold"

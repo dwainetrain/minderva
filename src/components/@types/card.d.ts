@@ -3,7 +3,7 @@ import React from "react";
 import {User} from "firebase/auth";
 
 type UserRouteModel = {
-  user: UserWithActions;
+  user?: UserWithActions;
   cardCollection?: any[];
   handleMessage?: HandleMessage;
   userLangPrefs?: UserLangPrefs;

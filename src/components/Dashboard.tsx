@@ -38,7 +38,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                                 <Spinner color="tomato" />
                             </Box>
                         </Flex>
-                        : cardCollection.length === 0 ?
+                        : cardCollection?.length === 0 ?
                             <NoCards />
                             :
                             <ReviewCount cardCollection={cardCollection} />
@@ -97,7 +97,7 @@ const Dashboard = ({ user, cardCollection, cardsLoaded }: UserRouteModel) => {
     return (
         <div>
             {user ?
-                <UserDashboard cardCollection={cardCollection} cardsLoaded={cardsLoaded} />
+                <UserDashboard user={user} cardCollection={cardCollection} cardsLoaded={cardsLoaded} />
                 :
                 <LogIn />}
         </div>

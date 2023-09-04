@@ -45,7 +45,7 @@ const CardFront = ({ toLanguage,
             </Box>
 
             {!toLanguage ? <Text>Loading language</Text> : <SelectLanguage
-                handleLanguageSelect={handleFromLanguageSelect}
+                handleLanguageSelect={handleFromLanguageSelect!}
                 selected={fromLanguage} keyTo="text" />}
 
             <Input
@@ -68,7 +68,7 @@ const CardFront = ({ toLanguage,
                     </Box>
                     :
                     <Box ml={3}>
-                        <PlayAudio type="button" side='front-audio' source={frontAudio} />
+                        <PlayAudio type="button" side='front-audio' source={frontAudio!} />
                     </Box>
 
             }
