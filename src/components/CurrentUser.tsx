@@ -27,13 +27,13 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
     }, [userLangPrefs])
 
     // TODO: FROM and TO are taking the event of the change from select language
-    const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const languageCode = e.target.value
         setFromLanguage(languageCode)
         update('origin', languageCode)
     }
 
-    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const languageCode = e.target.value
         setToLanguage(languageCode)
         update('target', languageCode)

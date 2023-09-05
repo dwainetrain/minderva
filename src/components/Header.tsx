@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
 import { Link as ChaLink, Flex, Box, BoxProps, forwardRef } from '@chakra-ui/react'
@@ -7,26 +7,31 @@ import { FiMenu, FiX } from 'react-icons/fi'
 
 /* Primary site navigation bar */
 
-const NavbarLink = forwardRef<BoxProps, 'div'>(({ children, ...props }) => (
-  <Box
-    _hover={{
-      textDecoration: "none", borderBottom: "1px solid #f4fff4",
-      transition: "border-bottom 0.5s ease-in-out", color: "white"
-    }}
-    _active={{ color: "white" }}
-    _focus={{ color: "white", textDecoration: "none" }}
-    as="a"
-    color="white"
-    fontWeight="semibold"
-    letterSpacing="wide"
-    px={3}
-    {...props}
-  >{children}</Box>
-));
+
+const NavbarLink = forwardRef<BoxProps, 'div'>(({ children, ...props }, ref) => {
+
+  return (
+    <Box
+      _hover={{
+        textDecoration: "none", borderBottom: "1px solid #f4fff4",
+        transition: "border-bottom 0.5s ease-in-out", color: "white"
+      }}
+      _active={{ color: "white" }}
+      _focus={{ color: "white", textDecoration: "none" }}
+      as="a"
+      color="white"
+      fontWeight="semibold"
+      letterSpacing="wide"
+      px={3}
+      {...props}
+    >{children}</Box>
+  )
+});
 
 const Header = () => {
   const [show, setShow] = useState(false);
   const handleToggle = () => setShow(!show);
+  const ref = useRef(null);
 
   return (
     <Flex
@@ -69,7 +74,7 @@ const Header = () => {
         flexGrow={1}
       >
         <Box my={{ sm: 3, md: 0 }}>
-          <NavbarLink as={NavLink} px={2} to="/review" key="review">Review</NavbarLink>
+          <NavbarLink as={NavLink} px={2} ref={ref} to="/review" key="review">Review</NavbarLink>
         </Box>
         <Divider orientation="vertical" />
         <Box my={{ sm: 3, md: 0 }}>

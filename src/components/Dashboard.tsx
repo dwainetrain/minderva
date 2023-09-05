@@ -51,7 +51,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                         <Box mb={6}>
 
                             <Link to="/add-cards">
-                                <Button as="a" size="sm" mb={3} variant="outline">Add Cards</Button>
+                                <Button size="sm" mb={3} variant="outline">Add Cards</Button>
                             </Link>
                             <Text>
                                 Tranaslate words or phrases and add them to your collection.
@@ -61,7 +61,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                         <Box mb={6}>
                             <Box>
                                 <Link to="/card-collection">
-                                    <Button as="a" size="sm" mb={3} variant="outline" flexShrink={1}>Card Collection</Button>
+                                    <Button size="sm" mb={3} variant="outline" flexShrink={1}>Card Collection</Button>
                                 </Link>
                             </Box>
                             <Box>
@@ -71,7 +71,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                         <Box>
                             <Box>
                                 <Link to="/user-profile">
-                                    <Button as="a" mb={3} size="sm" variant="outline">User Profile</Button>
+                                    <Button mb={3} size="sm" variant="outline">User Profile</Button>
                                 </Link>
                             </Box>
                             <Box>
@@ -86,7 +86,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                     <Divider mb={4} mr={32} />
                     <Text>Minderva is a cobblestone in the cobbled pathway of language study.</Text>
                     <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
-                    <Text>I hope it helps you get to where you’re going.</Text>
+                    <Text>I hope it helps you get to where you're going.</Text>
                 </Stack>
             </Box>
         </Flex>

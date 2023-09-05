@@ -21,7 +21,17 @@ const UserRoute = ({ user, cardCollection, handleMessage, userLangPrefs, loading
 
     const CardActionsWrapper = ({ mode }: CardAction) => {
         const { id } = useParams();
-        if (id) {
+        if (mode === 'add') {
+            return <AddCard
+                cardId={id}
+                handleMessage={handleMessage as HandleMessage}
+                user={user as User}
+                userLangPrefs={userLangPrefs}
+                mode={mode}
+            />;
+        }
+
+        if (id && mode === 'update') {
             return <AddCard
                 cardId={id}
                 handleMessage={handleMessage as HandleMessage}

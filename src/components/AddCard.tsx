@@ -23,7 +23,7 @@ import {
 } from '@chakra-ui/react'
 
 // Types
-import { CardAction } from './@types/card'
+import { CardAction, UserLangPrefs } from './@types/card'
 
 /* 
 Complex component that handles both adding and editing cards
@@ -34,9 +34,7 @@ The incoming mode prop is used to decide if the component adds or updates
 
 */
 
-// TODO: Move these type definitions to types folder...
-
-const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: CardAction) => {
+const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardAction) => {
     const navigate = useNavigate();
 
     const [currentMode, setCurrentMode] = useState('add')
@@ -63,17 +61,18 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: CardActio
     // Audio States
     const [loadingAudio, setLoadingAudio] = useState('')
 
+
+
     // If mode is 'add' then load user prefs, if mode is update then load card data
     useEffect(() => {
         setCurrentMode(mode)
-        if (userLangPrefs && currentMode === 'add') {
+        if (userLangPrefs?.targetCode && userLangPrefs?.originCode && currentMode === 'add') {
             setToLanguage(userLangPrefs.targetCode)
             setFromLanguage(userLangPrefs.originCode)
             setSpeechLanguage(speechLanguageMap[userLangPrefs.targetCode].ttsCode)
             setFrontSpeechLanguage(speechLanguageMap[userLangPrefs.originCode].ttsCode)
             setOriginLanguageName(speechLanguageMap[userLangPrefs.originCode].language)
             setTargetLanguageName(speechLanguageMap[userLangPrefs.targetCode].language)
-
         } else if (userLangPrefs && currentMode === 'update') {
             const fetchData = async () => {
                 const response = await firestore.doc(`users/${user.uid}/cards/${cardId}`).get();
@@ -161,14 +160,16 @@ const AddCard = ({ handleMessage, userLangPrefs, mode, user, cardId }: CardActio
         navigate('/card-collection');
     }
 
-    const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFromLanguageSelect = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(`**** E: ` + e.target.value)
         const languageCode = e.target.value
         setFromLanguage(languageCode)
         setOriginLanguageName(speechLanguageMap[languageCode].language)
         setFrontSpeechLanguage(speechLanguageMap[languageCode].ttsCode)
+        console.log(fromLanguage)
     }
 
-    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleToLanguageSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const languageCode = e.target.value
         setToLanguage(languageCode)
         setTargetLanguageName(speechLanguageMap[languageCode].language)

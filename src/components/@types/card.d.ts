@@ -35,7 +35,7 @@ type HandleMessage = (message: string, status?: AlertStatus) => void;
 export interface Card {
   fromLanguage: string;
   toLanguage: string;
-  handleToLanguageSelect?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleToLanguageSelect?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   handleManualGenerateAudio?: React.MouseEventHandler<HTMLButtonElement>;
   loadingTranslation?: boolean;
   loadingAudio: string;
@@ -44,7 +44,7 @@ export interface Card {
   ) => void;
   handleGenerateChecked?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   manual?: boolean;
-  handleFromLanguageSelect?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFromLanguageSelect?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   front: string;
   handleFront?: React.ChangeEventHandler<HTMLInputElement>;
   frontAudio?: string;
