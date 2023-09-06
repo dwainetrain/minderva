@@ -1,4 +1,3 @@
-import React from 'react';
 import { signOut } from '../firebase'
 
 import { Button } from '@chakra-ui/react'
