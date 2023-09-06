@@ -10,12 +10,12 @@ import {
     Heading,
     Divider
 } from '@chakra-ui/react'
-import { UserWithActions as User } from './@types/card';
+import { UserInfo as User, UserLangPrefs, HandleMessage } from './@types/card';
 
 /* User Profile page, allowing for setting user preferences */
 
-const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
-
+const CurrentUser = ({ user, userLangPrefs, handleMessage }: { user: User, userLangPrefs: UserLangPrefs, handleMessage: HandleMessage }) => {
+    console.log('UID FROM CURRENT USER: ' + user.uid)
     const [fromLanguage, setFromLanguage] = useState<string | undefined>('');
     const [toLanguage, setToLanguage] = useState<string | undefined>('');
 
@@ -26,7 +26,6 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
         setToLanguage(userLangPrefs?.targetCode)
     }, [userLangPrefs])
 
-    // TODO: FROM and TO are taking the event of the change from select language
     const handleFromLanguageSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const languageCode = e.target.value
         setFromLanguage(languageCode)
@@ -40,8 +39,9 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
     }
 
     const update = async (pref: string, code: string) => {
+        console.log(`UID: ` + user.uid)
         const languages = pref === 'target' ? { targetCode: code } : { originCode: code }
-        const cardRef = firestore.doc(`users/${uid}/profile/${uid}`);
+        const cardRef = firestore.doc(`users/${user.uid}/profile/${user.uid}`);
         await cardRef.update(languages);
         if (handleMessage) handleMessage('languageUpdate', 'success');
     }
@@ -60,7 +60,7 @@ const CurrentUser = ({ email, userLangPrefs, handleMessage, uid }: User) => {
             <Divider />
 
             <Text>Google email for this account: </Text>
-            <Text fontStyle="italic">{email}</Text>
+            <Text fontStyle="italic">{user.email}</Text>
 
             <Divider />
             <Text>Default Origin Language: </Text>

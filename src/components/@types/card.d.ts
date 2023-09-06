@@ -1,9 +1,10 @@
 import {AlertStatus} from "@chakra-ui/react";
 import React from "react";
-import {User} from "firebase/auth";
+import {UserInfo} from "firebase/auth";
+export {UserInfo} from "firebase/auth";
 
-type UserRouteModel = {
-  user?: UserWithActions;
+export type UserRouteModel = {
+  user?: UserInfo;
   cardCollection?: any[];
   handleMessage?: HandleMessage;
   userLangPrefs?: UserLangPrefs;
@@ -24,13 +25,19 @@ export interface UserLangPrefs {
   originCode: string;
 }
 
-export interface UserWithActions extends User {
-  uid: string;
+declare module "firebase/auth" {
+  export interface UserInfo {
+    userLangPrefs?: UserLangPrefs;
+    handleMessage?: HandleMessage;
+  }
+}
+
+export interface UserWithActions extends UserInfo {
   userLangPrefs?: UserLangPrefs;
   handleMessage?: HandleMessage;
 }
 
-type HandleMessage = (message: string, status?: AlertStatus) => void;
+export type HandleMessage = (message: string, status?: AlertStatus) => void;
 
 export interface Card {
   fromLanguage: string;
