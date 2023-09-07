@@ -1,4 +1,4 @@
-import { theme } from '@chakra-ui/react'
+import { theme } from '@chakra-ui/react';
 
 
 const customBreakpoints = ["360px", "900px", "1024px", "1366px"];
@@ -65,6 +65,36 @@ const customTheme = {
     extrabold: 900,
   },
 
+  // TODO: Find the correct property names for these
+  styles: {
+    global: {
+      'html': {
+        height: '100%',
+      },
+      'body': {
+        position: 'relative',
+        minHeight: '100%',
+        paddingBottom: '50px'
+      },
+      'html, body': {
+        bg: '#f4fff3',
+      },
+      'footer': {
+        position: 'absolute',
+        bottom: '0',
+        width: '100%',
+        paddingTop: '1rem',
+        paddingBottom: '1rem',
+        marginBottom: '0',
+        color: '#777777'
+      },
+      '.active': {
+        borderBottom: '1px solid #f4fff4',
+        transition: 'border-bottom 0.5s ease-in-out',
+      }
+
+    },
+  },
 };
 
 export default customTheme;
