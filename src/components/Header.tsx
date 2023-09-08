@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
-import { Link as ChaLink, Flex, Box, BoxProps, forwardRef } from '@chakra-ui/react'
-import { Divider, useBreakpointValue } from '@chakra-ui/react'
+import { Link as ChaLink, Flex, Box, BoxProps, forwardRef, Divider, useBreakpointValue, HStack, StackDivider } from '@chakra-ui/react'
 import { FiMenu, FiX } from 'react-icons/fi'
 
 /* Primary site navigation bar */
@@ -40,7 +39,7 @@ const Header = () => {
       as="nav"
       px={{ sm: 10, md: 24 }}
       py={3}
-      justifyContent="space-between"
+      justifyContent="flex-start"
       alignItems="baseline"
       wrap="wrap"
       color="white"
@@ -65,43 +64,36 @@ const Header = () => {
         {!show ? <Box as={FiMenu} size={4} /> : <Box as={FiX} size={4} />}
       </Box>
 
-      <Box
-        display={{ sm: show ? "flex" : "none", md: "flex" }}
-        flexDirection={{ sm: "column", md: "row" }}
-        width={{ sm: "full", md: "auto" }}
-        ml={{ sm: "-0.5rem", md: 36 }}
-        mt={{ base: 4, md: 0 }}
-        flexGrow={1}
-      >
+      <HStack align='baseline' justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor='gray.200' />} spacing={2} ml={12}>
         <Box my={{ sm: 3, md: 0 }}>
           <NavbarLink as={NavLink} px={2} ref={ref} to="/review" key="review">Review</NavbarLink>
         </Box>
-        <Divider orientation="vertical" />
         <Box my={{ sm: 3, md: 0 }}>
           <NavbarLink as={NavLink} px={2} to="/add-cards" key="add">Add Cards</NavbarLink>
         </Box>
-        <Divider orientation="vertical" />
         <Box my={{ sm: 3, md: 0 }}>
           <NavbarLink as={NavLink} px={2} to="/card-collection" key="collection">Card Collection</NavbarLink>
         </Box>
-      </Box>
+      </HStack>
 
 
-      <Box
-        display={{ sm: show ? "block" : "none", md: "flex" }}
-        mt={{ base: 4, md: 0 }}
-        ml={{ sm: "-0.5rem", md: 0 }}
-      >
+
+      <HStack divider={<StackDivider borderColor='gray.200' />}
+        spacing={2}
+        align='stretch'
+        ml="auto" >
         <Box ml="-0.25rem">
           <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
         </Box>
-        {!show ? <Divider orientation='vertical' /> : null}
-        <Divider my={3} variant={useBreakpointValue({ sm: 'horizontal', md: 'vertical' })} />
+        {/* {!show ? <Divider orientation='vertical' /> : null} */}
+        {/* <Divider my={3} variant={useBreakpointValue({ sm: 'horizontal', md: 'vertical' })} /> */}
         <Box>
           <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
         </Box>
-      </Box>
-    </Flex>
+      </HStack>
+
+
+    </Flex >
   );
 };
 

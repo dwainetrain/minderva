@@ -7,9 +7,10 @@ import { HelmetProvider } from 'react-helmet-async';
 // Chakra Styling
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 import customTheme from './components/theme';
-
 const domNode = document.getElementById('root')!;
 const root = createRoot(domNode);
+
+
 
 root.render(
   <React.StrictMode>

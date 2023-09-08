@@ -12,6 +12,7 @@ import { collectIdsAndDocs } from '../utilities';
 /// Styling
 import './App.css';
 import { Box, useToast, AlertStatus } from '@chakra-ui/react';
+import '@fontsource/source-sans-pro';
 // import { ToastStatus, ToastMessages } from './@types/toast';
 
 // Constants

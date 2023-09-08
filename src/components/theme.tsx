@@ -1,5 +1,5 @@
 import { theme } from '@chakra-ui/react';
-
+import { extendTheme } from '@chakra-ui/react'
 
 const customBreakpoints = ["360px", "900px", "1024px", "1366px"];
 
@@ -19,7 +19,7 @@ const breakpoints = {
 // }
 
 // Theme Options
-const customTheme = {
+const customTheme = extendTheme({
   ...theme,
   breakpoints,
   colors: {
@@ -65,7 +65,6 @@ const customTheme = {
     extrabold: 900,
   },
 
-  // TODO: Find the correct property names for these
   styles: {
     global: {
       'html': {
@@ -74,7 +73,17 @@ const customTheme = {
       'body': {
         position: 'relative',
         minHeight: '100%',
-        paddingBottom: '50px'
+        paddingBottom: "3rem",
+        marginBottom: "5rem",
+        WebkitFontSmoothing: "antialiased",
+        MozOsxFontSmoothing: "grayscale",
+        backgroundColor: "#f4fff3",
+        color: "#1a222f",
+        lineHeight: "1.4rem",
+        // height: "100%", // Uncomment this if you wish to use it
+        textRendering: "optimizeLegibility",
+        fontSmoothing: "antialiased",
+        fontKerning: "normal"
       },
       'html, body': {
         bg: '#f4fff3',
@@ -91,10 +100,22 @@ const customTheme = {
       '.active': {
         borderBottom: '1px solid #f4fff4',
         transition: 'border-bottom 0.5s ease-in-out',
-      }
-
+      },
+      'hr': {
+        borderWidth: "0px 0px 0px 0.0625rem",
+        borderTopStyle: "initial",
+        borderRightStyle: "initial",
+        borderBottomStyle: "initial",
+        borderImage: "initial",
+        opacity: 0.6,
+        borderLeftStyle: "solid",
+        height: "auto",
+        marginLeft: "0.5rem",
+        marginRight: "0.5rem",
+        borderColor: "inherit"
+      },
     },
   },
-};
+});
 
 export default customTheme;
