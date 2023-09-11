@@ -19,7 +19,9 @@ import {
     Heading,
     Box,
     IconButton,
-    Tooltip
+    Tooltip,
+    Grid,
+    GridItem
 } from '@chakra-ui/react'
 
 // Types
@@ -299,48 +301,53 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
             <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
 
 
-            <Flex justifyContent="space-between" flexDirection={{ sm: "column", md: "row" }} alignItems={{ sm: "center", md: "flex-start" }}>
+            <Grid templateColumns='repeat(5, 1fr)' gap={6}>
 
-                <CardFront
-                    toLanguage={toLanguage}
-                    loadingAudio={loadingAudio}
-                    frontAudio={frontAudio}
-                    handleFromLanguageSelect={handleFromLanguageSelect}
-                    fromLanguage={fromLanguage}
-                    front={front}
-                    handleFront={handleFront} />
+                <GridItem>
+                    <CardFront
+                        toLanguage={toLanguage}
+                        loadingAudio={loadingAudio}
+                        frontAudio={frontAudio}
+                        handleFromLanguageSelect={handleFromLanguageSelect}
+                        fromLanguage={fromLanguage}
+                        front={front}
+                        handleFront={handleFront} />
+                </GridItem>
 
-                <Tooltip aria-label="Swap Sides" label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
-                    <IconButton
-                        alignSelf="center"
-                        variant="link"
-                        colorScheme="blackAlpha"
-                        aria-label="Swap Card Sides"
-                        fontSize="36px"
-                        size="md"
+                <GridItem>
+                    <Tooltip aria-label="Swap Sides" label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
+                        <IconButton
+                            alignSelf="center"
+                            variant="link"
+                            colorScheme="blackAlpha"
+                            aria-label="Swap Card Sides"
+                            fontSize="36px"
+                            size="md"
+                            icon={<AiOutlineSwap />}
+                            onClick={handleSwap}
+                            maxH={16}
+                        />
+                    </Tooltip>
+                </GridItem>
 
-                        icon={<AiOutlineSwap />}
-                        onClick={handleSwap}
-                        maxH={16}
+                <GridItem>
+                    <CardBack
+                        fromLanguage={fromLanguage}
+                        loadingAudio={loadingAudio}
+                        backAudio={backAudio}
+                        handleToLanguageSelect={handleToLanguageSelect}
+                        toLanguage={toLanguage}
+                        back={back}
+                        handleBack={handleBack}
+                        front={front}
+                        handleTranslate={handleTranslate}
+                        handleGenerateChecked={handleGenerateChecked}
+                        handleManualGenerateAudio={handleManualGenerateAudio}
+                        loadingTranslation={loadingTranslation}
+                        manual={mode === 'update' ? true : false}
                     />
-                </Tooltip>
-
-                <CardBack
-                    fromLanguage={fromLanguage}
-                    loadingAudio={loadingAudio}
-                    backAudio={backAudio}
-                    handleToLanguageSelect={handleToLanguageSelect}
-                    toLanguage={toLanguage}
-                    back={back}
-                    handleBack={handleBack}
-                    front={front}
-                    handleTranslate={handleTranslate}
-                    handleGenerateChecked={handleGenerateChecked}
-                    handleManualGenerateAudio={handleManualGenerateAudio}
-                    loadingTranslation={loadingTranslation}
-                    manual={mode === 'update' ? true : false}
-                />
-            </Flex>
+                </GridItem>
+            </Grid>
 
             <Flex justifyContent="center">
                 <Flex width="100%" justifyContent={{ sm: "center", md: "flex-end" }} mb={5}>
@@ -363,7 +370,7 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
                         :
                         <Box display="flex" justifyContent="space-between" alignItems="center">
                             <Link to="/card-collection" >
-                                <Button as="a" variant="link" mr={10} color="grayGreen.800">Cancel</Button>
+                                <Button variant="link" mr={10} color="grayGreen.800">Cancel</Button>
                             </Link>
                             <Button colorScheme="whatsapp" onClick={update}>
                                 Update Card

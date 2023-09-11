@@ -18,8 +18,10 @@ import {
     Box,
     Button,
     Spinner,
-    Divider
-} from '@chakra-ui/react'
+    Divider,
+
+} from '@chakra-ui/react';
+import { PhoneIcon, Search2Icon } from '@chakra-ui/icons'
 import { HandleMessage, UserRouteModel, UserWithActions } from './@types/card';
 
 /* Grid of cards that are in user's collection */
@@ -54,7 +56,6 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
 
                 const totalResults = [...frontResults, ...backResults]
 
-                console.log(`TOTAL RESULTS: ${JSON.stringify(totalResults[0])}`);
                 setSearchResults([...new Set(totalResults)])
             }
 
@@ -72,9 +73,13 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                 <Helmet>
                     <title>Minderva | Card Collection</title>
                 </Helmet>
-                <Flex justifyContent="space-between" alignItems="flex-end">
-                    <InputGroup>
-                        <InputLeftElement children={<Icon name="search" color="gray.300" />} />
+                <Flex justifyContent="space-between" alignItems="center">
+
+
+                    <InputGroup width={'auto'} bgColor={'white'} >
+                        <InputLeftElement pointerEvents='none' >
+                            <Search2Icon color="gray.300" />
+                        </InputLeftElement>
                         <Input type="search" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search" />
                     </InputGroup>
                     <Text>Showing {searchResults.length} of {cardCollection?.length} total cards</Text>
@@ -113,8 +118,8 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
 
                                     <Flex justifyContent="space-between" py={3}>
 
-                                        <Link to={`/edit-card/${card.id}`} {...user}>
-                                            <Button as="a" size="sm" variant="outline" id={card.id}>Edit</Button>
+                                        <Link to={`/edit-card/${card.id}`} >
+                                            <Button size="sm" variant="outline" id={card.id}>Edit</Button>
                                         </Link>
 
                                         <DeleteCard mode="delete" user={user as UserWithActions} cardId={card.id} handleMessage={handleMessage as HandleMessage} />

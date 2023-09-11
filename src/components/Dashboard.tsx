@@ -12,7 +12,9 @@ import {
     Button,
     Text,
     Spinner,
-    Stack
+    Stack,
+    HStack,
+    StackDivider
 } from '@chakra-ui/react'
 import NoCards from './NoCards';
 
@@ -31,7 +33,8 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                 <Box ml={{ sm: 10, md: 0 }}>
                     <Quote />
                 </Box>
-                <Flex flexDirection={{ sm: "column", md: "row" }} flex="wrap" alignItems={{ sm: "center", md: "initial" }}>
+                <HStack align='center' justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor='gray.200' />} >
+
                     {!cardsLoaded ?
                         <Flex justifyContent="center" alignItems="center" mx={{ sm: 10, md: 16 }}>
                             <Box>
@@ -43,8 +46,6 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                             :
                             <ReviewCount cardCollection={cardCollection} />
                     }
-
-                    <Divider orientation='vertical' borderColor={{ sm: "grayGreen.200" }} display={{ sm: "none", md: 'initial' }} />
 
                     <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{ sm: 10, md: 12, lg: 16 }} px={{ sm: 6 }} borderWidth={{ sm: "1px", md: 0 }}>
                         <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
@@ -78,9 +79,8 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                                 <Text>View your profile and edit default language preferences.</Text>
                             </Box>
                         </Box>
-
                     </Flex>
-                </Flex>
+                </HStack>
 
                 <Stack mt={5} mb={10} ml={{ sm: 10, md: 0 }} spacing={4}>
                     <Divider mb={4} mr={32} />
@@ -89,7 +89,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                     <Text>I hope it helps you get to where you're going.</Text>
                 </Stack>
             </Box>
-        </Flex>
+        </Flex >
     )
 }
 

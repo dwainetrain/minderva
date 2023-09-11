@@ -60,8 +60,6 @@ function App() {
       .collection('profile')
       .onSnapshot(snapshot => {
         const entries = snapshot.docs.map(collectIdsAndDocs)
-        console.log(`****ENTRIES ${JSON.stringify(entries)}`)
-        // setUserLanguagePreferences({ targetCode: entries[0].targetCode, originCode: entries[0].originCode })
         window.localStorage.setItem('USER_LANGUAGE_PREF', JSON.stringify({ targetCode: entries[0].targetCode, originCode: entries[0].originCode }));
 
         const data = window.localStorage.getItem('USER_LANGUAGE_PREF');

@@ -36,7 +36,7 @@ const CardFront = ({ toLanguage,
             borderWidth="1px"
             rounded="lg"
             overflow="hidden"
-            minH={{ sm: "initial", md: "18rem" }}>
+        >
 
             <Box>
                 <Text textAlign="center" color="blackAlpha.500" >
