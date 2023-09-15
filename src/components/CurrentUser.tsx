@@ -15,7 +15,6 @@ import { UserInfo as User, UserLangPrefs, HandleMessage } from './@types/card';
 /* User Profile page, allowing for setting user preferences */
 
 const CurrentUser = ({ user, userLangPrefs, handleMessage }: { user: User, userLangPrefs: UserLangPrefs, handleMessage: HandleMessage }) => {
-    console.log('UID FROM CURRENT USER: ' + user.uid)
     const [fromLanguage, setFromLanguage] = useState<string | undefined>('');
     const [toLanguage, setToLanguage] = useState<string | undefined>('');
 

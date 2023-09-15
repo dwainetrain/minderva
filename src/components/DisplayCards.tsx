@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DeleteCard from './DeleteCard';
 import { Link } from 'react-router-dom';
 import moment from 'moment'
-import PlayAudio from './PlayAudio'
+import PlayAudio from './PlayAudio';
 import NoCards from './NoCards'
 import { Helmet } from 'react-helmet-async'
 
@@ -12,7 +12,6 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    Icon,
     Text,
     SimpleGrid,
     Box,
@@ -21,7 +20,7 @@ import {
     Divider,
 
 } from '@chakra-ui/react';
-import { PhoneIcon, Search2Icon } from '@chakra-ui/icons'
+import { Search2Icon } from '@chakra-ui/icons'
 import { HandleMessage, UserRouteModel, UserWithActions } from './@types/card';
 
 /* Grid of cards that are in user's collection */
@@ -40,7 +39,8 @@ interface card {
 const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: UserRouteModel) => {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState<card[]>([])
+    const [searchResults, setSearchResults] = useState<card[]>([]);
+    const [playingAudio, setPlayingAudio] = useState(false)
 
     useEffect(() => {
         // Just a very basic search
@@ -65,6 +65,8 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
         }
 
     }, [cardCollection, searchTerm])
+
+    const playAudio = () => setPlayingAudio(!playingAudio);
 
 
     return (
@@ -105,12 +107,12 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                                     minHeight="16rem"
                                 >
                                     <Flex>
-                                        <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL} type='' />
+                                        {playingAudio ? <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL} type='' /> : <Button onClick={playAudio}>Dummy</Button>}
                                         <Text fontSize="md">{card.front}</Text>
                                     </Flex>
                                     <Divider />
                                     <Flex>
-                                        <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL} type='' />
+                                        {playingAudio ? <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL} type='' /> : <Button onClick={playAudio}>Dummy</Button>}
                                         <Text fontSize="md">{card.back}</Text>
                                     </Flex>
                                     <Divider />
@@ -127,7 +129,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                                     </Flex>
                                     <Text fontSize="xs" color="grayGreen.800">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
                                 </Flex>
-                        ) : null}
+                        )[0] : null}
 
 
 
