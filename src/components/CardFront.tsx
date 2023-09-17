@@ -36,6 +36,7 @@ const CardFront = ({ toLanguage,
             borderWidth="1px"
             rounded="lg"
             overflow="hidden"
+            height={'100%'}
         >
 
             <Box>

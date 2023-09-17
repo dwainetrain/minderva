@@ -40,7 +40,6 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
 
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState<card[]>([]);
-    const [playingAudio, setPlayingAudio] = useState(false)
 
     useEffect(() => {
         // Just a very basic search
@@ -65,9 +64,6 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
         }
 
     }, [cardCollection, searchTerm])
-
-    const playAudio = () => setPlayingAudio(!playingAudio);
-
 
     return (
         <>
@@ -107,12 +103,12 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                                     minHeight="16rem"
                                 >
                                     <Flex>
-                                        {playingAudio ? <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL} type='' /> : <Button onClick={playAudio}>Dummy</Button>}
+                                        <PlayAudio side={"front-audio" + card.id} source={card.frontAudioURL} type='' />
                                         <Text fontSize="md">{card.front}</Text>
                                     </Flex>
                                     <Divider />
                                     <Flex>
-                                        {playingAudio ? <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL} type='' /> : <Button onClick={playAudio}>Dummy</Button>}
+                                        <PlayAudio side={"back-audio" + card.id} source={card.backAudioURL} type='' />
                                         <Text fontSize="md">{card.back}</Text>
                                     </Flex>
                                     <Divider />
@@ -129,7 +125,7 @@ const DisplayCards = ({ cardCollection, user, handleMessage, cardsLoaded }: User
                                     </Flex>
                                     <Text fontSize="xs" color="grayGreen.800">Created: {moment.unix(card.dateCreated.seconds).calendar()}</Text>
                                 </Flex>
-                        )[0] : null}
+                        ) : null}
 
 
 

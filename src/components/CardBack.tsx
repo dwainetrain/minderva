@@ -51,7 +51,8 @@ const CardBack = ({
             rounded="lg"
             minWidth="sm"
             maxWidth="md"
-            minH="18rem"
+            width={'100%'}
+            height={'100%'}
         >
 
             <Box width="100%">

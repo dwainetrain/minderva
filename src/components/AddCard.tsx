@@ -301,9 +301,10 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
             <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
 
 
-            <Grid templateColumns='repeat(5, 1fr)' gap={6}>
+            <Grid templateColumns='1fr 80px 1fr' alignItems={'center'} gridAutoRows={'1fr'} justifyItems={'center'} minHeight={'350px'} mb={5} gap={6}>
 
-                <GridItem>
+                <GridItem height={'100%'} width={'100%'}
+                    marginRight='auto'>
                     <CardFront
                         toLanguage={toLanguage}
                         loadingAudio={loadingAudio}
@@ -330,7 +331,8 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
                     </Tooltip>
                 </GridItem>
 
-                <GridItem>
+                <GridItem height={'100%'} width={'100%'}
+                    marginLeft='auto'>
                     <CardBack
                         fromLanguage={fromLanguage}
                         loadingAudio={loadingAudio}
