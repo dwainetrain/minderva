@@ -1,0 +1,109 @@
+import React from 'react';
+import LogIn from './LogIn'
+import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
+import ReviewCount from './ReviewCount'
+import Quote from './Quote';
+
+import {
+    Box,
+    Flex,
+    Divider,
+    Button,
+    Text,
+    Spinner,
+    Stack,
+    HStack,
+    StackDivider
+} from '@chakra-ui/react'
+import NoCards from './NoCards';
+
+// Types
+import { UserRouteModel } from './@types/card';
+
+/* Basic Dashboard Page, is the root route */
+
+const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
+    return (
+        <Flex ml={{ sm: 0, md: 24 }}>
+            <Helmet>
+                <title>Minderva | Dashboard</title>
+            </Helmet>
+            <Box width="100%" mt={4} >
+                <Box ml={{ sm: 10, md: 0 }}>
+                    <Quote />
+                </Box>
+                <Stack direction={{ sm: 'column', 'md': 'row' }} alignItems={'center'} justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor={{ sm: 'transparent', md: 'gray.200' }} />} >
+
+                    {!cardsLoaded ?
+                        <Flex justifyContent="center" alignItems="center" mx={{ sm: 10, md: 12, lg: 16 }}>
+                            <Box>
+                                <Spinner color="tomato" />
+                            </Box>
+                        </Flex>
+                        : cardCollection?.length === 0 ?
+                            <NoCards />
+                            :
+                            <Box minW={{ sm: 48, md: 'sm' }}><ReviewCount cardCollection={cardCollection} /></Box>
+                    }
+
+                    <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{ sm: 10, md: 12, lg: 16 }} px={{ sm: 6 }} borderWidth={{ sm: "1px", md: 0 }}>
+                        <Text fontSize="lg" fontWeight="semibold" color="grayGreen.800" mb={8}>Explore your Minderva</Text>
+                        <Box mb={6}>
+
+                            <Link to="/add-cards">
+                                <Button size="sm" mb={3} variant="outline">Add Cards</Button>
+                            </Link>
+                            <Text>
+                                Tranaslate words or phrases and add them to your collection.
+                            </Text>
+                        </Box>
+
+                        <Box mb={6}>
+                            <Box>
+                                <Link to="/card-collection">
+                                    <Button size="sm" mb={3} variant="outline" flexShrink={1}>Card Collection</Button>
+                                </Link>
+                            </Box>
+                            <Box>
+                                <Text>View, edit or delete your saved cards.</Text>
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Box>
+                                <Link to="/user-profile">
+                                    <Button mb={3} size="sm" variant="outline">User Profile</Button>
+                                </Link>
+                            </Box>
+                            <Box>
+                                <Text>View your profile and edit default language preferences.</Text>
+                            </Box>
+                        </Box>
+                    </Flex>
+                </Stack>
+
+                <Stack mt={5} mb={10} ml={{ sm: 10, md: 0 }} spacing={4}>
+                    <Divider mx={0} />
+                    <Text>Minderva is a cobblestone in the cobbled pathway of language study.</Text>
+                    <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
+                    <Text>I hope it helps you get to where you're going.</Text>
+                </Stack>
+            </Box>
+        </Flex >
+    )
+}
+
+const Dashboard = ({ user, cardCollection, cardsLoaded }: UserRouteModel) => {
+    return (
+        <div>
+            {user ?
+                <UserDashboard user={user} cardCollection={cardCollection} cardsLoaded={cardsLoaded} />
+                :
+                <LogIn />}
+        </div>
+
+    )
+}
+
+export default Dashboard;
+

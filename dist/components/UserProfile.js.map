@@ -1,0 +1,1 @@
+{"version":3,"file":"UserProfile.js","sourceRoot":"","sources":["../../src/components/UserProfile.tsx"],"names":[],"mappings":";;AAAA,iCAA0B;AAC1B,qDAA8C;AAK9C,uDAAuD;AAEvD,MAAM,WAAW,GAAG,CAAC,EAAE,IAAI,EAAE,aAAa,EAAE,aAAa,EAA2E,EAAE,EAAE,CAAC,CACrI;IACI,8BAAC,wBAAc,IAAC,IAAI,EAAE,IAAI,EAAE,aAAa,EAAE,aAAa,EAAE,aAAa,EAAE,aAAa,GAAI,CACxF,CACT,CAAA;AAED,kBAAe,WAAW,CAAC"}
