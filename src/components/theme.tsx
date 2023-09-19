@@ -1,22 +1,22 @@
 import { theme } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react'
 
-const customBreakpoints = ["360px", "900px", "1024px", "1366px"];
+// const customBreakpoints = ["360px", "900px", "1024px", "1366px"];
 
-const breakpoints = {
-  sm: customBreakpoints[0],
-  md: customBreakpoints[1],
-  lg: customBreakpoints[2],
-  xl: customBreakpoints[3],
-}
+// const breakpoints = {
+//   sm: customBreakpoints[0],
+//   md: customBreakpoints[1],
+//   lg: customBreakpoints[2],
+//   xl: customBreakpoints[3],
+// }
 
 // TODO: Typescript conversion: Mabye use this structure instead?
-// const breakpoints = {
-//   sm: '360px',
-//   md: '900px',
-//   lg: '1024px',
-//   xl: '1366px',
-// }
+const breakpoints = {
+  sm: '360px',
+  md: '900px',
+  lg: '1024px',
+  xl: '1366px',
+}
 
 // Theme Options
 const customTheme = extendTheme({

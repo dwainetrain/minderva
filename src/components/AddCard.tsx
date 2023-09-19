@@ -301,7 +301,7 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
             <Heading as="h2" size="md" pb={3}>{mode === 'add' ? "Add a card" : 'Edit your card'}</Heading>
 
 
-            <Grid templateColumns='1fr 80px 1fr' alignItems={'center'} gridAutoRows={'1fr'} justifyItems={'center'} minHeight={'350px'} mb={5} gap={6}>
+            <Grid maxW={{ sm: "md", md: '1200px' }} templateColumns={{ sm: 'md', md: '1fr 80px 1fr' }} alignItems={'center'} gridAutoRows={{ md: '1fr' }} justifyItems={'center'} minHeight={'350px'} mb={5} gap={6}>
 
                 <GridItem height={'100%'} width={'100%'}
                     marginRight='auto'>
@@ -319,6 +319,7 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
                     <Tooltip aria-label="Swap Sides" label="Swap Sides" placement="top" bg="grayGreen.200" color="grayGreen.800">
                         <IconButton
                             alignSelf="center"
+                            justifySelf={'center'}
                             variant="link"
                             colorScheme="blackAlpha"
                             aria-label="Swap Card Sides"
@@ -351,7 +352,7 @@ const AddCard = ({ userLangPrefs, handleMessage, mode, user, cardId }: CardActio
                 </GridItem>
             </Grid>
 
-            <Flex justifyContent="center">
+            <Flex justifyContent="center" >
                 <Flex width="100%" justifyContent={{ sm: "center", md: "flex-end" }} mb={5}>
                     {mode === 'add' ?
                         <Button

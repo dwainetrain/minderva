@@ -8,7 +8,7 @@ import { UserRouteModel } from './@types/card';
 
 const ReviewCount = ({ cardCollection }: UserRouteModel) => {
     return (
-        <Flex mx={{ sm: 0, md: 12, lg: 16 }} flexDirection="column" justifyContent="space-around" alignItems="center" minH="16rem" minW={{ sm: 48, md: 'sm' }} maxW="md" >
+        <Flex mx={{ sm: 0, md: 12, lg: 16 }} flexDirection="column" justifyContent="space-around" alignItems="center" minH="16rem" maxW="md" >
             <Box textAlign="center" >
                 <Box fontWeight="semibold">
                     You Have

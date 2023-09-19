@@ -33,10 +33,10 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                 <Box ml={{ sm: 10, md: 0 }}>
                     <Quote />
                 </Box>
-                <HStack align='center' justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor='gray.200' />} >
+                <Stack direction={{ sm: 'column', 'md': 'row' }} alignItems={'center'} justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor={{ sm: 'transparent', md: 'gray.200' }} />} >
 
                     {!cardsLoaded ?
-                        <Flex justifyContent="center" alignItems="center" mx={{ sm: 10, md: 16 }}>
+                        <Flex justifyContent="center" alignItems="center" mx={{ sm: 10, md: 12, lg: 16 }}>
                             <Box>
                                 <Spinner color="tomato" />
                             </Box>
@@ -44,7 +44,7 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                         : cardCollection?.length === 0 ?
                             <NoCards />
                             :
-                            <ReviewCount cardCollection={cardCollection} />
+                            <Box minW={{ sm: 48, md: 'sm' }}><ReviewCount cardCollection={cardCollection} /></Box>
                     }
 
                     <Flex flexDirection="column" justifyContent="space-around" alignItems="flex-start" minW="sm" maxW="sm" py={6} mx={{ sm: 10, md: 12, lg: 16 }} px={{ sm: 6 }} borderWidth={{ sm: "1px", md: 0 }}>
@@ -80,10 +80,10 @@ const UserDashboard = ({ cardCollection, cardsLoaded }: UserRouteModel) => {
                             </Box>
                         </Box>
                     </Flex>
-                </HStack>
+                </Stack>
 
                 <Stack mt={5} mb={10} ml={{ sm: 10, md: 0 }} spacing={4}>
-                    <Divider mb={4} mr={32} />
+                    <Divider mx={0} />
                     <Text>Minderva is a cobblestone in the cobbled pathway of language study.</Text>
                     <Text>It is a tool that uses flash cards, translation, text-to-speech and motivational cues to keep you learning.</Text>
                     <Text>I hope it helps you get to where you're going.</Text>

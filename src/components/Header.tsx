@@ -1,12 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { signOut } from '../firebase'
-import { Link as ChaLink, Flex, Box, BoxProps, forwardRef, Divider, useBreakpointValue, HStack, StackDivider } from '@chakra-ui/react'
+import { Link as ChaLink, Flex, Box, BoxProps, forwardRef, StackDivider, Stack, HStack } from '@chakra-ui/react'
 import { FiMenu, FiX } from 'react-icons/fi'
 
 /* Primary site navigation bar */
-
-
 const NavbarLink = forwardRef<BoxProps, 'div'>(({ children, ...props }, ref) => {
 
   return (
@@ -28,72 +26,71 @@ const NavbarLink = forwardRef<BoxProps, 'div'>(({ children, ...props }, ref) => 
 });
 
 const Header = () => {
-  const [show, setShow] = useState(false);
-  const handleToggle = () => setShow(!show);
+  const [showMenu, setShowMenu] = useState(false);
+  const handleToggle = () => setShowMenu(!showMenu);
   const ref = useRef(null);
 
   return (
-    <Flex
+    <Stack
       bg="tomato"
       w="100%"
       as="nav"
       px={{ sm: 10, md: 24 }}
       py={3}
+      flexDirection={{ sm: "column", md: "row" }}
       justifyContent="flex-start"
       alignItems="baseline"
       wrap="wrap"
       color="white"
     >
 
-      <Box fontWeight="extrabold">
-        <ChaLink as={Link} to='/' color="white"
-          _hover={{ textDecoration: "none", color: "white" }}
-          _active={{ color: "white" }}
-          _focus={{ color: "white", textDecoration: "none" }}
-          fontFamily="span"
-          letterSpacing="0.1em"
-          fontSize="lg"
-          lineHeight="0"
-        >
-          Minderva
-        </ChaLink>
-      </Box>
-
-      <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
-        <title>Menu</title>
-        {!show ? <Box as={FiMenu} size={4} /> : <Box as={FiX} size={4} />}
-      </Box>
-
-      <HStack align='baseline' justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor='gray.200' />} spacing={2} ml={12}>
-        <Box my={{ sm: 3, md: 0 }}>
-          <NavbarLink as={NavLink} px={2} ref={ref} to="/review" key="review">Review</NavbarLink>
+      <HStack width={{ sm: '100%', md: 'initial' }}>
+        <Box fontWeight="extrabold">
+          <ChaLink as={Link} to='/' color="white"
+            _hover={{ textDecoration: "none", color: "white" }}
+            _active={{ color: "white" }}
+            _focus={{ color: "white", textDecoration: "none" }}
+            fontFamily="span"
+            letterSpacing="0.1em"
+            fontSize="lg"
+            lineHeight="0"
+          >
+            Minderva
+          </ChaLink>
         </Box>
-        <Box my={{ sm: 3, md: 0 }}>
-          <NavbarLink as={NavLink} px={2} to="/add-cards" key="add">Add Cards</NavbarLink>
-        </Box>
-        <Box my={{ sm: 3, md: 0 }}>
-          <NavbarLink as={NavLink} px={2} to="/card-collection" key="collection">Card Collection</NavbarLink>
+
+        <Box display={{ sm: "block", md: "none" }} onClick={handleToggle} ml={'auto'}>
+          <title>Menu</title>
+          {!showMenu ? <Box as={FiMenu} size={24} /> : <Box as={FiX} size={24} />}
         </Box>
       </HStack>
 
+      <Stack display={{ sm: showMenu ? "flex" : "none", md: "flex" }} direction={{ sm: 'column', md: 'row' }} align='baseline' justify='flex-start' shouldWrapChildren={true} divider={<StackDivider borderColor={{ sm: 'transparent', md: 'gray.200' }} />} spacing={{ sm: '0px', md: 2 }} ml={{ sm: 0, md: 12 }}>
+        <Box my={{ sm: 3, md: 0 }}>
+          <NavbarLink as={NavLink} px={{ sm: 0, md: 2 }} ref={ref} to="/review" key="review">Review</NavbarLink>
+        </Box>
+        <Box my={{ sm: 3, md: 0 }}>
+          <NavbarLink as={NavLink} px={{ sm: 0, md: 2 }} to="/add-cards" key="add">Add Cards</NavbarLink>
+        </Box>
+        <Box my={{ sm: 3, md: 0 }}>
+          <NavbarLink as={NavLink} px={{ sm: 0, md: 2 }} to="/card-collection" key="collection">Card Collection</NavbarLink>
+        </Box>
+      </Stack>
 
-
-      <HStack divider={<StackDivider borderColor='gray.200' />}
-        spacing={2}
+      <Stack display={{ sm: showMenu ? "flex" : "none", md: "flex" }} direction={{ sm: 'column', md: 'row' }} divider={<StackDivider borderColor={{ sm: 'transparent', md: 'gray.200' }} />}
+        spacing={{ sm: '0px', md: 2 }}
         align='stretch'
-        ml="auto" >
-        <Box ml="-0.25rem">
-          <NavbarLink as={NavLink} to="/user-profile">User Profile</NavbarLink>
+        ml={{ sm: "initial", md: "auto" }} >
+        <Box my={{ sm: 3, md: 0 }} ml={{ sm: 0, md: "-0.25rem" }}>
+          <NavbarLink as={NavLink} px={{ sm: 0, md: 2 }} to="/user-profile" key="user-profile">User Profile</NavbarLink>
         </Box>
-        {/* {!show ? <Divider orientation='vertical' /> : null} */}
-        {/* <Divider my={3} variant={useBreakpointValue({ sm: 'horizontal', md: 'vertical' })} /> */}
-        <Box>
-          <NavbarLink as={Link} px={2} color="white" to="" onClick={signOut}>Sign Out</NavbarLink>
+        <Box my={{ sm: 3, md: 0 }}>
+          <NavbarLink as={Link} px={{ sm: 0, md: 2 }} color="white" to="" onClick={signOut} key="sign-out">Sign Out</NavbarLink>
         </Box>
-      </HStack>
+      </Stack>
 
 
-    </Flex >
+    </Stack >
   );
 };
 
